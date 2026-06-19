@@ -326,6 +326,86 @@ body{background:var(--mid-gray);min-height:100vh;display:flex;justify-content:ce
 .template-total-row input{width:70px;padding:8px 10px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:13px;font-weight:700;text-align:center;font-family:var(--font);color:var(--tm);background:var(--white);outline:none;}
 .btn-save-template{width:100%;padding:12px;background:var(--terra);color:var(--white);border:none;border-radius:var(--r-md);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:7px;transition:opacity .2s;}
 .btn-save-template:hover{opacity:.9;}
+
+/* UNIFIED ADMIN CONTROL STYLE
+   Makes Reward Template, Manage Sessions, and Data Collections inputs/buttons consistent. */
+.qr-session-select,
+.duration-select,
+.new-form-input,
+.new-form-select,
+.edit-form-input,
+.edit-form-select,
+.milestone-input,
+.milestone-icon-select,
+.template-total-row input{
+  border:1.5px solid var(--cream-d);
+  border-radius:var(--r-md);
+  background:var(--white);
+  color:var(--tm);
+  font-family:var(--font);
+  font-size:13px;
+  outline:none;
+  transition:border-color .2s, box-shadow .2s, background .2s;
+}
+.qr-session-select,
+.duration-select,
+.new-form-input,
+.new-form-select,
+.edit-form-input,
+.edit-form-select,
+.milestone-input,
+.milestone-icon-select{
+  min-height:42px;
+  padding:10px 12px;
+}
+.template-total-row input{
+  min-height:42px;
+  padding:10px 12px;
+}
+.qr-session-select:focus,
+.duration-select:focus,
+.new-form-input:focus,
+.new-form-select:focus,
+.edit-form-input:focus,
+.edit-form-select:focus,
+.milestone-input:focus,
+.milestone-icon-select:focus,
+.template-total-row input:focus{
+  border-color:var(--terra);
+  box-shadow:0 0 0 3px rgba(255,103,39,.10);
+}
+.btn-add-session,
+.btn-add-milestone,
+.btn-save-template,
+.btn-download-history{
+  width:100%;
+  min-height:42px;
+  padding:11px 14px;
+  background:var(--white);
+  color:var(--terra);
+  border:1.5px dashed var(--terra-l);
+  border-radius:var(--r-md);
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:var(--font);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  margin-bottom:10px;
+  transition:background .2s, border-color .2s, color .2s;
+}
+.btn-save-template,
+.btn-download-history{margin-bottom:0;}
+.btn-add-session:hover,
+.btn-add-milestone:hover,
+.btn-save-template:hover,
+.btn-download-history:hover{
+  background:var(--terra-p);
+  border-color:var(--terra);
+  opacity:1;
+}
 /* DEMO VIEW (read-only participant preview inside admin panel) */
 .btn-demo-view{width:100%;padding:13px;background:var(--white);color:var(--navy);border:1.5px solid var(--navy);border-radius:var(--r-md);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s;}
 .btn-demo-view:hover{background:var(--blue-l);}
@@ -639,11 +719,11 @@ h1,h2,h3,h4,
     </div>
     <div class="section mt-16">
       <div class="slabel">Data collections</div>
-      <div class="card" style="display:flex;flex-direction:column;gap:10px;">
+      <div class="qr-panel" style="display:flex;flex-direction:column;gap:10px;">
         <select class="qr-session-select" id="data-session-select">
           <option value="all">All sessions</option>
         </select>
-        <button class="btn-download-history" style="width:100%;padding:9px 12px;background:var(--white);color:var(--green-d);border:1.5px solid var(--green);border-radius:var(--r-sm);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px;" onclick="downloadSelectedScanHistory()"><i class="ti ti-table-export"></i> Download scan history</button>
+        <button class="btn-download-history" onclick="downloadSelectedScanHistory()"><i class="ti ti-table-export"></i> Download scan history</button>
       </div>
     </div>
     <div class="section mt-16">
