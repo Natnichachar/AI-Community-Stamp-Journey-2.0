@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Community — Stamp Journey</title>
+<title>AI Community — Stamp Journey 2.0</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
@@ -19,6 +19,7 @@
   --gray:#6B7280;--gray-l:#F3F4F6;
   --red:#DC2626;--red-l:#FEE2E2;
   --amber:#D97706;--amber-l:#FEF3C7;
+  --purple:#6D3FA0;--purple-l:#F1E9F8;--purple-d:#4A2470;
   --font:'Montserrat',sans-serif;
   --r-sm:10px;--r-md:14px;--r-lg:20px;--r-xl:26px;
   --shadow:0 2px 12px rgba(44,31,20,.08);
@@ -52,23 +53,84 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .btn-primary:hover{opacity:.9;}
 .btn-primary:disabled{opacity:.45;cursor:not-allowed;}
 .error-msg{background:var(--red-l);border:1px solid #FCA5A5;border-radius:var(--r-sm);padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:14px;display:none;}
-.success-msg{background:var(--green-l);border:1px solid #BFE3D0;border-radius:var(--r-sm);padding:10px 14px;font-size:12px;color:var(--green-d);margin-bottom:14px;display:none;}
+.success-msg{background:var(--green-l);border:1px solid #9FD9BC;border-radius:var(--r-sm);padding:10px 14px;font-size:12px;color:var(--green-d);margin-bottom:14px;display:none;}
 
-/* PARTICIPANT HEADER */
-.p-header{background:var(--terra);padding:24px 20px 22px;}
-.p-header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.p-header-brand{display:flex;align-items:center;gap:10px;}
-.p-header-icon{width:38px;height:38px;background:rgba(255,255,255,.2);border-radius:11px;display:flex;align-items:center;justify-content:center;}
-.p-header-icon i{font-size:20px;color:#fff;}
-.p-header-title{font-size:16px;font-weight:700;color:#fff;}
-.p-header-subtitle{font-size:12px;color:rgba(255,255,255,.7);}
-.btn-ghost{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:9px;padding:7px 12px;font-size:12px;font-weight:600;color:#fff;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:5px;}
-.p-header-welcome{font-size:22px;font-weight:700;color:#fff;margin-bottom:3px;}
-.p-header-sub{font-size:13px;color:rgba(255,255,255,.7);}
+/* SHARED TOP BAR (used by dashboard, participant, admin) */
+.top-bar{padding:24px 20px 22px;}
+.top-bar-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.top-bar-brand{display:flex;align-items:center;gap:10px;}
+.top-bar-icon{width:38px;height:38px;background:rgba(255,255,255,.2);border-radius:11px;display:flex;align-items:center;justify-content:center;}
+.top-bar-icon i{font-size:20px;color:#fff;}
+.top-bar-title{font-size:16px;font-weight:700;color:#fff;}
+.top-bar-subtitle{font-size:12px;color:rgba(255,255,255,.7);}
+.top-bar-actions{display:flex;gap:8px;}
+.btn-ghost{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:9px;padding:7px 12px;font-size:12px;font-weight:600;color:#fff;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:5px;white-space:nowrap;}
+.top-bar-welcome{font-size:22px;font-weight:700;color:#fff;margin-bottom:3px;}
+.top-bar-sub{font-size:13px;color:rgba(255,255,255,.7);}
 .p-body{flex:1;padding-bottom:80px;}
 .section{padding:20px 16px 0;}
-.slabel{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--ts);margin-bottom:12px;}
+.slabel{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--ts);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .card{background:#fff;border-radius:var(--r-lg);border:.5px solid #E8DDD4;padding:18px;box-shadow:var(--shadow);}
+.mt-16{margin-top:16px;}.mt-12{margin-top:12px;}.mt-8{margin-top:8px;}
+
+/* ── DASHBOARD ── */
+.dash-hero{background:var(--terra);}
+.role-chip{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;text-transform:uppercase;letter-spacing:.4px;}
+.role-chip.r-manager{background:var(--purple-l);color:var(--purple-d);}
+.role-chip.r-admin{background:var(--blue-l);color:var(--blue-d);}
+.role-chip.r-participant{background:var(--green-l);color:var(--green-d);}
+.track-card{background:#fff;border-radius:var(--r-md);border:.5px solid #E8DDD4;padding:16px;display:flex;align-items:center;gap:13px;box-shadow:var(--shadow);cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.track-card:hover{transform:translateY(-1px);box-shadow:var(--shadow-lg);}
+.track-card:active{transform:translateY(0);}
+.track-ic{width:44px;height:44px;border-radius:13px;background:var(--terra-p);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.track-ic i{font-size:21px;color:var(--terra);}
+.track-card-body{flex:1;min-width:0;}
+.track-name{font-size:14px;font-weight:700;color:var(--tm);margin-bottom:3px;}
+.track-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.track-chev{color:var(--terra-l);font-size:18px;flex-shrink:0;}
+.track-list{display:flex;flex-direction:column;gap:10px;}
+.empty-state{text-align:center;padding:36px 20px;}
+.empty-state i{font-size:40px;color:var(--terra-l);display:block;margin-bottom:10px;}
+.empty-state p{font-size:13px;color:var(--ts);line-height:1.6;}
+
+.join-card{background:#fff;border-radius:var(--r-lg);border:1.5px dashed var(--terra-l);padding:18px;}
+.join-card h4{font-size:13px;font-weight:700;color:var(--tm);margin-bottom:4px;}
+.join-card p{font-size:12px;color:var(--ts);margin-bottom:12px;line-height:1.5;}
+.join-row{display:flex;gap:8px;}
+.access-code-input{flex:1;padding:12px 14px;border:1.5px solid var(--cream-d);border-radius:var(--r-md);font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;font-family:var(--font);color:var(--tm);background:#fff;outline:none;text-align:center;}
+.access-code-input:focus{border-color:var(--terra);}
+.access-code-input::placeholder{letter-spacing:1px;font-weight:600;}
+.btn-join{padding:12px 18px;background:var(--terra);color:#fff;border:none;border-radius:var(--r-md);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:6px;white-space:nowrap;transition:opacity .2s;}
+.btn-join:hover{opacity:.9;}
+.btn-join:disabled{opacity:.45;cursor:not-allowed;}
+
+.btn-create-track{width:100%;padding:14px;background:var(--purple);color:#fff;border:none;border-radius:var(--r-md);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s;}
+.btn-create-track:hover{opacity:.9;}
+
+/* ── BREADCRUMB / BACK NAV (sits inside colored top bars) ── */
+.crumb-back{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:rgba(255,255,255,.85);cursor:pointer;margin-bottom:10px;}
+.crumb-back i{font-size:15px;}
+
+/* ── TRACK MANAGER MODAL (create track) ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal-card{background:#fff;border-radius:var(--r-xl);width:100%;max-width:380px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg);}
+.modal-header{background:var(--tm);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2;}
+.modal-header h3{font-size:16px;font-weight:700;color:#fff;}
+.btn-close-modal{background:rgba(255,255,255,.15);border:none;border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:18px;flex-shrink:0;}
+.modal-body{padding:20px;}
+.modal-body .form-hint{margin-bottom:10px;}
+.chip-input-row{display:flex;gap:8px;margin-bottom:8px;}
+.chip-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px;}
+.email-chip{display:inline-flex;align-items:center;gap:6px;background:var(--purple-l);color:var(--purple-d);border-radius:99px;padding:5px 6px 5px 12px;font-size:12px;font-weight:600;}
+.email-chip button{background:rgba(74,36,112,.12);border:none;border-radius:50%;width:18px;height:18px;color:var(--purple-d);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.access-code-display{background:var(--cream);border:1.5px dashed var(--terra-l);border-radius:var(--r-md);padding:16px;text-align:center;margin-bottom:14px;}
+.access-code-display .code{font-size:26px;font-weight:700;letter-spacing:4px;color:var(--terra);font-family:var(--font);}
+.access-code-display p{font-size:11px;color:var(--ts);margin-top:6px;}
+
+/* ── ADMIN: track header chip ── */
+.admin-track-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:99px;padding:5px 11px;font-size:11px;font-weight:700;color:#fff;margin-top:8px;}
+.admin-access-code-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);border-radius:99px;padding:4px 10px;font-size:11px;font-weight:700;color:#fff;letter-spacing:1px;}
 
 /* TRACK */
 .track{margin-bottom:20px;}
@@ -76,29 +138,30 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .tl{font-size:10px;font-weight:700;color:var(--ts);}
 .tline{height:8px;background:var(--cream-d);border-radius:99px;position:relative;}
 .tfill{height:100%;background:var(--terra);border-radius:99px;transition:width .5s;}
-.tdots{display:flex;justify-content:space-between;margin-top:6px;position:relative;}
+.tdots{display:flex;justify-content:space-between;margin-top:6px;}
 .dot{width:13px;height:13px;border-radius:50%;border:2.5px solid var(--terra-l);background:#fff;transition:.3s;}
 .dot.r{background:var(--terra);border-color:var(--terra);}
 .dot.reached{background:var(--green);border-color:var(--green);}
 
-/* STAMP GRID — dynamic count */
+/* STAMP GRID */
 .sgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;}
 .stamp{width:100%;aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
 .stamp.col{background:var(--terra-p);border:2.5px solid var(--terra);color:var(--terra);}
 .stamp.unc{background:#fff;border:2.5px dashed var(--terra-l);}
-.stamp.milestone.col{border-color:var(--green);background:var(--green-l);color:var(--green);}
+.stamp.col.milestone{border-color:var(--green);background:var(--green-l);color:var(--green);}
 .stamp-cat-svg{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:68%;height:54%;color:currentColor;opacity:.18;z-index:1;pointer-events:none;}
 .stamp-cat-svg path{fill:currentColor;}
 .snum{font-size:22px;font-weight:700;line-height:1;opacity:.7;display:block;text-align:center;}
-.stamp-milestone-badge{position:absolute;top:-3px;right:-3px;width:16px;height:16px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;z-index:2;}
 .ptxt{font-size:14px;color:var(--ts);}
 .ptxt strong{color:var(--tm);font-weight:700;}
 
-/* REWARD QR SECTION — dynamic cards */
+/* REWARD QR SECTION (dynamic milestones) */
 .qr-section{margin-top:16px;border-top:1px solid var(--cream-d);padding-top:16px;}
 .qr-section h4{font-size:13px;font-weight:700;color:var(--tm);margin-bottom:4px;}
 .qr-section p{font-size:12px;color:var(--ts);margin-bottom:12px;line-height:1.5;}
 .qr-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.qr-cards.cols-1{grid-template-columns:1fr;max-width:160px;margin:0 auto;}
+.qr-cards.cols-3{grid-template-columns:1fr 1fr 1fr;}
 .qr-card{border-radius:var(--r-md);border:1.5px solid #E8DDD4;padding:14px;text-align:center;transition:.3s;}
 .qr-card.active-qr{border-color:var(--terra);background:var(--terra-p);}
 .qr-card.locked{opacity:.4;}
@@ -145,21 +208,10 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .btn-scan:hover{background:var(--terra-p);}
 .btn-scan:disabled{opacity:.35;cursor:not-allowed;}
 
-.feedback-card{background:#fff;border-radius:var(--r-md);border:.5px solid #E8DDD4;padding:16px;box-shadow:var(--shadow);}
-.feedback-card h4{font-size:13px;font-weight:700;color:var(--tm);margin-bottom:5px;}
-.feedback-card p{font-size:12px;color:var(--ts);margin-bottom:13px;}
-.feedback-inner{display:flex;gap:13px;align-items:center;}
-.qr-mock{width:56px;height:56px;border-radius:9px;background:var(--cream-d);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.btn-feedback{background:#fff;color:var(--terra);border:1.5px solid var(--terra-l);border-radius:var(--r-sm);padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:var(--font);margin-top:8px;transition:background .2s;}
-.btn-feedback:hover{background:var(--terra-p);}
-
 /* QR SCANNER MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
-.modal-overlay.open{display:flex;}
 .scanner-modal{background:#fff;border-radius:var(--r-xl);width:100%;max-width:380px;overflow:hidden;box-shadow:var(--shadow-lg);}
 .scanner-header{background:var(--tm);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;}
 .scanner-header h3{font-size:16px;font-weight:700;color:#fff;}
-.btn-close-modal{background:rgba(255,255,255,.15);border:none;border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:18px;}
 .scanner-body{padding:20px;}
 .scanner-viewfinder{position:relative;width:100%;padding-bottom:100%;border-radius:var(--r-lg);overflow:hidden;background:#000;margin-bottom:16px;}
 .scanner-viewfinder video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
@@ -179,22 +231,12 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 
 /* ADMIN HEADER */
 .a-header{background:var(--navy);padding:24px 20px 20px;}
-.a-header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.a-header h2{font-size:20px;font-weight:700;color:#fff;}
 .a-header p{font-size:13px;color:rgba(255,255,255,.65);}
 .stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
 .stat-card{background:#fff;border-radius:var(--r-md);border:.5px solid #E8DDD4;padding:14px 16px;text-align:center;box-shadow:var(--shadow);}
 .stat-num{font-size:28px;font-weight:700;color:var(--terra);}
 .stat-num.green{color:var(--green);}
 .stat-lbl{font-size:11px;color:var(--ts);font-weight:600;margin-top:3px;}
-
-/* ADMIN TABS */
-.admin-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
-.admin-tabs::-webkit-scrollbar{display:none;}
-.admin-tab-btn{flex-shrink:0;padding:9px 14px;border-radius:99px;border:1.5px solid var(--cream-d);background:#fff;font-size:12px;font-weight:700;color:var(--ts);cursor:pointer;font-family:var(--font);white-space:nowrap;transition:.2s;display:flex;align-items:center;gap:5px;}
-.admin-tab-btn.active{background:var(--navy);border-color:var(--navy);color:#fff;}
-.admin-tab-panel{display:none;}
-.admin-tab-panel.active{display:block;}
 
 /* QR PANEL */
 .qr-panel{background:#fff;border-radius:var(--r-lg);border:.5px solid #E8DDD4;padding:16px;box-shadow:var(--shadow);}
@@ -265,21 +307,40 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .btn-cancel-edit{padding:9px 14px;background:#fff;color:var(--ts);border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);}
 .btn-cancel-edit:hover{background:var(--cream-d);}
 
-/* DATA / DOWNLOAD PANEL */
-.data-panel{background:#fff;border-radius:var(--r-lg);border:.5px solid #E8DDD4;padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;}
-.data-panel-row{display:grid;grid-template-columns:1fr;gap:9px;}
-.btn-download-history{width:100%;padding:9px 12px;background:#fff;color:var(--green-d);border:1.5px solid var(--green);border-radius:var(--r-sm);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px;transition:background .2s;white-space:nowrap;}
-.btn-download-history:hover{background:var(--green-l);}
+/* REWARD TEMPLATE EDITOR */
+.milestone-row{display:flex;gap:8px;align-items:flex-start;background:var(--cream);border-radius:var(--r-md);padding:12px;margin-bottom:8px;}
+.milestone-row-fields{flex:1;display:flex;flex-direction:column;gap:7px;}
+.milestone-row-line1{display:grid;grid-template-columns:72px 1fr;gap:7px;}
+.milestone-input{width:100%;padding:8px 10px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:12px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
+.milestone-input:focus{border-color:var(--terra);}
+.milestone-icon-select{width:100%;padding:8px 10px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:12px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;appearance:none;}
+.btn-remove-milestone{width:32px;height:32px;background:#fff;color:var(--red);border:1.5px solid #F3B6B6;border-radius:var(--r-sm);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s;}
+.btn-remove-milestone:hover{background:var(--red-l);}
+.btn-add-milestone{width:100%;padding:9px;background:#fff;color:var(--terra);border:1.5px dashed var(--terra-l);border-radius:var(--r-sm);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px;transition:background .2s;}
+.btn-add-milestone:hover{background:var(--terra-p);}
+.template-total-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;background:var(--cream);border-radius:var(--r-md);padding:12px;}
+.template-total-row label{font-size:12px;font-weight:700;color:var(--ts);flex-shrink:0;}
+.template-total-row input{width:70px;padding:8px 10px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:13px;font-weight:700;text-align:center;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
+.btn-save-template{width:100%;padding:12px;background:var(--terra);color:#fff;border:none;border-radius:var(--r-md);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:7px;transition:opacity .2s;}
+.btn-save-template:hover{opacity:.9;}
+
+/* DEMO VIEW (read-only participant preview inside admin panel) */
+.btn-demo-view{width:100%;padding:13px;background:#fff;color:var(--navy);border:1.5px solid var(--navy);border-radius:var(--r-md);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s;}
+.btn-demo-view:hover{background:var(--blue-l);}
+.demo-overlay{position:fixed;inset:0;background:#E4DDD5;z-index:2000;display:none;flex-direction:column;align-items:center;overflow-y:auto;}
+.demo-overlay.open{display:flex;}
+.demo-frame{width:100%;max-width:430px;min-height:100vh;background:var(--cream);position:relative;}
+.demo-watermark-bar{position:sticky;top:0;z-index:50;background:var(--tm);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;}
+.demo-watermark-bar span{display:flex;align-items:center;gap:6px;}
+.demo-watermark-bar button{background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:6px 12px;color:#fff;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:5px;}
+.demo-readonly-shield{position:absolute;inset:0;z-index:40;cursor:not-allowed;background:transparent;}
+.demo-badge-fixed{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--tm);color:#fff;font-size:11px;font-weight:700;padding:8px 16px;border-radius:99px;display:flex;align-items:center;gap:6px;box-shadow:var(--shadow-lg);z-index:60;max-width:90%;text-align:center;}
 
 /* ADMIN PARTICIPANTS */
 .search-wrap{position:relative;margin-bottom:12px;}
 .search-input{width:100%;padding:12px 16px 12px 42px;border:1.5px solid var(--cream-d);border-radius:var(--r-md);font-size:14px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;transition:border-color .2s;}
 .search-input:focus{border-color:var(--terra);}
 .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ts);font-size:18px;pointer-events:none;}
-.filter-row{display:flex;gap:7px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;}
-.filter-row::-webkit-scrollbar{display:none;}
-.fbtn{flex-shrink:0;padding:8px 14px;border-radius:99px;border:1.5px solid var(--cream-d);background:#fff;font-size:12px;font-weight:700;color:var(--ts);cursor:pointer;font-family:var(--font);white-space:nowrap;transition:.2s;}
-.fbtn.active{background:var(--terra);border-color:var(--terra);color:#fff;}
 .a-table{display:flex;flex-direction:column;gap:10px;}
 .a-card{background:#fff;border-radius:var(--r-md);border:.5px solid #E8DDD4;padding:16px;box-shadow:var(--shadow);}
 .a-card-top{display:flex;align-items:center;gap:11px;margin-bottom:12px;}
@@ -317,46 +378,13 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .redeemed-date{font-size:10px;color:var(--ts);margin-top:2px;}
 .no-results{text-align:center;padding:32px 20px;color:var(--ts);font-size:14px;}
 .no-results i{font-size:40px;display:block;margin-bottom:10px;color:var(--terra-l);}
-.mt-16{margin-top:16px;}.mt-12{margin-top:12px;}
 
-/* TEMPLATE BUILDER */
-.tb-card{background:#fff;border-radius:var(--r-lg);border:.5px solid #E8DDD4;padding:16px;box-shadow:var(--shadow);}
-.tb-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
-.tb-field label{font-size:11px;font-weight:700;color:var(--ts);text-transform:uppercase;letter-spacing:.6px;display:block;margin-bottom:6px;}
-.tb-field input{width:100%;padding:10px 12px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:13px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
-.tb-field input:focus{border-color:var(--terra);}
-.tb-preview-wrap{background:var(--cream);border-radius:var(--r-md);padding:14px;margin-bottom:16px;}
-.tb-preview-title{font-size:11px;font-weight:700;color:var(--ts);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;}
-.tb-preview-track{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;}
-.tb-preview-stamp{flex-shrink:0;width:34px;height:34px;border-radius:50%;border:2px dashed var(--terra-l);background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--ts);position:relative;}
-.tb-preview-stamp.milestone{border:2px solid var(--green);background:var(--green-l);color:var(--green-d);}
-.tb-preview-stamp .mi{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--green-d);}
-.tb-milestones-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
-.tb-milestone-row{background:var(--cream);border-radius:var(--r-md);padding:12px;display:flex;flex-direction:column;gap:8px;border:1.5px solid var(--cream-d);}
-.tb-milestone-top{display:grid;grid-template-columns:70px 1fr 36px;gap:8px;align-items:end;}
-.tb-milestone-top input,.tb-milestone-top select{width:100%;padding:9px 10px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:12px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
-.tb-mini-label{font-size:9px;font-weight:700;color:var(--ts);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px;}
-.btn-remove-milestone{width:36px;height:36px;border:1.5px solid #F3B6B6;border-radius:var(--r-sm);background:#fff;color:var(--red);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;}
-.btn-remove-milestone:hover{background:var(--red-l);}
-.btn-add-milestone{width:100%;padding:10px;background:#fff;color:var(--green-d);border:1.5px dashed #BFE3D0;border-radius:var(--r-md);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:14px;transition:background .2s;}
-.btn-add-milestone:hover{background:var(--green-l);}
-.btn-save-template{width:100%;padding:13px;background:var(--navy);color:#fff;border:none;border-radius:var(--r-md);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:7px;transition:opacity .2s;}
-.btn-save-template:hover{opacity:.9;}
-.btn-save-template:disabled{opacity:.4;cursor:not-allowed;}
-.tb-divider{height:1px;background:var(--cream-d);margin:18px 0;}
-.tb-bulk-row{display:flex;gap:8px;align-items:stretch;}
-.tb-bulk-row input{flex:1;padding:10px 12px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:13px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
-.btn-bulk-create{padding:10px 16px;background:var(--terra);color:#fff;border:none;border-radius:var(--r-sm);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:6px;white-space:nowrap;transition:opacity .2s;}
-.btn-bulk-create:hover{opacity:.9;}
-.btn-bulk-create:disabled{opacity:.4;cursor:not-allowed;}
-.tb-admin-form{display:flex;flex-direction:column;gap:10px;}
-.tb-admin-form input{width:100%;padding:10px 12px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:13px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
-.tb-admin-form input:focus{border-color:var(--terra);}
-.btn-register-admin{width:100%;padding:11px;background:var(--navy);color:#fff;border:none;border-radius:var(--r-sm);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .2s;}
-.btn-register-admin:hover{opacity:.9;}
-.btn-register-admin:disabled{opacity:.4;cursor:not-allowed;}
-.tb-section-title{font-size:13px;font-weight:700;color:var(--tm);margin-bottom:4px;display:flex;align-items:center;gap:6px;}
-.tb-section-sub{font-size:11px;color:var(--ts);margin-bottom:12px;line-height:1.5;}
+/* MANAGE ADMINS (track manager adding admins to a track) */
+.admin-add-row{display:flex;gap:8px;}
+.admin-add-row input{flex:1;}
+.admin-list{display:flex;flex-direction:column;gap:6px;margin-top:10px;}
+.admin-list-row{display:flex;align-items:center;justify-content:space-between;background:var(--cream);border-radius:var(--r-sm);padding:9px 12px;font-size:12px;}
+.admin-list-row strong{color:var(--tm);font-weight:700;}
 </style>
 </head>
 <body>
@@ -367,7 +395,7 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
   <div class="auth-hero">
     <div class="auth-hero-icon"><i class="ti ti-robot"></i></div>
     <h1>AI Community</h1><h2>Stamp Journey</h2>
-    <p>Collect stamps as you join each AI Community session and unlock rewards.</p>
+    <p>Join tracks, collect stamps as you take part, and unlock rewards along the way.</p>
   </div>
   <div class="auth-body">
     <div class="auth-tabs">
@@ -392,18 +420,59 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
   </div>
 </div>
 
-<!-- PARTICIPANT -->
-<div class="screen" id="screen-participant">
-  <div class="p-header">
-    <div class="p-header-top">
-      <div class="p-header-brand">
-        <div class="p-header-icon"><i class="ti ti-robot"></i></div>
-        <div><div class="p-header-title">AI Community</div><div class="p-header-subtitle">Stamp Journey</div></div>
+<!-- DASHBOARD -->
+<div class="screen" id="screen-dashboard">
+  <div class="top-bar dash-hero">
+    <div class="top-bar-row">
+      <div class="top-bar-brand">
+        <div class="top-bar-icon"><i class="ti ti-robot"></i></div>
+        <div><div class="top-bar-title">AI Community</div><div class="top-bar-subtitle">Stamp Journey</div></div>
       </div>
       <button class="btn-ghost" onclick="logout()"><i class="ti ti-logout" style="font-size:13px;"></i> Sign out</button>
     </div>
-    <div class="p-header-welcome" id="p-welcome">Hello 👋</div>
-    <div class="p-header-sub" id="p-facility"></div>
+    <div class="top-bar-welcome" id="dash-welcome">Hello 👋</div>
+    <div class="top-bar-sub" id="dash-sub"></div>
+  </div>
+  <div class="p-body">
+    <div class="section">
+      <div class="slabel">Your tracks</div>
+      <div class="track-list" id="dash-track-list"></div>
+    </div>
+
+    <div class="section mt-16">
+      <div class="slabel">Join a track</div>
+      <div class="join-card">
+        <h4><i class="ti ti-ticket" style="color:var(--terra);margin-right:5px;"></i>Have an access code?</h4>
+        <p>Enter the code your facilitator shared to join as a participant.</p>
+        <div id="join-error" class="error-msg"></div>
+        <div class="join-row">
+          <input class="access-code-input" id="join-code-input" type="text" maxlength="8" placeholder="CODE">
+          <button class="btn-join" id="btn-join-track" onclick="handleJoinTrack()"><i class="ti ti-arrow-right"></i> Join</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section mt-16" id="dash-manager-section" style="display:none;">
+      <div class="slabel">Track Manager tools</div>
+      <button class="btn-create-track" onclick="openCreateTrackModal()"><i class="ti ti-plus"></i> Create New Track</button>
+    </div>
+  </div>
+</div>
+
+<!-- PARTICIPANT -->
+<div class="screen" id="screen-participant">
+  <div class="top-bar" style="background:var(--terra);">
+    <div class="top-bar-row">
+      <div class="top-bar-brand">
+        <div class="top-bar-icon"><i class="ti ti-robot"></i></div>
+        <div><div class="top-bar-title" id="p-track-name">Track</div><div class="top-bar-subtitle">Stamp Journey</div></div>
+      </div>
+      <div class="top-bar-actions">
+        <button class="btn-ghost" onclick="goToDashboard()"><i class="ti ti-layout-grid" style="font-size:13px;"></i> Dashboard</button>
+      </div>
+    </div>
+    <div class="top-bar-welcome" id="p-welcome">Hello 👋</div>
+    <div class="top-bar-sub" id="p-facility"></div>
   </div>
   <div class="p-body">
     <div class="section">
@@ -412,10 +481,10 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
         <div class="track">
           <div class="track-lbl" id="p-track-lbl"></div>
           <div class="tline"><div class="tfill" id="p-fill"></div></div>
-          <div class="tdots" id="p-tdots"></div>
+          <div class="tdots" id="p-dots"></div>
         </div>
         <div class="sgrid" id="p-stamps"></div>
-        <p class="ptxt">Collected: <strong id="p-count">0</strong> / <strong id="p-total">0</strong> stamps</p>
+        <p class="ptxt">Collected: <strong id="p-count">0</strong> / <span id="p-total">10</span> stamps</p>
         <div class="qr-section">
           <h4>Your rewards</h4>
           <p>Show your QR code to the facilitator to redeem. Only the facilitator can mark it as redeemed.</p>
@@ -432,21 +501,10 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
         <button class="btn-pager" id="btn-next-sess" onclick="changeSessionPage(1)" aria-label="Next sessions"><i class="ti ti-chevron-right"></i></button>
       </div>
     </div>
-    <div class="p-actions">
+    <div class="p-actions" id="p-actions-real">
       <button class="btn-scan" id="btn-open-scanner" onclick="openScanner()">
         <i class="ti ti-qrcode-scan"></i> Scan Session QR Code
       </button>
-      <div class="feedback-card">
-        <h4>Give feedback</h4><p>Share your thoughts to help us improve the AI Community sessions.</p>
-        <div class="feedback-inner">
-          <div class="qr-mock"><i class="ti ti-qrcode" style="font-size:32px;color:var(--ts);"></i></div>
-          <div>
-            <p style="font-size:12px;font-weight:700;color:var(--tm);margin-bottom:3px;">Scan to give feedback</p>
-            <p style="font-size:11px;color:var(--ts);">Or open the form directly</p>
-            <button class="btn-feedback" onclick="alert('Feedback form opens here.')"><i class="ti ti-message-circle"></i> Open form</button>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>
@@ -454,171 +512,104 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 <!-- ADMIN -->
 <div class="screen" id="screen-admin">
   <div class="a-header">
-    <div class="a-header-top">
-      <div><h2><i class="ti ti-shield-check" style="font-size:18px;margin-right:6px;"></i>Admin Panel</h2><p id="a-logged-as"></p></div>
-      <button class="btn-ghost" onclick="logout()"><i class="ti ti-logout" style="font-size:13px;"></i> Sign out</button>
+    <div class="top-bar-row">
+      <div><h2 style="font-size:20px;font-weight:700;color:#fff;"><i class="ti ti-shield-check" style="font-size:18px;margin-right:6px;"></i>Admin Panel</h2><p id="a-logged-as"></p></div>
+      <div class="top-bar-actions">
+        <button class="btn-ghost" onclick="goToDashboard()"><i class="ti ti-layout-grid" style="font-size:13px;"></i> Dashboard</button>
+      </div>
     </div>
+    <div class="admin-track-pill"><i class="ti ti-route" style="font-size:12px;"></i> <span id="a-track-name">Track</span></div>
+    <div class="admin-access-code-pill" style="margin-top:6px;margin-left:0;display:inline-flex;"><i class="ti ti-ticket" style="font-size:11px;"></i> <span id="a-access-code">CODE</span></div>
   </div>
   <div class="p-body">
     <div class="section">
       <div class="slabel">Overview</div>
-      <div class="stat-grid">
-        <div class="stat-card"><div class="stat-num" id="a-total">0</div><div class="stat-lbl">Total participants</div></div>
-        <div class="stat-card"><div class="stat-num green" id="a-redeemed">0</div><div class="stat-lbl">Rewards redeemed</div></div>
-        <div class="stat-card"><div class="stat-num" id="a-eligible" style="color:var(--blue);">0</div><div class="stat-lbl">Eligible, not redeemed</div></div>
-        <div class="stat-card"><div class="stat-num" id="a-pending" style="color:var(--gray);">0</div><div class="stat-lbl">Not yet eligible</div></div>
+      <div class="stat-grid" id="a-stat-grid"></div>
+    </div>
+
+    <div class="section mt-16">
+      <button class="btn-demo-view" onclick="openDemoView()"><i class="ti ti-eye"></i> Preview as Participant</button>
+    </div>
+
+    <div class="section mt-16">
+      <div class="slabel">Reward Template</div>
+      <div class="qr-panel" id="template-editor"></div>
+    </div>
+
+    <div class="section mt-16">
+      <div class="slabel">Manage Sessions</div>
+      <div class="qr-panel">
+        <div class="qr-panel-select-row">
+          <select class="qr-session-select" id="qr-session-select" onchange="renderQRPanel()">
+            <option value="">— Select a session —</option>
+          </select>
+        </div>
+        <div id="qr-panel-content" style="display:none;">
+          <div class="qr-panel-body">
+            <div class="qr-display-wrap">
+              <div class="qr-display-box" id="qr-panel-box"></div>
+              <button class="btn-download-qr" id="btn-dl-qr" onclick="downloadPanelQR()"><i class="ti ti-download"></i> Download PNG</button>
+            </div>
+            <div class="qr-controls">
+              <div class="qr-status-row">
+                <span class="qr-status-pill inactive" id="qr-panel-status">Inactive</span>
+                <span class="scan-count-badge" id="qr-panel-count"><i class="ti ti-users" style="font-size:10px;"></i> 0 scanned</span>
+              </div>
+              <div class="selected-session-mini" id="selected-session-mini"></div>
+              <div class="qr-primary-row">
+                <select class="duration-select" id="qr-panel-dur">
+                  <option value="5">5 minutes</option><option value="10">10 minutes</option>
+                  <option value="15" selected>15 minutes</option><option value="30">30 minutes</option>
+                  <option value="60">1 hour</option><option value="120">2 hours</option>
+                </select>
+                <button class="btn-activate" id="btn-panel-activate" onclick="activatePanelQR()"><i class="ti ti-qrcode"></i> Activate QR</button>
+              </div>
+              <div class="countdown" id="qr-panel-countdown" style="display:none;"><i class="ti ti-clock"></i> <span></span></div>
+              <div class="qr-action-row">
+                <span></span>
+                <button class="btn-mini-icon" id="btn-selected-edit" title="Edit session" onclick="openSelectedEdit()"><i class="ti ti-pencil"></i></button>
+                <button class="btn-mini-icon danger" id="btn-selected-delete" title="Delete session" onclick="deleteSelectedSession()"><i class="ti ti-trash"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="selected-session-edit-slot" id="selected-session-card"></div>
+        </div>
+      </div>
+
+      <button class="btn-add-session" id="btn-show-new-form" onclick="toggleNewSessionForm(true)" style="margin-top:12px;"><i class="ti ti-plus"></i> Add New Session</button>
+      <div class="new-session-form" id="new-session-form">
+        <h4><i class="ti ti-plus" style="font-size:13px;color:var(--terra);margin-right:4px;"></i>New Session</h4>
+        <div><label class="form-label" style="font-size:11px;">Session Name</label><input class="new-form-input" id="new-sess-name" type="text" placeholder="e.g. Session 11"></div>
+        <div class="new-form-row">
+          <div><label class="form-label" style="font-size:11px;display:block;margin-bottom:5px;">Type</label>
+            <select class="new-form-select" id="new-sess-type"><option value="Sharing">Sharing</option><option value="Workshop">Workshop</option><option value="Sharing &amp; Workshop">Sharing &amp; Workshop</option></select></div>
+          <div><label class="form-label" style="font-size:11px;display:block;margin-bottom:5px;">Time</label><input class="new-form-input" id="new-sess-time" type="text" placeholder="e.g. 09:00–10:00"></div>
+        </div>
+        <div><label class="form-label" style="font-size:11px;display:block;margin-bottom:5px;">Location</label>
+          <select class="new-form-select" id="new-sess-loc"><option value="Building1">Building1</option><option value="Building2">Building2</option><option value="Building3">Building3</option></select></div>
+        <div><label class="form-label" style="font-size:11px;display:block;margin-bottom:5px;">Description</label><input class="new-form-input" id="new-sess-desc" type="text" placeholder="Short description"></div>
+        <div class="new-form-actions">
+          <button class="btn-create" id="btn-create-session" onclick="createSession()"><i class="ti ti-check"></i> Create Session</button>
+          <button class="btn-cancel-new" onclick="toggleNewSessionForm(false)">Cancel</button>
+        </div>
       </div>
     </div>
 
     <div class="section mt-16">
-      <div class="admin-tabs">
-        <button class="admin-tab-btn active" data-tab="sessions" onclick="setAdminTab('sessions')"><i class="ti ti-qrcode"></i> Sessions</button>
-        <button class="admin-tab-btn" data-tab="template" onclick="setAdminTab('template')"><i class="ti ti-stack-2"></i> Template Builder</button>
-        <button class="admin-tab-btn" data-tab="participants" onclick="setAdminTab('participants')"><i class="ti ti-users"></i> Participants</button>
+      <div class="slabel">Data collections</div>
+      <div class="card" style="display:flex;flex-direction:column;gap:10px;">
+        <select class="qr-session-select" id="data-session-select">
+          <option value="all">All sessions</option>
+        </select>
+        <button class="btn-download-history" style="width:100%;padding:9px 12px;background:#fff;color:var(--green-d);border:1.5px solid var(--green);border-radius:var(--r-sm);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px;" onclick="downloadSelectedScanHistory()"><i class="ti ti-table-export"></i> Download scan history</button>
       </div>
     </div>
 
-    <!-- TAB: SESSIONS -->
-    <div class="admin-tab-panel active" id="tab-sessions">
-      <div class="section mt-16">
-        <div class="slabel">Manage Sessions</div>
-        <div class="qr-panel">
-          <div class="qr-panel-select-row">
-            <select class="qr-session-select" id="qr-session-select" onchange="renderQRPanel()">
-              <option value="">— Select a session —</option>
-            </select>
-          </div>
-          <div id="qr-panel-content" style="display:none;">
-            <div class="qr-panel-body">
-              <div class="qr-display-wrap">
-                <div class="qr-display-box" id="qr-panel-box"></div>
-                <button class="btn-download-qr" id="btn-dl-qr" onclick="downloadPanelQR()"><i class="ti ti-download"></i> Download PNG</button>
-              </div>
-              <div class="qr-controls">
-                <div class="qr-status-row">
-                  <span class="qr-status-pill inactive" id="qr-panel-status">Inactive</span>
-                  <span class="scan-count-badge" id="qr-panel-count"><i class="ti ti-users" style="font-size:10px;"></i> 0 scanned</span>
-                </div>
-                <div class="selected-session-mini" id="selected-session-mini"></div>
-                <div class="qr-primary-row">
-                  <select class="duration-select" id="qr-panel-dur">
-                    <option value="5">5 minutes</option><option value="10">10 minutes</option>
-                    <option value="15" selected>15 minutes</option><option value="30">30 minutes</option>
-                    <option value="60">1 hour</option><option value="120">2 hours</option>
-                  </select>
-                  <button class="btn-activate" id="btn-panel-activate" onclick="activatePanelQR()"><i class="ti ti-qrcode"></i> Activate QR</button>
-                </div>
-                <div class="countdown" id="qr-panel-countdown" style="display:none;"><i class="ti ti-clock"></i> <span></span></div>
-                <div class="qr-action-row">
-                  <span></span>
-                  <button class="btn-mini-icon" id="btn-selected-edit" title="Edit session" onclick="openSelectedEdit()"><i class="ti ti-pencil"></i></button>
-                  <button class="btn-mini-icon danger" id="btn-selected-delete" title="Delete session" onclick="deleteSelectedSession()"><i class="ti ti-trash"></i></button>
-                </div>
-              </div>
-            </div>
-            <div class="selected-session-edit-slot" id="selected-session-card"></div>
-          </div>
-        </div>
-
-        <button class="btn-add-session" id="btn-show-new-form" onclick="toggleNewSessionForm(true)" style="margin-top:12px;"><i class="ti ti-plus"></i> Add New Session</button>
-        <div class="new-session-form" id="new-session-form">
-          <h4><i class="ti ti-plus" style="font-size:13px;color:var(--terra);margin-right:4px;"></i>New Session</h4>
-          <div><label class="form-label" style="font-size:11px;">Session Name</label><input class="new-form-input" id="new-sess-name" type="text" placeholder="e.g. Session 11"></div>
-          <div class="new-form-row">
-            <div><label class="form-label" style="font-size:11px;display:block;margin-bottom:5px;">Type</label>
-              <select class="new-form-select" id="new-sess-type"><option value="Sharing">Sharing</option><option value="Workshop">Workshop</option><option value="Sharing &amp; Workshop">Sharing &amp; Workshop</option></select></div>
-            <div><label class="form-label" style="font-size:11px;display:block;margin-bottom:5px;">Time</label><input class="new-form-input" id="new-sess-time" type="text" placeholder="e.g. 09:00–10:00"></div>
-          </div>
-          <div><label class="form-label" style="font-size:11px;display:block;margin-bottom:5px;">Location</label>
-            <select class="new-form-select" id="new-sess-loc"><option value="Building1">Building1</option><option value="Building2">Building2</option><option value="Building3">Building3</option></select></div>
-          <div><label class="form-label" style="font-size:11px;display:block;margin-bottom:5px;">Description</label><input class="new-form-input" id="new-sess-desc" type="text" placeholder="Short description"></div>
-          <div class="new-form-actions">
-            <button class="btn-create" id="btn-create-session" onclick="createSession()"><i class="ti ti-check"></i> Create Session</button>
-            <button class="btn-cancel-new" onclick="toggleNewSessionForm(false)">Cancel</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="section mt-16">
-        <div class="slabel">Data collections</div>
-        <div class="data-panel">
-          <div class="data-panel-row">
-            <select class="qr-session-select" id="data-session-select">
-              <option value="all">All sessions</option>
-            </select>
-            <button class="btn-download-history" onclick="downloadSelectedScanHistory()"><i class="ti ti-table-export"></i> Download scan history</button>
-          </div>
-        </div>
-      </div>
+    <div class="section mt-16">
+      <div class="slabel">Participants</div>
+      <div class="search-wrap"><i class="ti ti-search search-icon"></i><input class="search-input" id="a-search" type="text" placeholder="Search by name or email…" oninput="renderAdminParticipants()"></div>
     </div>
-
-    <!-- TAB: TEMPLATE BUILDER -->
-    <div class="admin-tab-panel" id="tab-template">
-      <div class="section mt-16">
-        <div class="slabel">Stamp Track Template</div>
-        <div class="tb-card">
-          <div class="tb-section-title"><i class="ti ti-stack-2" style="color:var(--terra);"></i> Track setup</div>
-          <p class="tb-section-sub">Choose the total number of stamps in the journey, then add as many reward milestones as you like — each one fires at a specific stamp number.</p>
-
-          <div class="tb-row">
-            <div class="tb-field">
-              <label>Total Stamps</label>
-              <input type="number" id="tb-total-stamps" min="1" max="100" value="10" oninput="renderTemplatePreview()">
-            </div>
-          </div>
-
-          <div class="tb-preview-wrap">
-            <div class="tb-preview-title">Live preview</div>
-            <div class="tb-preview-track" id="tb-preview-track"></div>
-          </div>
-
-          <div class="tb-section-title" style="margin-top:4px;"><i class="ti ti-gift" style="color:var(--green-d);"></i> Reward milestones</div>
-          <div class="tb-milestones-list" id="tb-milestones-list"></div>
-          <button class="btn-add-milestone" onclick="addMilestoneRow()"><i class="ti ti-plus"></i> Add milestone</button>
-
-          <div id="tb-save-error" class="error-msg"></div>
-          <div id="tb-save-success" class="success-msg"></div>
-          <button class="btn-save-template" id="btn-save-template" onclick="saveTemplate()"><i class="ti ti-device-floppy"></i> Save Template</button>
-
-          <div class="tb-divider"></div>
-
-          <div class="tb-section-title"><i class="ti ti-copy" style="color:var(--terra);"></i> Bulk-create sessions</div>
-          <p class="tb-section-sub">Quickly generate placeholder sessions ("Session N") matching your track. Edit each one afterwards in the Sessions tab to set time, location, and description.</p>
-          <div class="tb-bulk-row">
-            <input type="number" id="tb-bulk-count" min="1" max="50" placeholder="e.g. 10">
-            <button class="btn-bulk-create" id="btn-bulk-create" onclick="bulkCreateSessionsUI()"><i class="ti ti-plus"></i> Generate sessions</button>
-          </div>
-          <div id="tb-bulk-msg" class="success-msg" style="margin-top:10px;"></div>
-
-          <div class="tb-divider"></div>
-
-          <div class="tb-section-title"><i class="ti ti-user-shield" style="color:var(--navy);"></i> Register a new admin</div>
-          <p class="tb-section-sub">Create another admin account so a co-facilitator can manage sessions and rewards too.</p>
-          <div class="tb-admin-form">
-            <input type="text" id="reg-admin-name" placeholder="Full name">
-            <input type="email" id="reg-admin-email" placeholder="Organisation email">
-            <input type="password" id="reg-admin-password" placeholder="Temporary password (min. 8 chars)">
-            <div id="reg-admin-error" class="error-msg"></div>
-            <div id="reg-admin-success" class="success-msg"></div>
-            <button class="btn-register-admin" id="btn-register-admin" onclick="registerAdminUI()"><i class="ti ti-user-plus"></i> Register Admin</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB: PARTICIPANTS -->
-    <div class="admin-tab-panel" id="tab-participants">
-      <div class="section mt-16">
-        <div class="slabel">Participants</div>
-        <div class="search-wrap"><i class="ti ti-search search-icon"></i><input class="search-input" id="a-search" type="text" placeholder="Search by name or email…" oninput="renderAdminParticipants()"></div>
-        <div class="filter-row">
-          <button class="fbtn active" onclick="setFilter(this,'all')">All</button>
-          <button class="fbtn" onclick="setFilter(this,'eligible')">Eligible — not redeemed</button>
-          <button class="fbtn" onclick="setFilter(this,'redeemed')">Has redeemed something</button>
-        </div>
-      </div>
-      <div class="section mt-12"><div class="a-table" id="a-table"></div></div>
-    </div>
+    <div class="section mt-12"><div class="a-table" id="a-table"></div></div>
   </div>
 </div>
 
@@ -648,19 +639,119 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
   </div>
 </div>
 
+<!-- CREATE TRACK MODAL (Track Manager) -->
+<div class="modal-overlay" id="create-track-overlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3><i class="ti ti-route" style="margin-right:6px;"></i>Create New Track</h3>
+      <button class="btn-close-modal" onclick="closeCreateTrackModal()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body" id="create-track-body">
+      <div id="create-track-error" class="error-msg"></div>
+      <div class="form-group">
+        <label class="form-label">Track Name</label>
+        <input class="form-input" id="ct-name" type="text" placeholder="e.g. AI Community 2026">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Access Code <span style="text-transform:none;font-weight:500;">(optional)</span></label>
+        <input class="form-input" id="ct-code" type="text" maxlength="8" placeholder="Leave blank to auto-generate" style="text-transform:uppercase;letter-spacing:1px;">
+        <p class="form-hint">Participants use this code to join. We'll generate one for you if left blank.</p>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Total Stamps</label>
+        <input class="form-input" id="ct-total" type="number" min="1" max="50" value="10">
+        <p class="form-hint">A default reward template will be generated for this many stamps — the track's admin can edit reward names, icons, and milestone positions later.</p>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Admin Emails <span style="text-transform:none;font-weight:500;">(optional)</span></label>
+        <div class="chip-input-row">
+          <input class="form-input" id="ct-admin-input" type="email" placeholder="admin@company.com" onkeydown="if(event.key==='Enter'){event.preventDefault();addAdminChip();}">
+          <button class="btn-join" type="button" onclick="addAdminChip()"><i class="ti ti-plus"></i></button>
+        </div>
+        <div class="chip-list" id="ct-admin-chips"></div>
+        <p class="form-hint">Each email must already have an account. You'll be added as an admin automatically.</p>
+      </div>
+      <button class="btn-primary" id="btn-do-create-track" onclick="submitCreateTrack()"><i class="ti ti-check"></i> Create Track</button>
+    </div>
+  </div>
+</div>
+
+<!-- READ-ONLY DEMO VIEW OVERLAY (admin "Preview as Participant") -->
+<div class="demo-overlay" id="demo-overlay">
+  <div class="demo-frame">
+    <div class="demo-watermark-bar">
+      <span><i class="ti ti-eye"></i> Preview mode — read only</span>
+      <button onclick="closeDemoView()"><i class="ti ti-x"></i> Exit</button>
+    </div>
+    <div class="top-bar" style="background:var(--terra);">
+      <div class="top-bar-row">
+        <div class="top-bar-brand">
+          <div class="top-bar-icon"><i class="ti ti-robot"></i></div>
+          <div><div class="top-bar-title" id="demo-track-name">Track</div><div class="top-bar-subtitle">Stamp Journey</div></div>
+        </div>
+      </div>
+      <div class="top-bar-welcome">Hello, Participant 👋</div>
+      <div class="top-bar-sub">This is a preview of what participants see</div>
+    </div>
+    <div class="p-body">
+      <div class="section">
+        <div class="slabel">Stamp card</div>
+        <div class="card">
+          <div class="track">
+            <div class="track-lbl" id="demo-track-lbl"></div>
+            <div class="tline"><div class="tfill" id="demo-fill"></div></div>
+            <div class="tdots" id="demo-dots"></div>
+          </div>
+          <div class="sgrid" id="demo-stamps"></div>
+          <p class="ptxt">Collected: <strong id="demo-count">0</strong> / <span id="demo-total">10</span> stamps</p>
+          <div class="qr-section">
+            <h4>Rewards</h4>
+            <p>This is how reward cards will look to participants.</p>
+            <div class="qr-cards" id="demo-reward-cards"></div>
+          </div>
+        </div>
+      </div>
+      <div class="section mt-16">
+        <div class="slabel">Sessions</div>
+        <div class="sess-grid" id="demo-sessions"></div>
+      </div>
+    </div>
+    <div class="demo-readonly-shield" title="Preview only — not interactive"></div>
+  </div>
+  <div class="demo-badge-fixed"><i class="ti ti-lock"></i> Read-only preview — nothing here is clickable</div>
+</div>
+
+</div>
 <script>
 'use strict';
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwboSpUY92utf-oZkDeCGtmmqeqUo91am239BdNYtFGoJyS7QDlLGNE4n_zfl--AZnl/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbx9FDwSPE9aAROR2MU_MYpTI_xP_ZtbqokQTd98Ajx5KnkYqCrp1xqakisNwiHh7Ki9kw/exec';
 
-var currentUser = null, allSessions = [], adminUsers = [], activeFilter = 'all';
+// ── GLOBAL STATE ──
+var currentUser = null;       // { id, name, facility, email, isTrackManager }
+var myTracks = [];            // [{ trackId, trackName, role, joinedAt }]  role: admin|participant|manager
+var currentTrackId = null;    // track currently open (participant or admin view)
+var currentTrackRole = null;  // role on the currently open track
+
+// Participant-view state
+var trackProgress = null;     // { trackId, trackName, totalStamps, stamps, claimedSessions, scanTimestamps, milestones }
+var allSessions = [];          // sessions for currentTrackId
+
+// Admin-view state
+var adminTrackInfo = null;     // { trackId, trackName, accessCode }
+var adminTemplate = null;      // { totalStamps, milestones:[{position,name,icon}] }
+var adminParticipants = [];    // participants with progress, for currentTrackId
+
 var scanStream = null, scanAnimFrame = null, scanDone = false;
 var countdownTimer = null;
 var sessionPage = 0;
 var SESSION_PAGE_SIZE = 3;
 var LOCATION_OPTIONS = ['Building1','Building2','Building3'];
-var currentTemplate = { totalStamps: 10, milestones: [] };
-var builderMilestones = []; // working copy while editing in Template Builder
+var MILESTONE_ICON_OPTIONS = ['ti-coffee','ti-gift','ti-trophy','ti-medal','ti-star','ti-crown','ti-award','ti-sparkles'];
+var pendingAdminEmails = [];
 
+// ─────────────────────────────────────────────────────────────
+// API
+// ─────────────────────────────────────────────────────────────
 function apiRequest(action, payload) {
   payload = payload || {};
   payload.action = action;
@@ -671,43 +762,40 @@ function apiRequest(action, payload) {
 }
 function busy(id,lbl){ var b=document.getElementById(id); if(!b) return; b.dataset.orig=b.innerHTML; b.disabled=true; b.innerHTML='<i class="ti ti-loader-2"></i> '+lbl; }
 function restore(id){ var b=document.getElementById(id); if(!b) return; if(b.dataset.orig) b.innerHTML=b.dataset.orig; b.disabled=false; }
+function htmlAttr(v){ return String(v||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
+// ─────────────────────────────────────────────────────────────
+// NORMALIZERS
+// ─────────────────────────────────────────────────────────────
 function normalizeUser(u){
-  var name=String(u.name||u.full_name||'');
-  var init=name.split(' ').filter(Boolean).map(function(w){return w[0];}).join('').toUpperCase().slice(0,2)||'U';
-  return { id:String(u.id||u.user_id||''), name:name, initials:init, facility:String(u.facility||''),
-    email:String(u.email||'').toLowerCase(), role:String(u.role||'participant').toLowerCase(),
-    stamps:Number(u.stamps||0), totalStamps:Number(u.totalStamps||10),
-    claimedSessions:Array.isArray(u.claimedSessions)?u.claimedSessions.map(Number):[],
-    scanTimestamps:u.scanTimestamps||{},
-    rewards: Array.isArray(u.rewards) ? u.rewards.map(function(r){
-      return { id:String(r.id||''), position:Number(r.position||0), name:String(r.name||'Reward'),
-        icon:String(r.icon||'ti-gift'), eligible:Boolean(r.eligible), redeemed:Boolean(r.redeemed),
-        redeemedAt:r.redeemedAt||null };
-    }) : []
-  };
+  return { id:String(u.id||''), name:String(u.name||''), facility:String(u.facility||''),
+    email:String(u.email||'').toLowerCase(), isTrackManager:Boolean(u.isTrackManager) };
+}
+function normalizeTrackSummary(t){
+  return { trackId:Number(t.trackId), trackName:String(t.trackName||''), role:String(t.role||'').toLowerCase(), joinedAt:String(t.joinedAt||'') };
 }
 function normalizeSession(s){
-  return { id:Number(s.id||s.session_id||0), name:String(s.name||s.session_name||'Session'),
-    type:String(s.type||s.session_type||'Sharing'), desc:String(s.desc||s.description||''),
-    icon:String(s.icon||'ti-brain'), location:String(s.location||''), time:String(s.time||''),
+  return { id:Number(s.id||0), trackId:Number(s.trackId||0), name:String(s.name||'Session'),
+    type:String(s.type||'Sharing'), desc:String(s.desc||''), icon:String(s.icon||'ti-brain'),
+    location:String(s.location||''), time:String(s.time||''),
     qrActive:Boolean(s.qrActive), qrExpiresAt:Number(s.qrExpiresAt||0), qrToken:String(s.qrToken||'') };
 }
-function normalizeTemplate(t){
-  if(!t) return { totalStamps:10, milestones:[] };
-  return {
-    totalStamps: Number(t.totalStamps||10),
-    milestones: Array.isArray(t.milestones) ? t.milestones.map(function(m){
-      return { id:String(m.id||('m'+m.position)), position:Number(m.position), name:String(m.name||'Reward'), icon:String(m.icon||'ti-gift') };
-    }).sort(function(a,b){ return a.position-b.position; }) : []
-  };
+function normalizeProgress(p){
+  return { trackId:Number(p.trackId), trackName:String(p.trackName||''), totalStamps:Number(p.totalStamps||10),
+    stamps:Number(p.stamps||0), claimedSessions:(p.claimedSessions||[]).map(Number),
+    scanTimestamps:p.scanTimestamps||{},
+    milestones:(p.milestones||[]).map(function(m){ return { index:Number(m.index), position:Number(m.position),
+      name:String(m.name||'Reward'), icon:String(m.icon||'ti-gift'), eligible:Boolean(m.eligible),
+      redeemed:Boolean(m.redeemed), redeemedAt:m.redeemedAt||null }; }) };
 }
-function htmlAttr(v){ return String(v||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function buildLocationOptions(selected){
-  selected=String(selected||'');
-  return LOCATION_OPTIONS.map(function(loc){
-    return '<option value="'+htmlAttr(loc)+'"'+(loc===selected?' selected':'')+'>'+loc+'</option>';
-  }).join('');
+function normalizeAdminParticipant(p){
+  return { id:String(p.id||''), name:String(p.name||''), facility:String(p.facility||''),
+    email:String(p.email||'').toLowerCase(), joinedAt:String(p.joinedAt||''),
+    stamps:Number(p.stamps||0), claimedSessions:(p.claimedSessions||[]).map(Number),
+    scanTimestamps:p.scanTimestamps||{},
+    milestones:(p.milestones||[]).map(function(m){ return { index:Number(m.index), position:Number(m.position),
+      name:String(m.name||'Reward'), icon:String(m.icon||'ti-gift'), eligible:Boolean(m.eligible),
+      redeemed:Boolean(m.redeemed), redeemedAt:m.redeemedAt||null }; }) };
 }
 function formatDateOnly(ts){
   if(!ts) return '';
@@ -719,19 +807,42 @@ function formatDateOnly(ts){
   if(p.length>=3) return String(p[0]).padStart(2,'0')+'/'+(mo[p[1]]?String(mo[p[1]]).padStart(2,'0'):'00')+'/'+p[2];
   return ts;
 }
+function sanitizeFilename(name){ return String(name||'file').trim().replace(/[^a-z0-9-_]+/gi,'-').replace(/^-+|-+$/g,'')||'file'; }
 
+// ─────────────────────────────────────────────────────────────
+// ROLE HELPERS
+// ─────────────────────────────────────────────────────────────
+function roleChipClass(role){ if(role==='manager') return 'r-manager'; if(role==='admin') return 'r-admin'; return 'r-participant'; }
+function roleChipLabel(role){ if(role==='manager') return 'Manager'; if(role==='admin') return 'Admin'; return 'Participant'; }
+function routeForRole(role){ return (role==='admin'||role==='manager') ? 'admin' : 'participant'; }
+
+// ─────────────────────────────────────────────────────────────
+// BOOT / SESSION PERSISTENCE
+// ─────────────────────────────────────────────────────────────
 (function init(){
-  var saved=localStorage.getItem('aiStampSession');
-  if(saved){ try{ currentUser=normalizeUser(JSON.parse(saved)); bootUser(); }catch(e){ localStorage.removeItem('aiStampSession'); } }
+  var saved=localStorage.getItem('aiStampSessionV2');
+  if(saved){
+    try{ currentUser=normalizeUser(JSON.parse(saved)); refreshDashboardAndShow(); }
+    catch(e){ localStorage.removeItem('aiStampSessionV2'); }
+  }
 })();
 
+function persistUser(){ localStorage.setItem('aiStampSessionV2', JSON.stringify(currentUser)); }
+
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById('screen-'+name).classList.add('active');
+}
+
+// ─────────────────────────────────────────────────────────────
+// AUTH
+// ─────────────────────────────────────────────────────────────
 function switchAuthTab(tab){
   document.querySelectorAll('.auth-tab').forEach(function(el,i){ el.classList.toggle('active',['login','signup'][i]===tab); });
   document.getElementById('form-login').style.display=tab==='login'?'block':'none';
   document.getElementById('form-signup').style.display=tab==='signup'?'block':'none';
 }
-function showErr(id,msg){ var el=document.getElementById(id); el.textContent=msg; el.style.display='block'; setTimeout(function(){ el.style.display='none'; },5000); }
-function showOk(id,msg){ var el=document.getElementById(id); el.textContent=msg; el.style.display='block'; setTimeout(function(){ el.style.display='none'; },4000); }
+function showErr(id,msg){ var el=document.getElementById(id); if(!el) return; el.textContent=msg; el.style.display='block'; setTimeout(function(){ el.style.display='none'; },5000); }
 
 async function handleLogin(){
   busy('btn-login','Signing in…');
@@ -739,7 +850,8 @@ async function handleLogin(){
     var email=document.getElementById('login-email').value.trim().toLowerCase();
     var password=document.getElementById('login-password').value;
     if(!email||!password){ showErr('login-error','Enter your email and password.'); return; }
-    finishAuth(await apiRequest('login',{email,password}));
+    var data=await apiRequest('login',{email,password});
+    finishAuth(data);
   }catch(e){ showErr('login-error',e.message); }
   finally{ restore('btn-login'); }
 }
@@ -754,122 +866,244 @@ async function handleSignUp(){
     if(!facility){ showErr('signup-error','Please select your facility.'); return; }
     if(!email||!email.includes('@')){ showErr('signup-error','Enter a valid email.'); return; }
     if(password.length<8){ showErr('signup-error','Password must be at least 8 characters.'); return; }
-    finishAuth(await apiRequest('signup',{name,facility,email,password}));
+    var data=await apiRequest('signup',{name,facility,email,password});
+    finishAuth(data);
   }catch(e){ showErr('signup-error',e.message); }
   finally{ restore('btn-signup'); }
 }
 function finishAuth(data){
   currentUser=normalizeUser(data.user);
-  allSessions=(data.sessions||[]).map(normalizeSession);
-  localStorage.setItem('aiStampSession',JSON.stringify(currentUser));
-  bootUser();
+  myTracks=(data.tracks||[]).map(normalizeTrackSummary);
+  persistUser();
+  renderDashboard();
+  showScreen('dashboard');
 }
 function logout(){
-  localStorage.removeItem('aiStampSession');
-  currentUser=null; allSessions=[]; adminUsers=[]; activeFilter='all';
+  localStorage.removeItem('aiStampSessionV2');
+  currentUser=null; myTracks=[]; currentTrackId=null; currentTrackRole=null;
+  trackProgress=null; allSessions=[]; adminTrackInfo=null; adminTemplate=null; adminParticipants=[];
   if(countdownTimer){ clearInterval(countdownTimer); countdownTimer=null; }
   showScreen('auth');
 }
-async function bootUser(){
-  if(!currentUser) return;
-  if(currentUser.role==='admin'){
-    try{
-      var data=await apiRequest('getAdminParticipants',{adminEmail:currentUser.email});
-      adminUsers=(data.participants||[]).map(normalizeUser);
-      allSessions=(data.sessions||[]).map(normalizeSession);
-      currentTemplate=normalizeTemplate(data.template);
-    }catch(e){ console.error(e); }
-    document.getElementById('a-logged-as').textContent=currentUser.name+' · '+currentUser.email;
-    renderAdmin(); showScreen('admin');
-  } else {
-    sessionPage=0;
-    try{
-      var prof=await apiRequest('getProfile',{userId:currentUser.id,email:currentUser.email});
-      currentUser=normalizeUser(prof.user);
-      allSessions=(prof.sessions||[]).map(normalizeSession);
-      localStorage.setItem('aiStampSession',JSON.stringify(currentUser));
-    }catch(e){ console.error(e); }
-    renderParticipant(); showScreen('participant');
+async function refreshDashboardAndShow(){
+  try{
+    var data=await apiRequest('getDashboard',{userId:currentUser.id,email:currentUser.email});
+    currentUser=normalizeUser(data.user);
+    myTracks=(data.tracks||[]).map(normalizeTrackSummary);
+    persistUser();
+    renderDashboard();
+    showScreen('dashboard');
+  }catch(e){
+    console.error(e);
+    showScreen('dashboard');
+    renderDashboard();
   }
 }
-function showScreen(name){ document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); }); document.getElementById('screen-'+name).classList.add('active'); }
 
-// ══ PARTICIPANT ══
-function renderParticipant(){
-  var u=currentUser;
-  document.getElementById('p-welcome').textContent='Hello, '+u.name.split(' ')[0]+' 👋';
-  document.getElementById('p-facility').textContent=u.facility+' · '+u.email;
-  renderStamps(); renderSessions();
+// ─────────────────────────────────────────────────────────────
+// DASHBOARD
+// ─────────────────────────────────────────────────────────────
+function goToDashboard(){
+  if(countdownTimer){ clearInterval(countdownTimer); countdownTimer=null; }
+  currentTrackId=null; currentTrackRole=null;
+  refreshDashboardAndShow();
 }
 
-function renderStamps(){
-  var u=currentUser;
-  var total = u.totalStamps || 10;
-  var milestonePositions = {};
-  u.rewards.forEach(function(r){ milestonePositions[r.position] = r; });
+function renderDashboard(){
+  document.getElementById('dash-welcome').textContent='Hello, '+(currentUser.name.split(' ')[0]||'there')+' 👋';
+  document.getElementById('dash-sub').textContent=currentUser.email;
+  document.getElementById('dash-manager-section').style.display=currentUser.isTrackManager?'block':'none';
 
-  var grid=document.getElementById('p-stamps');
-  grid.innerHTML='';
-  for(var i=1;i<=total;i++){
-    var filled=i<=u.stamps, div=document.createElement('div');
-    var isMilestone = !!milestonePositions[i];
-    div.className='stamp '+(filled?'col':'unc')+(isMilestone?' milestone':'');
-    var badge = isMilestone ? '<span class="stamp-milestone-badge"><i class="ti ti-gift"></i></span>' : '';
-    div.innerHTML=badge+'<span class="snum">'+i+'</span>'+(filled?'<svg class="stamp-cat-svg" viewBox="0 0 100 100"><path d="M14 18 Q14 13 19 12 L39 19 Q45 21 50 21 Q55 21 61 19 L81 12 Q86 13 86 18 L83 48 Q87 56 85 63 L83 68 L92 68 Q94 68 94 70 L94 71 Q94 73 92 73 L82 73 L80 76 L92 80 Q94 81 93 83 L92 85 Q91 87 88 86 L77 82 Q67 96 50 96 Q33 96 23 82 L12 86 Q9 87 8 85 L7 83 Q6 81 8 80 L20 76 L18 73 L8 73 Q6 73 6 71 L6 70 Q6 68 8 68 L17 68 L15 63 Q13 56 17 48 Z" fill="currentColor"/></svg>':'');
-    grid.appendChild(div);
-  }
-  document.getElementById('p-count').textContent=u.stamps;
-  document.getElementById('p-total').textContent=total;
-  document.getElementById('p-fill').style.width=Math.min(100, total ? (u.stamps/total*100) : 0)+'%';
-
-  // Track labels + dots: Start + one per milestone
-  var lblWrap=document.getElementById('p-track-lbl');
-  var dotsWrap=document.getElementById('p-tdots');
-  lblWrap.innerHTML='<span class="tl">Start</span>'+u.rewards.map(function(r){
-    return '<span class="tl">'+r.position+' pts</span>';
-  }).join('');
-  dotsWrap.innerHTML='<div class="dot r"></div>'+u.rewards.map(function(r){
-    return '<div class="dot'+(u.stamps>=r.position?' reached':'')+'"></div>';
-  }).join('');
-
-  document.getElementById('btn-open-scanner').disabled = total>0 && u.stamps>=total;
-
-  renderRewardCards();
-}
-
-function renderRewardCards(){
-  var u=currentUser;
-  var wrap=document.getElementById('p-reward-cards');
-  wrap.innerHTML='';
-  if(!u.rewards.length){
-    wrap.innerHTML='<p style="font-size:12px;color:var(--ts);">No rewards configured yet.</p>';
+  var list=document.getElementById('dash-track-list');
+  list.innerHTML='';
+  if(!myTracks.length){
+    list.innerHTML='<div class="empty-state"><i class="ti ti-route-off"></i><p>You haven\'t joined any tracks yet.<br>Enter an access code below to get started.</p></div>';
     return;
   }
-  u.rewards.forEach(function(r,idx){
+  myTracks.forEach(function(t){
     var card=document.createElement('div');
-    card.className='qr-card';
-    var svgId='reward-qr-'+idx;
-    if(r.redeemed){
-      card.classList.add('redeemed-qr');
-      card.innerHTML=
-        '<div class="qr-box"><i class="ti '+r.icon+'" style="font-size:28px;color:#999;"></i></div>'+
-        '<div class="qr-lbl">'+htmlAttr(r.name)+'</div>'+
-        '<div class="qr-sub"><span class="redeemed-tag"><i class="ti ti-check" style="font-size:10px;"></i> Redeemed</span></div>';
-    } else if(r.eligible){
-      card.classList.add('active-qr');
-      card.innerHTML=
-        '<div class="qr-box"><svg width="60" height="60" viewBox="0 0 60 60" id="'+svgId+'"></svg></div>'+
-        '<div class="qr-lbl">'+htmlAttr(r.name)+'</div>'+
-        '<div class="qr-sub">Show to facilitator</div>';
+    card.className='track-card';
+    card.onclick=function(){ openTrack(t.trackId, t.role); };
+    card.innerHTML=
+      '<div class="track-ic"><i class="ti ti-route"></i></div>'+
+      '<div class="track-card-body">'+
+        '<div class="track-name">'+htmlAttr(t.trackName)+'</div>'+
+        '<div class="track-meta"><span class="role-chip '+roleChipClass(t.role)+'">'+roleChipLabel(t.role)+'</span></div>'+
+      '</div>'+
+      '<i class="ti ti-chevron-right track-chev"></i>';
+    list.appendChild(card);
+  });
+}
+
+async function handleJoinTrack(){
+  var code=document.getElementById('join-code-input').value.trim().toUpperCase();
+  if(!code){ showErr('join-error','Please enter an access code.'); return; }
+  busy('btn-join-track','Joining…');
+  try{
+    var data=await apiRequest('joinTrackByCode',{userId:currentUser.id,email:currentUser.email,accessCode:code});
+    myTracks=(data.tracks||[]).map(normalizeTrackSummary);
+    document.getElementById('join-code-input').value='';
+    renderDashboard();
+    if(data.alreadyEnrolled){
+      // already had access — just route them in
+      openTrack(data.trackId, data.role);
     } else {
-      card.classList.add('locked');
-      card.innerHTML=
-        '<div class="qr-box"><i class="ti '+r.icon+'" style="font-size:28px;color:var(--ts);"></i></div>'+
-        '<div class="qr-lbl">'+htmlAttr(r.name)+'</div>'+
-        '<div class="qr-sub">'+r.position+' stamps needed</div>';
+      openTrack(data.trackId, data.role);
     }
-    wrap.appendChild(card);
-    if(r.eligible && !r.redeemed) drawSVGQR(svgId, r.position + idx);
+  }catch(e){ showErr('join-error',e.message); }
+  finally{ restore('btn-join-track'); }
+}
+
+// Dynamic routing: role on this specific track decides destination screen.
+function openTrack(trackId, role){
+  currentTrackId=Number(trackId);
+  currentTrackRole=String(role||'participant').toLowerCase();
+  if(routeForRole(currentTrackRole)==='admin'){
+    bootAdminView();
+  } else {
+    bootParticipantView();
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// CREATE TRACK MODAL (Track Manager)
+// ─────────────────────────────────────────────────────────────
+function openCreateTrackModal(){
+  document.getElementById('ct-name').value='';
+  document.getElementById('ct-code').value='';
+  document.getElementById('ct-total').value='10';
+  document.getElementById('ct-admin-input').value='';
+  pendingAdminEmails=[];
+  renderAdminChips();
+  document.getElementById('create-track-error').style.display='none';
+  document.getElementById('create-track-overlay').classList.add('open');
+}
+function closeCreateTrackModal(){ document.getElementById('create-track-overlay').classList.remove('open'); }
+
+function addAdminChip(){
+  var input=document.getElementById('ct-admin-input');
+  var email=input.value.trim().toLowerCase();
+  if(!email||!email.includes('@')) return;
+  if(pendingAdminEmails.indexOf(email)===-1) pendingAdminEmails.push(email);
+  input.value='';
+  renderAdminChips();
+}
+function removeAdminChip(email){
+  pendingAdminEmails=pendingAdminEmails.filter(function(e){ return e!==email; });
+  renderAdminChips();
+}
+function renderAdminChips(){
+  var wrap=document.getElementById('ct-admin-chips');
+  wrap.innerHTML=pendingAdminEmails.map(function(e){
+    return '<span class="email-chip">'+htmlAttr(e)+'<button onclick="removeAdminChip(\''+htmlAttr(e)+'\')"><i class="ti ti-x" style="font-size:11px;"></i></button></span>';
+  }).join('');
+}
+
+async function submitCreateTrack(){
+  var name=document.getElementById('ct-name').value.trim();
+  var code=document.getElementById('ct-code').value.trim().toUpperCase();
+  var total=Number(document.getElementById('ct-total').value)||10;
+  if(!name){ showErr('create-track-error','Please enter a track name.'); return; }
+  if(total<1||total>50){ showErr('create-track-error','Total stamps must be between 1 and 50.'); return; }
+  busy('btn-do-create-track','Creating…');
+  try{
+    var data=await apiRequest('createTrack',{
+      managerEmail:currentUser.email, trackName:name, accessCode:code,
+      totalStamps:total, adminEmails:pendingAdminEmails
+    });
+    myTracks=(data.tracks||[]).map(normalizeTrackSummary);
+    closeCreateTrackModal();
+    renderDashboard();
+    var msg='Track "'+name+'" created. Access code: '+data.accessCode+'.';
+    if(data.skippedAdminEmails&&data.skippedAdminEmails.length){
+      msg+='\n\nNote: these emails don\'t have accounts yet, so they weren\'t added as admins: '+data.skippedAdminEmails.join(', ')+'. Use "Add Admin" once they\'ve signed up.';
+    }
+    alert(msg);
+    openTrack(data.trackId,'admin');
+  }catch(e){ showErr('create-track-error',e.message); }
+  finally{ restore('btn-do-create-track'); }
+}
+
+// ─────────────────────────────────────────────────────────────
+// PARTICIPANT VIEW
+// ─────────────────────────────────────────────────────────────
+async function bootParticipantView(){
+  sessionPage=0;
+  try{
+    var data=await apiRequest('getParticipantView',{userId:currentUser.id,email:currentUser.email,trackId:currentTrackId});
+    trackProgress=normalizeProgress(data.progress);
+    allSessions=(data.sessions||[]).map(normalizeSession);
+    renderParticipant();
+    showScreen('participant');
+  }catch(e){ alert('Could not open track: '+e.message); }
+}
+
+function renderParticipant(){
+  var p=trackProgress;
+  document.getElementById('p-track-name').textContent=p.trackName;
+  document.getElementById('p-welcome').textContent='Hello, '+(currentUser.name.split(' ')[0]||'there')+' 👋';
+  document.getElementById('p-facility').textContent=currentUser.facility+' · '+currentUser.email;
+  renderStampCard('p-track-lbl','p-fill','p-dots','p-stamps','p-count','p-total','p-reward-cards',p,false);
+  renderSessions();
+  document.getElementById('btn-open-scanner').disabled = p.stamps>=p.totalStamps;
+}
+
+// Shared renderer used by both the real participant view and the read-only demo view.
+function renderStampCard(lblId,fillId,dotsId,stampsId,countId,totalId,rewardsId,progress,readOnlyDemo){
+  var lbl=document.getElementById(lblId);
+  lbl.innerHTML='<span class="tl">Start</span>'+progress.milestones.map(function(m){
+    return '<span class="tl">'+m.position+' pts</span>';
+  }).join('')+(progress.milestones.length && progress.milestones[progress.milestones.length-1].position===progress.totalStamps ? '' : '<span class="tl">'+progress.totalStamps+' pts</span>');
+
+  document.getElementById(fillId).style.width=Math.min(100, (progress.stamps/progress.totalStamps)*100)+'%';
+
+  var dotsWrap=document.getElementById(dotsId);
+  var dotsHtml='<div class="dot r"></div>';
+  progress.milestones.forEach(function(m){
+    dotsHtml+='<div class="dot'+(progress.stamps>=m.position?' reached':'')+'" title="'+htmlAttr(m.name)+'"></div>';
+  });
+  dotsWrap.innerHTML=dotsHtml;
+
+  var grid=document.getElementById(stampsId);
+  grid.innerHTML='';
+  var milestonePositions={};
+  progress.milestones.forEach(function(m){ milestonePositions[m.position]=true; });
+  for(var i=1;i<=progress.totalStamps;i++){
+    var filled = (readOnlyDemo ? i<=Math.min(progress.totalStamps, Math.ceil(progress.totalStamps*0.6)) : i<=progress.stamps);
+    var div=document.createElement('div');
+    var isMilestone=milestonePositions[i];
+    div.className='stamp '+(filled?'col':'unc')+(isMilestone?' milestone':'');
+    div.innerHTML='<span class="snum">'+i+'</span>'+(filled?'<svg class="stamp-cat-svg" viewBox="0 0 100 100"><path d="M14 18 Q14 13 19 12 L39 19 Q45 21 50 21 Q55 21 61 19 L81 12 Q86 13 86 18 L83 48 Q87 56 85 63 L83 68 L92 68 Q94 68 94 70 L94 71 Q94 73 92 73 L82 73 L80 76 L92 80 Q94 81 93 83 L92 85 Q91 87 88 86 L77 82 Q67 96 50 96 Q33 96 23 82 L12 86 Q9 87 8 85 L7 83 Q6 81 8 80 L20 76 L18 73 L8 73 Q6 73 6 71 L6 70 Q6 68 8 68 L17 68 L15 63 Q13 56 17 48 Z" fill="currentColor"/></svg>':'');
+    grid.appendChild(div);
+  }
+  document.getElementById(countId).textContent = readOnlyDemo ? Math.min(progress.totalStamps, Math.ceil(progress.totalStamps*0.6)) : progress.stamps;
+  document.getElementById(totalId).textContent=progress.totalStamps;
+
+  var rewardsWrap=document.getElementById(rewardsId);
+  rewardsWrap.className='qr-cards '+(progress.milestones.length===1?'cols-1':progress.milestones.length>=3?'cols-3':'');
+  rewardsWrap.innerHTML='';
+  if(!progress.milestones.length){
+    rewardsWrap.innerHTML='<p style="font-size:12px;color:var(--ts);grid-column:1/-1;text-align:center;">No rewards configured for this track yet.</p>';
+    return;
+  }
+  progress.milestones.forEach(function(m, idx){
+    var simEligible = readOnlyDemo ? false : m.eligible;
+    var simRedeemed = readOnlyDemo ? false : m.redeemed;
+    var card=document.createElement('div');
+    card.className='qr-card '+(simRedeemed?'redeemed-qr':(simEligible?'active-qr':'locked'));
+    var svgId=lblId+'-qr-'+idx;
+    var sub;
+    if(simRedeemed){ sub='<span class="redeemed-tag"><i class="ti ti-check" style="font-size:10px;"></i> Redeemed</span>'; }
+    else if(simEligible){ sub='Show to facilitator'; }
+    else { sub=m.position+' stamps needed'; }
+    card.innerHTML=
+      '<div class="qr-box"><svg width="60" height="60" viewBox="0 0 60 60" id="'+svgId+'"></svg></div>'+
+      '<div class="qr-lbl"><i class="ti '+htmlAttr(m.icon)+'" style="font-size:11px;margin-right:3px;"></i>'+htmlAttr(m.name)+'</div>'+
+      '<div class="qr-sub">'+sub+'</div>';
+    rewardsWrap.appendChild(card);
+    if(simEligible && !simRedeemed){
+      setTimeout(function(){ drawSVGQR(svgId, idx*4+3); },0);
+    }
   });
 }
 
@@ -888,7 +1122,7 @@ function drawSVGQR(svgId,seed){
 }
 
 function renderSessions(){
-  var u=currentUser, grid=document.getElementById('p-sessions');
+  var grid=document.getElementById('p-sessions');
   grid.innerHTML='';
   var total=allSessions.length;
   var totalPages=Math.max(1,Math.ceil(total/SESSION_PAGE_SIZE));
@@ -897,11 +1131,11 @@ function renderSessions(){
   var start=sessionPage*SESSION_PAGE_SIZE;
   var visible=allSessions.slice(start,start+SESSION_PAGE_SIZE);
   visible.forEach(function(s){
-    var claimed=u.claimedSessions.indexOf(s.id)!==-1;
+    var claimed=trackProgress.claimedSessions.indexOf(s.id)!==-1;
     var status=claimed?'col':(s.qrActive?'avl':'upc');
     var lbl=claimed?'Collected':(s.qrActive?'QR Active':'Upcoming');
     var icon=claimed?'ti-check':(s.qrActive?'ti-qrcode-scan':'ti-clock');
-    var rawTs=u.scanTimestamps&&u.scanTimestamps[s.id]?u.scanTimestamps[s.id]:'';
+    var rawTs=trackProgress.scanTimestamps&&trackProgress.scanTimestamps[s.id]?trackProgress.scanTimestamps[s.id]:'';
     var dateOnly=rawTs?formatDateOnly(rawTs):'';
     var tsHtml=dateOnly?'<div class="scan-ts"><i class="ti ti-calendar"></i>Stamped: '+dateOnly+'</div>':'';
     var metaParts=[];
@@ -913,9 +1147,9 @@ function renderSessions(){
     card.innerHTML=
       '<div class="sess-ic '+status+'"><i class="ti '+s.icon+'" style="font-size:17px;"></i></div>'+
       '<div style="flex:1;min-width:0;">'+
-        '<div class="stop"><span class="sname">'+s.name+'</span><span class="pb">1 pt</span></div>'+
-        '<div class="stype">'+s.type+'</div>'+
-        '<div class="sdesc">'+s.desc+'</div>'+
+        '<div class="stop"><span class="sname">'+htmlAttr(s.name)+'</span><span class="pb">1 pt</span></div>'+
+        '<div class="stype">'+htmlAttr(s.type)+'</div>'+
+        '<div class="sdesc">'+htmlAttr(s.desc)+'</div>'+
         metaHtml+
         '<span class="spill '+status+'" style="margin-top:6px;"><i class="ti '+icon+'" style="font-size:10px;"></i> '+lbl+'</span>'+
         tsHtml+
@@ -984,9 +1218,8 @@ async function submitQRToken(token){
   document.getElementById('scanner-status').textContent='Verifying…';
   try{
     var data=await apiRequest('scanQR',{userId:currentUser.id,email:currentUser.email,qrToken:token});
-    currentUser=normalizeUser(data.user);
+    trackProgress=normalizeProgress(data.progress);
     if(data.sessions) allSessions=data.sessions.map(normalizeSession);
-    localStorage.setItem('aiStampSession',JSON.stringify(currentUser));
     document.getElementById('scanner-live-area').style.display='none';
     var rc=document.getElementById('scan-result-card');
     rc.className='scan-result-card'; rc.style.display='block';
@@ -1006,20 +1239,118 @@ async function submitQRToken(token){
   }
 }
 
-// ══ ADMIN ══
+// ─────────────────────────────────────────────────────────────
+// ADMIN VIEW
+// ─────────────────────────────────────────────────────────────
+async function bootAdminView(){
+  try{
+    var data=await apiRequest('getAdminView',{adminEmail:currentUser.email,trackId:currentTrackId});
+    adminTrackInfo=data.track;
+    adminTemplate=data.template;
+    adminParticipants=(data.participants||[]).map(normalizeAdminParticipant);
+    allSessions=(data.sessions||[]).map(normalizeSession);
+    renderAdmin();
+    showScreen('admin');
+  }catch(e){ alert('Could not open admin panel: '+e.message); }
+}
+
+async function refreshAdminData(){
+  try{
+    var data=await apiRequest('getAdminView',{adminEmail:currentUser.email,trackId:currentTrackId});
+    adminTrackInfo=data.track;
+    adminTemplate=data.template;
+    adminParticipants=(data.participants||[]).map(normalizeAdminParticipant);
+    allSessions=(data.sessions||[]).map(normalizeSession);
+    renderAdmin();
+  }catch(e){ console.error(e); }
+}
+
 function renderAdmin(){
-  populateQRSessionSelect(); populateDataSessionSelect(); renderQRPanel(); renderAdminParticipants();
-  syncTemplateBuilderFromCurrent();
+  document.getElementById('a-logged-as').textContent=currentUser.name+' · '+currentUser.email;
+  document.getElementById('a-track-name').textContent=adminTrackInfo.trackName;
+  document.getElementById('a-access-code').textContent=adminTrackInfo.accessCode;
+  renderAdminStats();
+  renderTemplateEditor();
+  populateQRSessionSelect();
+  populateDataSessionSelect();
+  renderQRPanel();
+  renderAdminParticipants();
 }
 
-function setAdminTab(tab){
-  document.querySelectorAll('.admin-tab-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.tab===tab); });
-  document.querySelectorAll('.admin-tab-panel').forEach(function(p){ p.classList.remove('active'); });
-  document.getElementById('tab-'+tab).classList.add('active');
-  if(tab==='template') syncTemplateBuilderFromCurrent();
+function renderAdminStats(){
+  var parts=adminParticipants;
+  var totalMilestones=adminTemplate.milestones.length;
+  var eligible=parts.filter(function(p){ return p.milestones.some(function(m){ return m.eligible&&!m.redeemed; }); });
+  var redeemedAny=parts.filter(function(p){ return p.milestones.some(function(m){ return m.redeemed; }); });
+  var notYet=parts.filter(function(p){ return !totalMilestones || p.stamps < (adminTemplate.milestones[0]?adminTemplate.milestones[0].position:1); });
+  var grid=document.getElementById('a-stat-grid');
+  grid.innerHTML=
+    '<div class="stat-card"><div class="stat-num">'+parts.length+'</div><div class="stat-lbl">Total participants</div></div>'+
+    '<div class="stat-card"><div class="stat-num green">'+redeemedAny.length+'</div><div class="stat-lbl">Rewards redeemed</div></div>'+
+    '<div class="stat-card"><div class="stat-num" style="color:var(--blue);">'+eligible.length+'</div><div class="stat-lbl">Eligible, not redeemed</div></div>'+
+    '<div class="stat-card"><div class="stat-num" style="color:var(--gray);">'+notYet.length+'</div><div class="stat-lbl">Not yet eligible</div></div>';
 }
 
-// ── Session dropdowns ──
+// ── Reward template editor ──
+var editingMilestones = [];
+function renderTemplateEditor(){
+  editingMilestones = adminTemplate.milestones.map(function(m){ return Object.assign({},m); });
+  var wrap=document.getElementById('template-editor');
+  wrap.innerHTML=
+    '<div class="template-total-row"><label>Total stamps</label><input type="number" min="1" max="50" id="tpl-total" value="'+adminTemplate.totalStamps+'"></div>'+
+    '<div id="tpl-milestone-list"></div>'+
+    '<button class="btn-add-milestone" onclick="addMilestoneRow()"><i class="ti ti-plus"></i> Add Milestone</button>'+
+    '<button class="btn-save-template" id="btn-save-template" onclick="saveTemplate()"><i class="ti ti-check"></i> Save Reward Template</button>';
+  renderMilestoneRows();
+}
+function renderMilestoneRows(){
+  var list=document.getElementById('tpl-milestone-list');
+  list.innerHTML=editingMilestones.map(function(m,idx){
+    var iconOpts=MILESTONE_ICON_OPTIONS.map(function(ic){ return '<option value="'+ic+'"'+(ic===m.icon?' selected':'')+'>'+ic.replace('ti-','')+'</option>'; }).join('');
+    return '<div class="milestone-row">'+
+      '<div class="milestone-row-fields">'+
+        '<div class="milestone-row-line1">'+
+          '<input class="milestone-input" type="number" min="1" max="50" value="'+m.position+'" onchange="updateMilestoneField('+idx+',\'position\',this.value)" placeholder="Pos">'+
+          '<input class="milestone-input" type="text" value="'+htmlAttr(m.name)+'" onchange="updateMilestoneField('+idx+',\'name\',this.value)" placeholder="Reward name">'+
+        '</div>'+
+        '<select class="milestone-icon-select" onchange="updateMilestoneField('+idx+',\'icon\',this.value)">'+iconOpts+'</select>'+
+      '</div>'+
+      '<button class="btn-remove-milestone" onclick="removeMilestoneRow('+idx+')"><i class="ti ti-trash"></i></button>'+
+    '</div>';
+  }).join('') || '<p style="font-size:12px;color:var(--ts);text-align:center;padding:10px 0;">No milestones yet — add one below.</p>';
+}
+function updateMilestoneField(idx,field,value){
+  if(!editingMilestones[idx]) return;
+  editingMilestones[idx][field] = field==='position' ? Number(value) : value;
+}
+function addMilestoneRow(){
+  var total=Number(document.getElementById('tpl-total').value)||adminTemplate.totalStamps;
+  editingMilestones.push({ position: total, name: 'New Reward', icon: 'ti-gift' });
+  renderMilestoneRows();
+}
+function removeMilestoneRow(idx){
+  editingMilestones.splice(idx,1);
+  renderMilestoneRows();
+}
+async function saveTemplate(){
+  var total=Number(document.getElementById('tpl-total').value)||10;
+  if(!editingMilestones.length){ alert('Add at least one milestone before saving.'); return; }
+  for(var i=0;i<editingMilestones.length;i++){
+    var m=editingMilestones[i];
+    if(!m.name||!m.name.trim()){ alert('Every milestone needs a name.'); return; }
+    if(!m.position||m.position<1||m.position>total){ alert('Milestone "'+m.name+'" position must be between 1 and '+total+'.'); return; }
+  }
+  busy('btn-save-template','Saving…');
+  try{
+    var data=await apiRequest('updateTemplate',{adminEmail:currentUser.email,trackId:currentTrackId,totalStamps:total,milestones:editingMilestones});
+    adminTemplate=data.template;
+    adminParticipants=(data.participants||[]).map(normalizeAdminParticipant);
+    renderAdmin();
+  }catch(e){ alert('Error: '+e.message); }
+  finally{ restore('btn-save-template'); }
+}
+
+// ── Session select dropdowns ──
 function populateQRSessionSelect(){
   var sel=document.getElementById('qr-session-select');
   var current=sel.value;
@@ -1053,7 +1384,7 @@ function renderQRPanel(){
   content.style.display='block';
 
   var isActive=s.qrActive&&s.qrExpiresAt>Date.now();
-  var claimCount=adminUsers.filter(function(u){ return u.claimedSessions.indexOf(sid)!==-1; }).length;
+  var claimCount=adminParticipants.filter(function(u){ return u.claimedSessions.indexOf(sid)!==-1; }).length;
 
   var pill=document.getElementById('qr-panel-status');
   pill.textContent=isActive?'Active':'Inactive';
@@ -1087,10 +1418,9 @@ function renderQRPanel(){
       cdEl.className='countdown'+(rem<60?' expired':'');
       if(rem===0){ clearInterval(countdownTimer); countdownTimer=null; setTimeout(refreshAdminData,1000); }
     }
-    tick();
-    countdownTimer=setInterval(tick,1000);
     cdEl.innerHTML='<i class="ti ti-clock"></i> <span></span>';
     tick();
+    countdownTimer=setInterval(tick,1000);
   } else {
     cdEl.style.display='none';
   }
@@ -1102,7 +1432,7 @@ async function activatePanelQR(){
   var dur=Number(document.getElementById('qr-panel-dur').value||15);
   busy('btn-panel-activate','Generating…');
   try{
-    var data=await apiRequest('generateQRToken',{adminEmail:currentUser.email,sessionId:sid,durationMinutes:dur});
+    var data=await apiRequest('generateQRToken',{adminEmail:currentUser.email,trackId:currentTrackId,sessionId:sid,durationMinutes:dur});
     var idx=allSessions.findIndex(function(s){ return s.id===sid; });
     if(idx!==-1){ allSessions[idx].qrActive=true; allSessions[idx].qrExpiresAt=data.expiresAtMs; allSessions[idx].qrToken=data.token; }
     renderQRPanel();
@@ -1140,6 +1470,9 @@ function openSelectedEdit(){
   var typeOpts=['Sharing','Workshop','Sharing & Workshop'].map(function(t){
     return '<option value="'+htmlAttr(t)+'"'+(t===s.type?' selected':'')+'>'+t+'</option>';
   }).join('');
+  var locOpts=LOCATION_OPTIONS.map(function(loc){
+    return '<option value="'+htmlAttr(loc)+'"'+(loc===s.location?' selected':'')+'>'+loc+'</option>';
+  }).join('');
   slot.innerHTML=
     '<div class="sess-edit-form open" id="edit-form-'+s.id+'">'+
       '<div><label class="form-label" style="font-size:10px;">Session Name</label>'+
@@ -1151,7 +1484,7 @@ function openSelectedEdit(){
         '<input class="edit-form-input" id="ef-time-'+s.id+'" value="'+htmlAttr(s.time)+'" placeholder="09:00–10:00"></div>'+
       '</div>'+
       '<div><label class="form-label" style="font-size:10px;">Location</label>'+
-      '<select class="edit-form-select" id="ef-loc-'+s.id+'">'+buildLocationOptions(s.location)+'</select></div>'+
+      '<select class="edit-form-select" id="ef-loc-'+s.id+'">'+locOpts+'</select></div>'+
       '<div><label class="form-label" style="font-size:10px;">Description</label>'+
       '<input class="edit-form-input" id="ef-desc-'+s.id+'" value="'+htmlAttr(s.desc)+'" placeholder="Description"></div>'+
       '<div class="edit-form-actions">'+
@@ -1190,8 +1523,8 @@ async function createSession(){
     if(LOCATION_OPTIONS.indexOf(location)===-1){ alert('Please select a valid location.'); return; }
     var existingIds={};
     allSessions.forEach(function(s){ existingIds[s.id]=true; });
-    var data=await apiRequest('createSession',{adminEmail:currentUser.email,sessionName:name,sessionType:type,time:time,location:location,description:desc});
-    adminUsers=(data.participants||[]).map(normalizeUser);
+    var data=await apiRequest('createSession',{adminEmail:currentUser.email,trackId:currentTrackId,sessionName:name,sessionType:type,time:time,location:location,description:desc});
+    adminParticipants=(data.participants||[]).map(normalizeAdminParticipant);
     allSessions=(data.sessions||[]).map(normalizeSession);
     var created=allSessions.find(function(s){ return !existingIds[s.id]; })||allSessions[allSessions.length-1];
     toggleNewSessionForm(false);
@@ -1211,8 +1544,8 @@ async function saveSession(sid){
     var desc=document.getElementById('ef-desc-'+sid).value.trim();
     if(!name){ alert('Session name is required.'); return; }
     if(LOCATION_OPTIONS.indexOf(location)===-1){ alert('Please select a valid location.'); return; }
-    var data=await apiRequest('updateSession',{adminEmail:currentUser.email,sessionId:sid,sessionName:name,sessionType:type,time:time,location:location,description:desc});
-    adminUsers=(data.participants||[]).map(normalizeUser);
+    var data=await apiRequest('updateSession',{adminEmail:currentUser.email,trackId:currentTrackId,sessionId:sid,sessionName:name,sessionType:type,time:time,location:location,description:desc});
+    adminParticipants=(data.participants||[]).map(normalizeAdminParticipant);
     allSessions=(data.sessions||[]).map(normalizeSession);
     document.getElementById('selected-session-card').innerHTML='';
     renderAdmin();
@@ -1224,157 +1557,24 @@ async function saveSession(sid){
 async function deleteSession(sid,name){
   if(!confirm('Delete "'+name+'"?\n\nThis will hide the session. Existing stamps are preserved.')) return;
   try{
-    var data=await apiRequest('deleteSession',{adminEmail:currentUser.email,sessionId:sid});
-    adminUsers=(data.participants||[]).map(normalizeUser);
+    var data=await apiRequest('deleteSession',{adminEmail:currentUser.email,trackId:currentTrackId,sessionId:sid});
+    adminParticipants=(data.participants||[]).map(normalizeAdminParticipant);
     allSessions=(data.sessions||[]).map(normalizeSession);
     renderAdmin();
   }catch(e){ alert('Error: '+e.message); }
 }
 
-async function refreshAdminData(){
-  try{
-    var data=await apiRequest('getAdminParticipants',{adminEmail:currentUser.email});
-    adminUsers=(data.participants||[]).map(normalizeUser);
-    allSessions=(data.sessions||[]).map(normalizeSession);
-    currentTemplate=normalizeTemplate(data.template);
-    renderAdmin();
-  }catch(e){ console.error(e); }
-}
-
-// ── TEMPLATE BUILDER ──
-function syncTemplateBuilderFromCurrent(){
-  document.getElementById('tb-total-stamps').value = currentTemplate.totalStamps || 10;
-  builderMilestones = (currentTemplate.milestones||[]).map(function(m){
-    return { position: m.position, name: m.name, icon: m.icon };
-  });
-  if(!builderMilestones.length){
-    builderMilestones = [{ position: 5, name: 'Reward 1', icon: 'ti-gift' }];
-  }
-  renderMilestoneRows();
-  renderTemplatePreview();
-}
-
-function renderMilestoneRows(){
-  var list=document.getElementById('tb-milestones-list');
-  list.innerHTML='';
-  builderMilestones.forEach(function(m, idx){
-    var row=document.createElement('div');
-    row.className='tb-milestone-row';
-    row.innerHTML=
-      '<div class="tb-milestone-top">'+
-        '<div><span class="tb-mini-label">At stamp</span><input type="number" min="1" value="'+m.position+'" oninput="updateMilestoneField('+idx+',\'position\',this.value)"></div>'+
-        '<div><span class="tb-mini-label">Reward name</span><input type="text" value="'+htmlAttr(m.name)+'" placeholder="e.g. Starbucks Card" oninput="updateMilestoneField('+idx+',\'name\',this.value)"></div>'+
-        '<button class="btn-remove-milestone" title="Remove milestone" onclick="removeMilestoneRow('+idx+')"><i class="ti ti-x"></i></button>'+
-      '</div>'+
-      '<div><span class="tb-mini-label">Icon (Tabler icon class)</span><input type="text" value="'+htmlAttr(m.icon)+'" placeholder="ti-gift, ti-coffee, ti-device-laptop…" oninput="updateMilestoneField('+idx+',\'icon\',this.value)"></div>';
-    list.appendChild(row);
-  });
-}
-
-function updateMilestoneField(idx, field, value){
-  if(field==='position') value = Math.max(1, Number(value)||1);
-  builderMilestones[idx][field] = value;
-  renderTemplatePreview();
-}
-
-function addMilestoneRow(){
-  var total = Number(document.getElementById('tb-total-stamps').value)||10;
-  builderMilestones.push({ position: total, name: 'New Reward', icon: 'ti-gift' });
-  renderMilestoneRows();
-  renderTemplatePreview();
-}
-
-function removeMilestoneRow(idx){
-  builderMilestones.splice(idx,1);
-  renderMilestoneRows();
-  renderTemplatePreview();
-}
-
-function renderTemplatePreview(){
-  var total = Math.max(1, Math.min(100, Number(document.getElementById('tb-total-stamps').value)||10));
-  var track=document.getElementById('tb-preview-track');
-  track.innerHTML='';
-  var positions={};
-  builderMilestones.forEach(function(m){ positions[Number(m.position)] = m; });
-  for(var i=1;i<=total;i++){
-    var isM = !!positions[i];
-    var div=document.createElement('div');
-    div.className='tb-preview-stamp'+(isM?' milestone':'');
-    div.innerHTML=(isM?'<span class="mi"><i class="ti ti-gift"></i></span>':'')+i;
-    track.appendChild(div);
-  }
-}
-
-async function saveTemplate(){
-  busy('btn-save-template','Saving…');
-  try{
-    var total = Number(document.getElementById('tb-total-stamps').value);
-    var milestonesPayload = builderMilestones.map(function(m){
-      return { position: Number(m.position), name: String(m.name||'').trim(), icon: String(m.icon||'ti-gift').trim() };
-    });
-    var data = await apiRequest('saveTemplateConfig', { adminEmail: currentUser.email, totalStamps: total, milestones: milestonesPayload });
-    currentTemplate = normalizeTemplate(data.config);
-    showOk('tb-save-success','Template saved! Participants will see the updated track next time they refresh.');
-    await refreshAdminData();
-  }catch(e){ showErr('tb-save-error', e.message); }
-  finally{ restore('btn-save-template'); }
-}
-
-async function bulkCreateSessionsUI(){
-  busy('btn-bulk-create','Creating…');
-  try{
-    var count = Number(document.getElementById('tb-bulk-count').value);
-    if(!count || count<1){ showErr('tb-save-error','Enter how many sessions to create.'); return; }
-    var data = await apiRequest('bulkCreateSessions', { adminEmail: currentUser.email, count: count });
-    adminUsers=(data.participants||[]).map(normalizeUser);
-    allSessions=(data.sessions||[]).map(normalizeSession);
-    document.getElementById('tb-bulk-msg').textContent = data.message || (count+' sessions created.');
-    document.getElementById('tb-bulk-msg').style.display='block';
-    setTimeout(function(){ document.getElementById('tb-bulk-msg').style.display='none'; }, 5000);
-    document.getElementById('tb-bulk-count').value='';
-    populateQRSessionSelect(); populateDataSessionSelect();
-  }catch(e){ alert('Error: '+e.message); }
-  finally{ restore('btn-bulk-create'); }
-}
-
-async function registerAdminUI(){
-  busy('btn-register-admin','Registering…');
-  try{
-    var name=document.getElementById('reg-admin-name').value.trim();
-    var email=document.getElementById('reg-admin-email').value.trim().toLowerCase();
-    var password=document.getElementById('reg-admin-password').value;
-    if(!name){ showErr('reg-admin-error', "Enter the admin's full name."); return; }
-    if(!email||!email.includes('@')){ showErr('reg-admin-error','Enter a valid email.'); return; }
-    if(password.length<8){ showErr('reg-admin-error','Password must be at least 8 characters.'); return; }
-    var data = await apiRequest('registerAdmin', { adminEmail: currentUser.email, name:name, email:email, password:password });
-    showOk('reg-admin-success', data.message || 'Admin account created.');
-    document.getElementById('reg-admin-name').value='';
-    document.getElementById('reg-admin-email').value='';
-    document.getElementById('reg-admin-password').value='';
-  }catch(e){ showErr('reg-admin-error', e.message); }
-  finally{ restore('btn-register-admin'); }
-}
-
-// ── Participants tab ──
+// ── Admin participants list ──
 function renderAdminParticipants(){
   var query=(document.getElementById('a-search').value||'').toLowerCase();
-  var parts=adminUsers.filter(function(u){ return u.role==='participant'; });
-  var eligible=parts.filter(function(p){ return p.rewards.some(function(r){ return r.eligible && !r.redeemed; }); });
-  var redeemed=parts.filter(function(p){ return p.rewards.some(function(r){ return r.redeemed; }); });
-  var notYet=parts.filter(function(p){ return !p.rewards.some(function(r){ return r.eligible; }); });
-  document.getElementById('a-total').textContent=parts.length;
-  document.getElementById('a-eligible').textContent=eligible.length;
-  document.getElementById('a-redeemed').textContent=redeemed.length;
-  document.getElementById('a-pending').textContent=notYet.length;
-
+  var parts=adminParticipants;
   var filtered=parts;
-  if(activeFilter==='eligible') filtered=eligible;
-  if(activeFilter==='redeemed') filtered=redeemed;
   if(query) filtered=filtered.filter(function(p){ return p.name.toLowerCase().indexOf(query)!==-1||p.email.toLowerCase().indexOf(query)!==-1; });
 
   var tbl=document.getElementById('a-table'); tbl.innerHTML='';
   if(!filtered.length){ tbl.innerHTML='<div class="no-results"><i class="ti ti-search-off"></i>No participants found.</div>'; return; }
   filtered.forEach(function(p){
+    var name=p.name, init=name.split(' ').filter(Boolean).map(function(w){return w[0];}).join('').toUpperCase().slice(0,2)||'U';
     var card=document.createElement('div'); card.className='a-card';
     var historyRows='';
     if(p.claimedSessions.length>0){
@@ -1382,49 +1582,40 @@ function renderAdminParticipants(){
       p.claimedSessions.forEach(function(sid){
         var sess=allSessions.find(function(s){ return s.id===sid; });
         var sname=sess?sess.name:'Session '+sid;
-        var ts=(p.scanTimestamps && p.scanTimestamps[sid])?p.scanTimestamps[sid]:'—';
-        historyRows+='<div class="shrow"><span class="shrow-name">'+sname+'</span><span class="shrow-ts"><i class="ti ti-clock-hour-4"></i>'+ts+'</span></div>';
+        var ts=(p.scanTimestamps&&p.scanTimestamps[sid])?p.scanTimestamps[sid]:'—';
+        historyRows+='<div class="shrow"><span class="shrow-name">'+htmlAttr(sname)+'</span><span class="shrow-ts"><i class="ti ti-clock-hour-4"></i>'+htmlAttr(ts)+'</span></div>';
       });
       historyRows+='</div></details>';
     }
-    var rewardRows = p.rewards.map(function(r){ return rewardBlock(p, r); }).join('');
+    var rewardRows=p.milestones.map(function(m){ return rewardBlock(p,m); }).join('');
     card.innerHTML=
-      '<div class="a-card-top"><div class="avatar">'+p.initials+'</div>'+
-      '<div><div class="a-pname">'+p.name+'</div><div class="a-pmeta">'+p.facility+' · '+p.email+'</div></div></div>'+
-      '<div class="a-stamp-bar"><div class="a-stamp-label"><span class="a-stamp-lbl">Stamps collected</span><span class="a-stamp-val">'+p.stamps+' / '+p.totalStamps+'</span></div>'+
-      '<div class="mini-bar"><div class="mini-fill" style="width:'+(p.totalStamps?Math.min(100,p.stamps/p.totalStamps*100):0)+'%;"></div></div></div>'+
+      '<div class="a-card-top"><div class="avatar">'+init+'</div>'+
+      '<div><div class="a-pname">'+htmlAttr(name)+'</div><div class="a-pmeta">'+htmlAttr(p.facility)+' · '+htmlAttr(p.email)+'</div></div></div>'+
+      '<div class="a-stamp-bar"><div class="a-stamp-label"><span class="a-stamp-lbl">Stamps collected</span><span class="a-stamp-val">'+p.stamps+' / '+adminTemplate.totalStamps+'</span></div>'+
+      '<div class="mini-bar"><div class="mini-fill" style="width:'+Math.min(100,(p.stamps/adminTemplate.totalStamps)*100)+'%;"></div></div></div>'+
       historyRows+
-      '<div class="reward-rows">'+(rewardRows || '<p style="font-size:11px;color:var(--ts);">No rewards configured.</p>')+'</div>';
+      (rewardRows ? '<div class="reward-rows">'+rewardRows+'</div>' : '');
     tbl.appendChild(card);
   });
 }
 
-function rewardBlock(p, r){
-  var right = r.redeemed
-    ? '<div style="text-align:right;"><span class="rbadge done"><i class="ti ti-check" style="font-size:10px;"></i> Redeemed</span>'+(r.redeemedAt?'<div class="redeemed-date">'+r.redeemedAt+'</div>':'')+' </div>'
-    : (r.eligible
-        ? '<button class="btn-mark" onclick="markRedeemed(\''+p.id+'\',\''+r.id+'\')">Mark redeemed</button>'
-        : '<span class="rbadge locked">Locked</span>');
-  return '<div class="rrow"><div class="rleft"><div class="ricon"><i class="ti '+r.icon+'"></i></div>'+
-    '<div><div class="rname">'+htmlAttr(r.name)+'</div><div class="rsub">Eligible at '+r.position+' stamps</div></div></div>'+right+'</div>';
+function rewardBlock(p,m){
+  var right=m.redeemed
+    ?'<div style="text-align:right;"><span class="rbadge done"><i class="ti ti-check" style="font-size:10px;"></i> Redeemed</span>'+(m.redeemedAt?'<div class="redeemed-date">'+htmlAttr(m.redeemedAt)+'</div>':'')+'</div>'
+    :(m.eligible?'<button class="btn-mark" onclick="markRedeemed(\''+p.id+'\','+m.index+')">Mark redeemed</button>':'<span class="rbadge locked">Locked</span>');
+  return '<div class="rrow"><div class="rleft"><div class="ricon"><i class="ti '+htmlAttr(m.icon)+'" style="font-size:13px;"></i></div><div><div class="rname">'+htmlAttr(m.name)+'</div><div class="rsub">Eligible at '+m.position+' stamps</div></div></div>'+right+'</div>';
 }
 
-async function markRedeemed(userId,rewardId){
+async function markRedeemed(userId,milestoneIndex){
   try{
-    var data=await apiRequest('markRedeemed',{adminEmail:currentUser.email,userId,rewardId:rewardId});
-    adminUsers=(data.participants||[]).map(normalizeUser);
+    var data=await apiRequest('markRedeemed',{adminEmail:currentUser.email,trackId:currentTrackId,userId,milestoneIndex});
+    adminParticipants=(data.participants||[]).map(normalizeAdminParticipant);
     allSessions=(data.sessions||[]).map(normalizeSession);
-    currentTemplate=normalizeTemplate(data.template);
     renderAdmin();
   }catch(e){ alert(e.message); }
 }
 
-function setFilter(btn,filter){
-  document.querySelectorAll('.fbtn').forEach(function(b){ b.classList.remove('active'); });
-  btn.classList.add('active'); activeFilter=filter; renderAdminParticipants();
-}
-
-function sanitizeFilename(name){ return String(name||'file').trim().replace(/[^a-z0-9-_]+/gi,'-').replace(/^-+|-+$/g,'')||'file'; }
+// ── CSV export ──
 function csvEscape(v){ var s=String(v==null?'':v); return (s.indexOf('"')!==-1||s.indexOf(',')!==-1||s.indexOf('\n')!==-1)?'"'+s.replace(/"/g,'""')+'"':s; }
 function downloadCsv(filename,rows){
   var csv=rows.map(function(r){ return r.map(csvEscape).join(','); }).join('\n');
@@ -1443,7 +1634,7 @@ function downloadSessionScanHistory(sessionId){
   var session=allSessions.find(function(s){ return Number(s.id)===Number(sessionId); });
   if(!session){ alert('Session not found.'); return; }
   var rows=[['Session ID','Session Name','Participant Name','Facility','Email','Scanned At']];
-  var scanned=adminUsers.filter(function(u){ return u.scanTimestamps&&u.scanTimestamps[sessionId]; })
+  var scanned=adminParticipants.filter(function(u){ return u.scanTimestamps&&u.scanTimestamps[sessionId]; })
     .sort(function(a,b){ return String(a.scanTimestamps[sessionId]||'').localeCompare(String(b.scanTimestamps[sessionId]||'')); });
   scanned.forEach(function(u){ rows.push([session.id,session.name,u.name,u.facility,u.email,u.scanTimestamps[sessionId]||'']); });
   if(!scanned.length) rows.push([session.id,session.name,'','','','No scans yet']);
@@ -1453,13 +1644,66 @@ function downloadAllSessionScanHistory(){
   var rows=[['Session ID','Session Name','Participant Name','Facility','Email','Scanned At']];
   allSessions.forEach(function(session){
     var found=false;
-    adminUsers.forEach(function(u){
+    adminParticipants.forEach(function(u){
       if(u.scanTimestamps&&u.scanTimestamps[session.id]){ found=true; rows.push([session.id,session.name,u.name,u.facility,u.email,u.scanTimestamps[session.id]||'']); }
     });
     if(!found) rows.push([session.id,session.name,'','','','No scans yet']);
   });
   downloadCsv('all-session-scan-history.csv',rows);
 }
+
+// ─────────────────────────────────────────────────────────────
+// DEMO VIEW — "Preview as Participant" (strictly read-only)
+// ─────────────────────────────────────────────────────────────
+function openDemoView(){
+  document.getElementById('demo-track-name').textContent=adminTrackInfo.trackName;
+  // Build a synthetic, read-only progress object purely for layout preview.
+  // Numbers here are illustrative only — the demo never reflects real participant data,
+  // and the readOnlyDemo flag in renderStampCard forces every reward to render as locked.
+  var demoProgress={
+    trackId: currentTrackId, trackName: adminTrackInfo.trackName,
+    totalStamps: adminTemplate.totalStamps,
+    stamps: Math.ceil(adminTemplate.totalStamps*0.6),
+    claimedSessions: allSessions.slice(0, Math.ceil(allSessions.length*0.5)).map(function(s){return s.id;}),
+    scanTimestamps: {},
+    milestones: adminTemplate.milestones.map(function(m,idx){ return { index:idx, position:m.position, name:m.name, icon:m.icon, eligible:false, redeemed:false, redeemedAt:null }; })
+  };
+  renderStampCard('demo-track-lbl','demo-fill','demo-dots','demo-stamps','demo-count','demo-total','demo-reward-cards', demoProgress, true);
+
+  var grid=document.getElementById('demo-sessions');
+  grid.innerHTML='';
+  allSessions.slice(0,SESSION_PAGE_SIZE).forEach(function(s,idx){
+    var claimed = idx < Math.ceil(allSessions.length*0.5);
+    var status=claimed?'col':'upc';
+    var lbl=claimed?'Collected':'Upcoming';
+    var icon=claimed?'ti-check':'ti-clock';
+    var metaParts=[];
+    if(s.time)     metaParts.push('<span class="sess-meta-pill"><i class="ti ti-clock"></i>'+s.time+'</span>');
+    if(s.location) metaParts.push('<span class="sess-meta-pill"><i class="ti ti-map-pin"></i>'+s.location+'</span>');
+    var metaHtml=metaParts.length?'<div class="sess-meta">'+metaParts.join('')+'</div>':'';
+    var card=document.createElement('div');
+    card.className='sess-card';
+    card.innerHTML=
+      '<div class="sess-ic '+status+'"><i class="ti '+s.icon+'" style="font-size:17px;"></i></div>'+
+      '<div style="flex:1;min-width:0;">'+
+        '<div class="stop"><span class="sname">'+htmlAttr(s.name)+'</span><span class="pb">1 pt</span></div>'+
+        '<div class="stype">'+htmlAttr(s.type)+'</div>'+
+        '<div class="sdesc">'+htmlAttr(s.desc)+'</div>'+
+        metaHtml+
+        '<span class="spill '+status+'" style="margin-top:6px;"><i class="ti '+icon+'" style="font-size:10px;"></i> '+lbl+'</span>'+
+      '</div>';
+    grid.appendChild(card);
+  });
+  if(!allSessions.length){
+    grid.innerHTML='<p style="font-size:12px;color:var(--ts);text-align:center;padding:16px 0;">No sessions configured for this track yet.</p>';
+  }
+
+  document.getElementById('demo-overlay').classList.add('open');
+}
+function closeDemoView(){
+  document.getElementById('demo-overlay').classList.remove('open');
+}
 </script>
+
 </body>
 </html>
