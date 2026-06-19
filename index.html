@@ -29,7 +29,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .app{width:100%;max-width:430px;min-height:100vh;background:var(--cream);display:flex;flex-direction:column;}
 .screen{display:none;flex-direction:column;min-height:100vh;}
 .screen.active{display:flex;}
-
 /* AUTH */
 .auth-hero{background:var(--terra);padding:48px 28px 36px;text-align:center;}
 .auth-hero-icon{width:64px;height:64px;background:rgba(255,255,255,.2);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
@@ -54,7 +53,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .btn-primary:disabled{opacity:.45;cursor:not-allowed;}
 .error-msg{background:var(--red-l);border:1px solid #FCA5A5;border-radius:var(--r-sm);padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:14px;display:none;}
 .success-msg{background:var(--green-l);border:1px solid #9FD9BC;border-radius:var(--r-sm);padding:10px 14px;font-size:12px;color:var(--green-d);margin-bottom:14px;display:none;}
-
 /* SHARED TOP BAR (used by dashboard, participant, admin) */
 .top-bar{padding:24px 20px 22px;}
 .top-bar-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
@@ -72,7 +70,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .slabel{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--ts);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .card{background:#fff;border-radius:var(--r-lg);border:.5px solid #E8DDD4;padding:18px;box-shadow:var(--shadow);}
 .mt-16{margin-top:16px;}.mt-12{margin-top:12px;}.mt-8{margin-top:8px;}
-
 /* ── DASHBOARD ── */
 .dash-hero{background:var(--terra);}
 .role-chip{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;text-transform:uppercase;letter-spacing:.4px;}
@@ -92,7 +89,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .empty-state{text-align:center;padding:36px 20px;}
 .empty-state i{font-size:40px;color:var(--terra-l);display:block;margin-bottom:10px;}
 .empty-state p{font-size:13px;color:var(--ts);line-height:1.6;}
-
 .join-card{background:#fff;border-radius:var(--r-lg);border:1.5px dashed var(--terra-l);padding:18px;}
 .join-card h4{font-size:13px;font-weight:700;color:var(--tm);margin-bottom:4px;}
 .join-card p{font-size:12px;color:var(--ts);margin-bottom:12px;line-height:1.5;}
@@ -103,14 +99,11 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .btn-join{padding:12px 18px;background:var(--terra);color:#fff;border:none;border-radius:var(--r-md);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:6px;white-space:nowrap;transition:opacity .2s;}
 .btn-join:hover{opacity:.9;}
 .btn-join:disabled{opacity:.45;cursor:not-allowed;}
-
 .btn-create-track{width:100%;padding:14px;background:var(--purple);color:#fff;border:none;border-radius:var(--r-md);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s;}
 .btn-create-track:hover{opacity:.9;}
-
 /* ── BREADCRUMB / BACK NAV (sits inside colored top bars) ── */
 .crumb-back{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:rgba(255,255,255,.85);cursor:pointer;margin-bottom:10px;}
 .crumb-back i{font-size:15px;}
-
 /* ── TRACK MANAGER MODAL (create track) ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.open{display:flex;}
@@ -127,11 +120,9 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .access-code-display{background:var(--cream);border:1.5px dashed var(--terra-l);border-radius:var(--r-md);padding:16px;text-align:center;margin-bottom:14px;}
 .access-code-display .code{font-size:26px;font-weight:700;letter-spacing:4px;color:var(--terra);font-family:var(--font);}
 .access-code-display p{font-size:11px;color:var(--ts);margin-top:6px;}
-
 /* ── ADMIN: track header chip ── */
 .admin-track-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:99px;padding:5px 11px;font-size:11px;font-weight:700;color:#fff;margin-top:8px;}
 .admin-access-code-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);border-radius:99px;padding:4px 10px;font-size:11px;font-weight:700;color:#fff;letter-spacing:1px;}
-
 /* TRACK */
 .track{margin-bottom:20px;}
 .track-lbl{display:flex;justify-content:space-between;margin-bottom:5px;flex-wrap:wrap;gap:4px;}
@@ -142,7 +133,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .dot{width:13px;height:13px;border-radius:50%;border:2.5px solid var(--terra-l);background:#fff;transition:.3s;}
 .dot.r{background:var(--terra);border-color:var(--terra);}
 .dot.reached{background:var(--green);border-color:var(--green);}
-
 /* STAMP GRID */
 .sgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;}
 .stamp{width:100%;aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
@@ -154,7 +144,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .snum{font-size:22px;font-weight:700;line-height:1;opacity:.7;display:block;text-align:center;}
 .ptxt{font-size:14px;color:var(--ts);}
 .ptxt strong{color:var(--tm);font-weight:700;}
-
 /* REWARD QR SECTION (dynamic milestones) */
 .qr-section{margin-top:16px;border-top:1px solid var(--cream-d);padding-top:16px;}
 .qr-section h4{font-size:13px;font-weight:700;color:var(--tm);margin-bottom:4px;}
@@ -174,7 +163,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .qr-sub{font-size:11px;color:var(--ts);}
 .qr-card.redeemed-qr .qr-lbl,.qr-card.redeemed-qr .qr-sub{color:#999;}
 .redeemed-tag{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;background:#E0D8D0;color:#888;margin-top:6px;}
-
 /* SESSION LIST (participant) */
 .sess-grid{display:grid;gap:10px;}
 .sess-card{background:#fff;border-radius:var(--r-md);border:.5px solid #E8DDD4;padding:14px 15px;display:flex;gap:12px;align-items:flex-start;box-shadow:var(--shadow);}
@@ -196,18 +184,15 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .sess-meta-pill i{font-size:11px;color:var(--terra-l);}
 .scan-ts{font-size:11px;color:var(--ts);margin-top:5px;display:flex;align-items:center;gap:4px;}
 .scan-ts i{font-size:12px;color:var(--terra-l);}
-
 .sess-pager{display:flex;align-items:center;justify-content:space-between;margin-top:10px;gap:8px;}
 .sess-pager-info{font-size:12px;color:var(--ts);font-weight:600;text-align:center;flex:1;}
 .btn-pager{width:36px;height:36px;border:1.5px solid var(--cream-d);border-radius:50%;background:#fff;color:var(--ts);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:.2s;flex-shrink:0;}
 .btn-pager:hover:not(:disabled){background:var(--cream-d);color:var(--tm);}
 .btn-pager:disabled{opacity:.3;cursor:not-allowed;}
-
 .p-actions{padding:20px 16px 0;display:flex;flex-direction:column;gap:10px;}
 .btn-scan{background:transparent;color:var(--terra);border:1.5px solid var(--terra);border-radius:var(--r-md);padding:13px 16px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;font-family:var(--font);transition:background .2s,color .2s;}
 .btn-scan:hover{background:var(--terra-p);}
 .btn-scan:disabled{opacity:.35;cursor:not-allowed;}
-
 /* QR SCANNER MODAL */
 .scanner-modal{background:#fff;border-radius:var(--r-xl);width:100%;max-width:380px;overflow:hidden;box-shadow:var(--shadow-lg);}
 .scanner-header{background:var(--tm);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;}
@@ -228,7 +213,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .scan-result-card.error-card h4{color:var(--red);}
 .scan-result-card p{font-size:12px;color:var(--green-d);line-height:1.5;}
 .scan-result-card.error-card p{color:var(--red);}
-
 /* ADMIN HEADER */
 .a-header{background:var(--navy);padding:24px 20px 20px;}
 .a-header p{font-size:13px;color:rgba(255,255,255,.65);}
@@ -237,7 +221,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .stat-num{font-size:28px;font-weight:700;color:var(--terra);}
 .stat-num.green{color:var(--green);}
 .stat-lbl{font-size:11px;color:var(--ts);font-weight:600;margin-top:3px;}
-
 /* QR PANEL */
 .qr-panel{background:#fff;border-radius:var(--r-lg);border:.5px solid #E8DDD4;padding:16px;box-shadow:var(--shadow);}
 .qr-panel-select-row{display:flex;gap:8px;align-items:center;margin-bottom:14px;}
@@ -275,7 +258,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .btn-mini-icon.danger:hover{background:var(--red-l);}
 .selected-session-edit-slot{margin-top:10px;}
 .selected-session-edit-slot:empty{display:none;}
-
 /* ADD SESSION FORM */
 .btn-add-session{width:100%;padding:11px;background:#fff;color:var(--terra);border:1.5px dashed var(--terra-l);border-radius:var(--r-md);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:10px;transition:background .2s;}
 .btn-add-session:hover{background:var(--terra-p);}
@@ -292,7 +274,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .btn-create:hover{opacity:.9;}
 .btn-create:disabled{opacity:.4;cursor:not-allowed;}
 .btn-cancel-new{padding:10px 14px;background:#fff;color:var(--ts);border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);}
-
 /* INLINE EDIT FORM */
 .sess-edit-form{background:var(--cream);border-radius:var(--r-md);padding:12px;margin-top:10px;border:1.5px solid var(--terra-l);display:none;flex-direction:column;gap:9px;}
 .sess-edit-form.open{display:flex;}
@@ -306,7 +287,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .btn-save:hover{opacity:.9;}
 .btn-cancel-edit{padding:9px 14px;background:#fff;color:var(--ts);border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);}
 .btn-cancel-edit:hover{background:var(--cream-d);}
-
 /* REWARD TEMPLATE EDITOR */
 .milestone-row{display:flex;gap:8px;align-items:flex-start;background:var(--cream);border-radius:var(--r-md);padding:12px;margin-bottom:8px;}
 .milestone-row-fields{flex:1;display:flex;flex-direction:column;gap:7px;}
@@ -323,7 +303,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .template-total-row input{width:70px;padding:8px 10px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:13px;font-weight:700;text-align:center;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
 .btn-save-template{width:100%;padding:12px;background:var(--terra);color:#fff;border:none;border-radius:var(--r-md);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:7px;transition:opacity .2s;}
 .btn-save-template:hover{opacity:.9;}
-
 /* DEMO VIEW (read-only participant preview inside admin panel) */
 .btn-demo-view{width:100%;padding:13px;background:#fff;color:var(--navy);border:1.5px solid var(--navy);border-radius:var(--r-md);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s;}
 .btn-demo-view:hover{background:var(--blue-l);}
@@ -335,7 +314,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .demo-watermark-bar button{background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:6px 12px;color:#fff;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:5px;}
 .demo-readonly-shield{position:absolute;inset:0;z-index:40;cursor:not-allowed;background:transparent;}
 .demo-badge-fixed{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--tm);color:#fff;font-size:11px;font-weight:700;padding:8px 16px;border-radius:99px;display:flex;align-items:center;gap:6px;box-shadow:var(--shadow-lg);z-index:60;max-width:90%;text-align:center;}
-
 /* ADMIN PARTICIPANTS */
 .search-wrap{position:relative;margin-bottom:12px;}
 .search-input{width:100%;padding:12px 16px 12px 42px;border:1.5px solid var(--cream-d);border-radius:var(--r-md);font-size:14px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;transition:border-color .2s;}
@@ -378,18 +356,21 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .redeemed-date{font-size:10px;color:var(--ts);margin-top:2px;}
 .no-results{text-align:center;padding:32px 20px;color:var(--ts);font-size:14px;}
 .no-results i{font-size:40px;display:block;margin-bottom:10px;color:var(--terra-l);}
-
 /* MANAGE ADMINS (track manager adding admins to a track) */
 .admin-add-row{display:flex;gap:8px;}
 .admin-add-row input{flex:1;}
 .admin-list{display:flex;flex-direction:column;gap:6px;margin-top:10px;}
-.admin-list-row{display:flex;align-items:center;justify-content:space-between;background:var(--cream);border-radius:var(--r-sm);padding:9px 12px;font-size:12px;}
+.admin-list-row{display:flex;align-items:center;justify-content:space-between;background:var(--cream);border-radius:var(--r-sm);padding:9px 12px;font-size:12px;gap:8px;}
 .admin-list-row strong{color:var(--tm);font-weight:700;}
+.admin-list-row .admin-row-meta{display:flex;flex-direction:column;min-width:0;}
+.admin-list-row .admin-row-meta span{font-size:10px;color:var(--ts);font-weight:500;}
+.btn-remove-admin{flex-shrink:0;font-size:11px;font-weight:700;padding:5px 11px;border-radius:99px;border:1.5px solid #F3B6B6;background:#fff;color:var(--red);cursor:pointer;font-family:var(--font);transition:.2s;white-space:nowrap;}
+.btn-remove-admin:hover{background:var(--red-l);}
+.you-tag{font-size:9px;font-weight:700;color:var(--terra);background:var(--terra-p);border-radius:99px;padding:2px 7px;margin-left:6px;text-transform:uppercase;letter-spacing:.4px;}
 </style>
 </head>
 <body>
 <div class="app">
-
 <!-- AUTH -->
 <div class="screen active" id="screen-auth">
   <div class="auth-hero">
@@ -419,7 +400,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
     </div>
   </div>
 </div>
-
 <!-- DASHBOARD -->
 <div class="screen" id="screen-dashboard">
   <div class="top-bar dash-hero">
@@ -438,7 +418,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
       <div class="slabel">Your tracks</div>
       <div class="track-list" id="dash-track-list"></div>
     </div>
-
     <div class="section mt-16">
       <div class="slabel">Join a track</div>
       <div class="join-card">
@@ -451,14 +430,21 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
         </div>
       </div>
     </div>
-
     <div class="section mt-16" id="dash-manager-section" style="display:none;">
       <div class="slabel">Track Manager tools</div>
       <button class="btn-create-track" onclick="openCreateTrackModal()"><i class="ti ti-plus"></i> Create New Track</button>
+      
+      <div class="card mt-12" id="delete-track-card" style="display:none;">
+        <h4 style="font-size:13px;font-weight:700;color:var(--tm);margin-bottom:4px;"><i class="ti ti-trash" style="color:var(--red);margin-right:5px;"></i>Delete a track</h4>
+        <p style="font-size:12px;color:var(--ts);margin-bottom:12px;line-height:1.5;">This permanently removes the track, its sessions, stamps, and redemptions. This cannot be undone.</p>
+        <div style="display:flex;gap:8px;">
+          <select class="qr-session-select" id="delete-track-select" style="flex:1;"></select>
+          <button class="btn-mini-icon danger" style="width:42px;height:42px;flex-shrink:0;" title="Delete selected track" onclick="handleDeleteTrack()"><i class="ti ti-trash"></i></button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
 <!-- PARTICIPANT -->
 <div class="screen" id="screen-participant">
   <div class="top-bar" style="background:var(--terra);">
@@ -508,7 +494,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
     </div>
   </div>
 </div>
-
 <!-- ADMIN -->
 <div class="screen" id="screen-admin">
   <div class="a-header">
@@ -526,16 +511,33 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
       <div class="slabel">Overview</div>
       <div class="stat-grid" id="a-stat-grid"></div>
     </div>
+    
+    <div class="section mt-16">
+      <details class="stamp-history" id="admin-list-details" style="background:#fff;border:.5px solid #E8DDD4;box-shadow:var(--shadow);">
+        <summary class="stamp-history-title" style="padding:14px 16px;">
+          <span><i class="ti ti-users-group" style="color:var(--terra);margin-right:5px;"></i>Track Admins</span>
+          <span class="history-count" id="admin-list-count">0 admins</span>
+        </summary>
+        <div style="padding:0 16px 16px;">
+          <div id="admin-add-row-wrap" style="display:none;margin-bottom:12px;">
+            <div class="admin-add-row">
+              <input class="form-input" id="add-admin-email-input" type="email" placeholder="newadmin@company.com" onkeydown="if(event.key==='Enter'){event.preventDefault();handleAddTrackAdmin();}">
+              <button class="btn-join" id="btn-add-track-admin" onclick="handleAddTrackAdmin()"><i class="ti ti-plus"></i> Add</button>
+            </div>
+            <div id="add-admin-error" class="error-msg" style="margin-top:8px;margin-bottom:0;"></div>
+          </div>
+          <div class="admin-list" id="admin-list-rows"></div>
+        </div>
+      </details>
+    </div>
 
     <div class="section mt-16">
       <button class="btn-demo-view" onclick="openDemoView()"><i class="ti ti-eye"></i> Preview as Participant</button>
     </div>
-
     <div class="section mt-16">
       <div class="slabel">Reward Template</div>
       <div class="qr-panel" id="template-editor"></div>
     </div>
-
     <div class="section mt-16">
       <div class="slabel">Manage Sessions</div>
       <div class="qr-panel">
@@ -575,7 +577,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
           <div class="selected-session-edit-slot" id="selected-session-card"></div>
         </div>
       </div>
-
       <button class="btn-add-session" id="btn-show-new-form" onclick="toggleNewSessionForm(true)" style="margin-top:12px;"><i class="ti ti-plus"></i> Add New Session</button>
       <div class="new-session-form" id="new-session-form">
         <h4><i class="ti ti-plus" style="font-size:13px;color:var(--terra);margin-right:4px;"></i>New Session</h4>
@@ -594,7 +595,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
         </div>
       </div>
     </div>
-
     <div class="section mt-16">
       <div class="slabel">Data collections</div>
       <div class="card" style="display:flex;flex-direction:column;gap:10px;">
@@ -604,7 +604,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
         <button class="btn-download-history" style="width:100%;padding:9px 12px;background:#fff;color:var(--green-d);border:1.5px solid var(--green);border-radius:var(--r-sm);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px;" onclick="downloadSelectedScanHistory()"><i class="ti ti-table-export"></i> Download scan history</button>
       </div>
     </div>
-
     <div class="section mt-16">
       <div class="slabel">Participants</div>
       <div class="search-wrap"><i class="ti ti-search search-icon"></i><input class="search-input" id="a-search" type="text" placeholder="Search by name or email…" oninput="renderAdminParticipants()"></div>
@@ -612,7 +611,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
     <div class="section mt-12"><div class="a-table" id="a-table"></div></div>
   </div>
 </div>
-
 <!-- QR SCANNER MODAL -->
 <div class="modal-overlay" id="scanner-overlay">
   <div class="scanner-modal">
@@ -638,7 +636,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
     </div>
   </div>
 </div>
-
 <!-- CREATE TRACK MODAL (Track Manager) -->
 <div class="modal-overlay" id="create-track-overlay">
   <div class="modal-card">
@@ -675,7 +672,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
     </div>
   </div>
 </div>
-
 <!-- READ-ONLY DEMO VIEW OVERLAY (admin "Preview as Participant") -->
 <div class="demo-overlay" id="demo-overlay">
   <div class="demo-frame">
@@ -720,27 +716,23 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
   </div>
   <div class="demo-badge-fixed"><i class="ti ti-lock"></i> Read-only preview — nothing here is clickable</div>
 </div>
-
 </div>
 <script>
 'use strict';
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwQoLdqUw1TVlAY9nfe68L8_Dk_pQ652pSdQODDrk47qkJeKYE4K-cez3WTjwUPnhDw/exec';
-
 // ── GLOBAL STATE ──
 var currentUser = null;       // { id, name, facility, email, isTrackManager }
 var myTracks = [];            // [{ trackId, trackName, role, joinedAt }]  role: admin|participant|manager
 var currentTrackId = null;    // track currently open (participant or admin view)
 var currentTrackRole = null;  // role on the currently open track
-
 // Participant-view state
 var trackProgress = null;     // { trackId, trackName, totalStamps, stamps, claimedSessions, scanTimestamps, milestones }
 var allSessions = [];          // sessions for currentTrackId
-
 // Admin-view state
 var adminTrackInfo = null;     // { trackId, trackName, accessCode }
 var adminTemplate = null;      // { totalStamps, milestones:[{position,name,icon}] }
 var adminParticipants = [];    // participants with progress, for currentTrackId
-
+var adminTrackAdmins = [];     // [{id,name,facility,email}] admins enrolled on currentTrackId
 var scanStream = null, scanAnimFrame = null, scanDone = false;
 var countdownTimer = null;
 var sessionPage = 0;
@@ -748,7 +740,6 @@ var SESSION_PAGE_SIZE = 3;
 var LOCATION_OPTIONS = ['Building1','Building2','Building3'];
 var MILESTONE_ICON_OPTIONS = ['ti-coffee','ti-gift','ti-trophy','ti-medal','ti-star','ti-crown','ti-award','ti-sparkles'];
 var pendingAdminEmails = [];
-
 // ─────────────────────────────────────────────────────────────
 // API
 // ─────────────────────────────────────────────────────────────
@@ -763,7 +754,6 @@ function apiRequest(action, payload) {
 function busy(id,lbl){ var b=document.getElementById(id); if(!b) return; b.dataset.orig=b.innerHTML; b.disabled=true; b.innerHTML='<i class="ti ti-loader-2"></i> '+lbl; }
 function restore(id){ var b=document.getElementById(id); if(!b) return; if(b.dataset.orig) b.innerHTML=b.dataset.orig; b.disabled=false; }
 function htmlAttr(v){ return String(v||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
 // ─────────────────────────────────────────────────────────────
 // NORMALIZERS
 // ─────────────────────────────────────────────────────────────
@@ -797,6 +787,9 @@ function normalizeAdminParticipant(p){
       name:String(m.name||'Reward'), icon:String(m.icon||'ti-gift'), eligible:Boolean(m.eligible),
       redeemed:Boolean(m.redeemed), redeemedAt:m.redeemedAt||null }; }) };
 }
+function normalizeTrackAdmin(a){
+  return { id:String(a.id||''), name:String(a.name||''), facility:String(a.facility||''), email:String(a.email||'').toLowerCase() };
+}
 function formatDateOnly(ts){
   if(!ts) return '';
   var d=new Date(ts);
@@ -808,14 +801,12 @@ function formatDateOnly(ts){
   return ts;
 }
 function sanitizeFilename(name){ return String(name||'file').trim().replace(/[^a-z0-9-_]+/gi,'-').replace(/^-+|-+$/g,'')||'file'; }
-
 // ─────────────────────────────────────────────────────────────
 // ROLE HELPERS
 // ─────────────────────────────────────────────────────────────
 function roleChipClass(role){ if(role==='manager') return 'r-manager'; if(role==='admin') return 'r-admin'; return 'r-participant'; }
 function roleChipLabel(role){ if(role==='manager') return 'Manager'; if(role==='admin') return 'Admin'; return 'Participant'; }
 function routeForRole(role){ return (role==='admin'||role==='manager') ? 'admin' : 'participant'; }
-
 // ─────────────────────────────────────────────────────────────
 // BOOT / SESSION PERSISTENCE
 // ─────────────────────────────────────────────────────────────
@@ -826,14 +817,11 @@ function routeForRole(role){ return (role==='admin'||role==='manager') ? 'admin'
     catch(e){ localStorage.removeItem('aiStampSessionV2'); }
   }
 })();
-
 function persistUser(){ localStorage.setItem('aiStampSessionV2', JSON.stringify(currentUser)); }
-
 function showScreen(name){
   document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
   document.getElementById('screen-'+name).classList.add('active');
 }
-
 // ─────────────────────────────────────────────────────────────
 // AUTH
 // ─────────────────────────────────────────────────────────────
@@ -843,7 +831,6 @@ function switchAuthTab(tab){
   document.getElementById('form-signup').style.display=tab==='signup'?'block':'none';
 }
 function showErr(id,msg){ var el=document.getElementById(id); if(!el) return; el.textContent=msg; el.style.display='block'; setTimeout(function(){ el.style.display='none'; },5000); }
-
 async function handleLogin(){
   busy('btn-login','Signing in…');
   try{
@@ -881,7 +868,7 @@ function finishAuth(data){
 function logout(){
   localStorage.removeItem('aiStampSessionV2');
   currentUser=null; myTracks=[]; currentTrackId=null; currentTrackRole=null;
-  trackProgress=null; allSessions=[]; adminTrackInfo=null; adminTemplate=null; adminParticipants=[];
+  trackProgress=null; allSessions=[]; adminTrackInfo=null; adminTemplate=null; adminParticipants=[]; adminTrackAdmins=[];
   if(countdownTimer){ clearInterval(countdownTimer); countdownTimer=null; }
   showScreen('auth');
 }
@@ -899,7 +886,6 @@ async function refreshDashboardAndShow(){
     renderDashboard();
   }
 }
-
 // ─────────────────────────────────────────────────────────────
 // DASHBOARD
 // ─────────────────────────────────────────────────────────────
@@ -908,31 +894,62 @@ function goToDashboard(){
   currentTrackId=null; currentTrackRole=null;
   refreshDashboardAndShow();
 }
-
 function renderDashboard(){
   document.getElementById('dash-welcome').textContent='Hello, '+(currentUser.name.split(' ')[0]||'there')+' 👋';
   document.getElementById('dash-sub').textContent=currentUser.email;
   document.getElementById('dash-manager-section').style.display=currentUser.isTrackManager?'block':'none';
-
   var list=document.getElementById('dash-track-list');
   list.innerHTML='';
   if(!myTracks.length){
     list.innerHTML='<div class="empty-state"><i class="ti ti-route-off"></i><p>You haven\'t joined any tracks yet.<br>Enter an access code below to get started.</p></div>';
+  } else {
+    myTracks.forEach(function(t){
+      var card=document.createElement('div');
+      card.className='track-card';
+      card.onclick=function(){ openTrack(t.trackId, t.role); };
+      card.innerHTML=
+        '<div class="track-ic"><i class="ti ti-route"></i></div>'+
+        '<div class="track-card-body">'+
+          '<div class="track-name">'+htmlAttr(t.trackName)+'</div>'+
+          '<div class="track-meta"><span class="role-chip '+roleChipClass(t.role)+'">'+roleChipLabel(t.role)+'</span></div>'+
+        '</div>'+
+        '<i class="ti ti-chevron-right track-chev"></i>';
+      list.appendChild(card);
+    });
+  }
+  
+  renderDeleteTrackSelect();
+}
+function renderDeleteTrackSelect(){
+  var card=document.getElementById('delete-track-card');
+  var sel=document.getElementById('delete-track-select');
+  if(!currentUser.isTrackManager || !myTracks.length){
+    card.style.display='none';
     return;
   }
+  card.style.display='block';
+  var current=sel.value;
+  sel.innerHTML='';
   myTracks.forEach(function(t){
-    var card=document.createElement('div');
-    card.className='track-card';
-    card.onclick=function(){ openTrack(t.trackId, t.role); };
-    card.innerHTML=
-      '<div class="track-ic"><i class="ti ti-route"></i></div>'+
-      '<div class="track-card-body">'+
-        '<div class="track-name">'+htmlAttr(t.trackName)+'</div>'+
-        '<div class="track-meta"><span class="role-chip '+roleChipClass(t.role)+'">'+roleChipLabel(t.role)+'</span></div>'+
-      '</div>'+
-      '<i class="ti ti-chevron-right track-chev"></i>';
-    list.appendChild(card);
+    var opt=document.createElement('option');
+    opt.value=t.trackId; opt.textContent=t.trackName;
+    sel.appendChild(opt);
   });
+  if(current && Array.prototype.some.call(sel.options,function(o){ return o.value===current; })) sel.value=current;
+}
+
+async function handleDeleteTrack(){
+  var sel=document.getElementById('delete-track-select');
+  var trackId=Number(sel.value);
+  var trackName=sel.options[sel.selectedIndex]?sel.options[sel.selectedIndex].textContent:'this track';
+  if(!trackId){ alert('Please select a track to delete.'); return; }
+  var confirmed=confirm('Are you sure you want to delete "'+trackName+'"?\n\nThis deletes the track, all its sessions, and all stamps and redemptions permanently. This cannot be undone.');
+  if(!confirmed) return;
+  try{
+    var data=await apiRequest('deleteTrack',{managerEmail:currentUser.email,trackId:trackId});
+    myTracks=(data.tracks||[]).map(normalizeTrackSummary);
+    renderDashboard();
+  }catch(e){ alert('Error: '+e.message); }
 }
 
 async function handleJoinTrack(){
@@ -953,7 +970,6 @@ async function handleJoinTrack(){
   }catch(e){ showErr('join-error',e.message); }
   finally{ restore('btn-join-track'); }
 }
-
 // Dynamic routing: role on this specific track decides destination screen.
 function openTrack(trackId, role){
   currentTrackId=Number(trackId);
@@ -964,7 +980,6 @@ function openTrack(trackId, role){
     bootParticipantView();
   }
 }
-
 // ─────────────────────────────────────────────────────────────
 // CREATE TRACK MODAL (Track Manager)
 // ─────────────────────────────────────────────────────────────
@@ -979,7 +994,6 @@ function openCreateTrackModal(){
   document.getElementById('create-track-overlay').classList.add('open');
 }
 function closeCreateTrackModal(){ document.getElementById('create-track-overlay').classList.remove('open'); }
-
 function addAdminChip(){
   var input=document.getElementById('ct-admin-input');
   var email=input.value.trim().toLowerCase();
@@ -998,7 +1012,6 @@ function renderAdminChips(){
     return '<span class="email-chip">'+htmlAttr(e)+'<button onclick="removeAdminChip(\''+htmlAttr(e)+'\')"><i class="ti ti-x" style="font-size:11px;"></i></button></span>';
   }).join('');
 }
-
 async function submitCreateTrack(){
   var name=document.getElementById('ct-name').value.trim();
   var code=document.getElementById('ct-code').value.trim().toUpperCase();
@@ -1023,7 +1036,6 @@ async function submitCreateTrack(){
   }catch(e){ showErr('create-track-error',e.message); }
   finally{ restore('btn-do-create-track'); }
 }
-
 // ─────────────────────────────────────────────────────────────
 // PARTICIPANT VIEW
 // ─────────────────────────────────────────────────────────────
@@ -1037,7 +1049,6 @@ async function bootParticipantView(){
     showScreen('participant');
   }catch(e){ alert('Could not open track: '+e.message); }
 }
-
 function renderParticipant(){
   var p=trackProgress;
   document.getElementById('p-track-name').textContent=p.trackName;
@@ -1047,23 +1058,19 @@ function renderParticipant(){
   renderSessions();
   document.getElementById('btn-open-scanner').disabled = p.stamps>=p.totalStamps;
 }
-
 // Shared renderer used by both the real participant view and the read-only demo view.
 function renderStampCard(lblId,fillId,dotsId,stampsId,countId,totalId,rewardsId,progress,readOnlyDemo){
   var lbl=document.getElementById(lblId);
   lbl.innerHTML='<span class="tl">Start</span>'+progress.milestones.map(function(m){
     return '<span class="tl">'+m.position+' pts</span>';
   }).join('')+(progress.milestones.length && progress.milestones[progress.milestones.length-1].position===progress.totalStamps ? '' : '<span class="tl">'+progress.totalStamps+' pts</span>');
-
   document.getElementById(fillId).style.width=Math.min(100, (progress.stamps/progress.totalStamps)*100)+'%';
-
   var dotsWrap=document.getElementById(dotsId);
   var dotsHtml='<div class="dot r"></div>';
   progress.milestones.forEach(function(m){
     dotsHtml+='<div class="dot'+(progress.stamps>=m.position?' reached':'')+'" title="'+htmlAttr(m.name)+'"></div>';
   });
   dotsWrap.innerHTML=dotsHtml;
-
   var grid=document.getElementById(stampsId);
   grid.innerHTML='';
   var milestonePositions={};
@@ -1078,7 +1085,6 @@ function renderStampCard(lblId,fillId,dotsId,stampsId,countId,totalId,rewardsId,
   }
   document.getElementById(countId).textContent = readOnlyDemo ? Math.min(progress.totalStamps, Math.ceil(progress.totalStamps*0.6)) : progress.stamps;
   document.getElementById(totalId).textContent=progress.totalStamps;
-
   var rewardsWrap=document.getElementById(rewardsId);
   rewardsWrap.className='qr-cards '+(progress.milestones.length===1?'cols-1':progress.milestones.length>=3?'cols-3':'');
   rewardsWrap.innerHTML='';
@@ -1106,7 +1112,6 @@ function renderStampCard(lblId,fillId,dotsId,stampsId,countId,totalId,rewardsId,
     }
   });
 }
-
 function drawSVGQR(svgId,seed){
   var svg=document.getElementById(svgId); if(!svg) return; svg.innerHTML='';
   var G=7,CS=8,PAD=2,pat=[];
@@ -1120,7 +1125,6 @@ function drawSVGQR(svgId,seed){
     rect.setAttribute('fill','#2C1F14'); svg.appendChild(rect);
   }
 }
-
 function renderSessions(){
   var grid=document.getElementById('p-sessions');
   grid.innerHTML='';
@@ -1169,14 +1173,12 @@ function renderSessions(){
     pager.style.display='none';
   }
 }
-
 function changeSessionPage(dir){
   var total=allSessions.length;
   var totalPages=Math.max(1,Math.ceil(total/SESSION_PAGE_SIZE));
   sessionPage=Math.max(0,Math.min(totalPages-1,sessionPage+dir));
   renderSessions();
 }
-
 // ── QR Scanner ──
 function openScanner(){
   document.getElementById('scanner-overlay').classList.add('open');
@@ -1238,7 +1240,6 @@ async function submitQRToken(token){
     setTimeout(function(){ rc.style.display='none'; document.getElementById('scanner-live-area').style.display='block'; scanDone=false; startCamera(); },3000);
   }
 }
-
 // ─────────────────────────────────────────────────────────────
 // ADMIN VIEW
 // ─────────────────────────────────────────────────────────────
@@ -1248,35 +1249,35 @@ async function bootAdminView(){
     adminTrackInfo=data.track;
     adminTemplate=data.template;
     adminParticipants=(data.participants||[]).map(normalizeAdminParticipant);
+    adminTrackAdmins=(data.admins||[]).map(normalizeTrackAdmin);
     allSessions=(data.sessions||[]).map(normalizeSession);
     renderAdmin();
     showScreen('admin');
   }catch(e){ alert('Could not open admin panel: '+e.message); }
 }
-
 async function refreshAdminData(){
   try{
     var data=await apiRequest('getAdminView',{adminEmail:currentUser.email,trackId:currentTrackId});
     adminTrackInfo=data.track;
     adminTemplate=data.template;
     adminParticipants=(data.participants||[]).map(normalizeAdminParticipant);
+    adminTrackAdmins=(data.admins||[]).map(normalizeTrackAdmin);
     allSessions=(data.sessions||[]).map(normalizeSession);
     renderAdmin();
   }catch(e){ console.error(e); }
 }
-
 function renderAdmin(){
   document.getElementById('a-logged-as').textContent=currentUser.name+' · '+currentUser.email;
   document.getElementById('a-track-name').textContent=adminTrackInfo.trackName;
   document.getElementById('a-access-code').textContent=adminTrackInfo.accessCode;
   renderAdminStats();
+  renderAdminList();
   renderTemplateEditor();
   populateQRSessionSelect();
   populateDataSessionSelect();
   renderQRPanel();
   renderAdminParticipants();
 }
-
 function renderAdminStats(){
   var parts=adminParticipants;
   var totalMilestones=adminTemplate.milestones.length;
@@ -1289,6 +1290,61 @@ function renderAdminStats(){
     '<div class="stat-card"><div class="stat-num green">'+redeemedAny.length+'</div><div class="stat-lbl">Rewards redeemed</div></div>'+
     '<div class="stat-card"><div class="stat-num" style="color:var(--blue);">'+eligible.length+'</div><div class="stat-lbl">Eligible, not redeemed</div></div>'+
     '<div class="stat-card"><div class="stat-num" style="color:var(--gray);">'+notYet.length+'</div><div class="stat-lbl">Not yet eligible</div></div>';
+}
+
+// ── Manage Admins (collapsible list) ──
+// Visible to every track admin; the add/remove controls only render for a Track
+// Manager (currentUser.isTrackManager). A regular admin sees the same list, read-only.
+function renderAdminList(){
+  document.getElementById('admin-list-count').textContent=adminTrackAdmins.length+' admin'+(adminTrackAdmins.length===1?'':'s');
+  document.getElementById('admin-add-row-wrap').style.display=currentUser.isTrackManager?'block':'none';
+  document.getElementById('add-admin-email-input').value='';
+
+  var rows=document.getElementById('admin-list-rows');
+  var canManage=currentUser.isTrackManager;
+  var canRemove=canManage && adminTrackAdmins.length>1; // never allow removing the last admin
+  rows.innerHTML=adminTrackAdmins.map(function(a){
+    var isYou=a.email===currentUser.email;
+    var removeBtn=canManage
+      ? (canRemove
+          ? '<button class="btn-remove-admin" onclick="handleRemoveTrackAdmin(\''+a.id+'\',\''+htmlAttr(a.name)+'\')">Remove</button>'
+          : '<span class="rbadge locked" title="A track needs at least one admin">Last admin</span>')
+      : '';
+    return '<div class="admin-list-row">'+
+      '<div class="admin-row-meta"><strong>'+htmlAttr(a.name)+(isYou?'<span class="you-tag">You</span>':'')+'</strong><span>'+htmlAttr(a.facility)+' · '+htmlAttr(a.email)+'</span></div>'+
+      removeBtn+
+    '</div>';
+  }).join('') || '<p style="font-size:12px;color:var(--ts);text-align:center;padding:8px 0;">No admins found.</p>';
+}
+
+async function handleAddTrackAdmin(){
+  var input=document.getElementById('add-admin-email-input');
+  var email=input.value.trim().toLowerCase();
+  if(!email||!email.includes('@')){ showErr('add-admin-error','Enter a valid email.'); return; }
+  busy('btn-add-track-admin','Adding…');
+  try{
+    var data=await apiRequest('addTrackAdmin',{managerEmail:currentUser.email,trackId:currentTrackId,adminEmail:email});
+    adminTrackAdmins=(data.admins||[]).map(normalizeTrackAdmin);
+    adminParticipants=(data.participants||[]).map(normalizeAdminParticipant);
+    if(data.template) adminTemplate=data.template;
+    if(data.sessions) allSessions=data.sessions.map(normalizeSession);
+    renderAdmin();
+    document.getElementById('admin-list-details').open=true;
+  }catch(e){ showErr('add-admin-error',e.message); }
+  finally{ restore('btn-add-track-admin'); }
+}
+
+async function handleRemoveTrackAdmin(userId,name){
+  if(!confirm('Remove "'+name+'" as an admin on this track?\n\nThey will lose admin access to this track but keep their account.')) return;
+  try{
+    var data=await apiRequest('removeTrackAdmin',{managerEmail:currentUser.email,trackId:currentTrackId,userId:userId});
+    adminTrackAdmins=(data.admins||[]).map(normalizeTrackAdmin);
+    adminParticipants=(data.participants||[]).map(normalizeAdminParticipant);
+    if(data.template) adminTemplate=data.template;
+    if(data.sessions) allSessions=data.sessions.map(normalizeSession);
+    renderAdmin();
+    document.getElementById('admin-list-details').open=true;
+  }catch(e){ alert('Error: '+e.message); }
 }
 
 // ── Reward template editor ──
@@ -1349,7 +1405,6 @@ async function saveTemplate(){
   }catch(e){ alert('Error: '+e.message); }
   finally{ restore('btn-save-template'); }
 }
-
 // ── Session select dropdowns ──
 function populateQRSessionSelect(){
   var sel=document.getElementById('qr-session-select');
@@ -1373,7 +1428,6 @@ function populateDataSessionSelect(){
   });
   sel.value=Array.prototype.some.call(sel.options,function(o){ return o.value===current; })?current:'all';
 }
-
 function renderQRPanel(){
   if(countdownTimer){ clearInterval(countdownTimer); countdownTimer=null; }
   var sid=Number(document.getElementById('qr-session-select').value);
@@ -1382,20 +1436,15 @@ function renderQRPanel(){
   var s=allSessions.find(function(x){ return x.id===sid; });
   if(!s){ content.style.display='none'; document.getElementById('selected-session-card').innerHTML=''; return; }
   content.style.display='block';
-
   var isActive=s.qrActive&&s.qrExpiresAt>Date.now();
   var claimCount=adminParticipants.filter(function(u){ return u.claimedSessions.indexOf(sid)!==-1; }).length;
-
   var pill=document.getElementById('qr-panel-status');
   pill.textContent=isActive?'Active':'Inactive';
   pill.className='qr-status-pill '+(isActive?'active':'inactive');
   document.getElementById('qr-panel-count').innerHTML='<i class="ti ti-users" style="font-size:10px;"></i> '+claimCount+' scanned';
-
   var mini=document.getElementById('selected-session-mini');
   mini.innerHTML='<strong>'+htmlAttr(s.name)+'</strong>'+(s.type?' &nbsp;·&nbsp; '+htmlAttr(s.type):'')+(s.time?' &nbsp;·&nbsp; '+htmlAttr(s.time):'')+(s.location?' &nbsp;·&nbsp; '+htmlAttr(s.location):'');
-
   document.getElementById('btn-panel-activate').innerHTML='<i class="ti ti-qrcode"></i> '+(isActive?'Refresh QR':'Activate QR');
-
   var box=document.getElementById('qr-panel-box');
   box.innerHTML='';
   if(isActive&&s.qrToken){
@@ -1406,7 +1455,6 @@ function renderQRPanel(){
     box.textContent='No QR active';
     document.getElementById('btn-dl-qr').style.display='none';
   }
-
   var cdEl=document.getElementById('qr-panel-countdown');
   if(isActive){
     cdEl.style.display='flex';
@@ -1425,7 +1473,6 @@ function renderQRPanel(){
     cdEl.style.display='none';
   }
 }
-
 async function activatePanelQR(){
   var sid=Number(document.getElementById('qr-session-select').value);
   if(!sid){ alert('Please select a session first.'); return; }
@@ -1439,7 +1486,6 @@ async function activatePanelQR(){
   }catch(e){ alert('Error: '+e.message); }
   finally{ restore('btn-panel-activate'); }
 }
-
 function downloadPanelQR(){
   var sid=Number(document.getElementById('qr-session-select').value);
   var s=allSessions.find(function(x){ return x.id===sid; });
@@ -1460,7 +1506,6 @@ function downloadPanelQR(){
     },50);
   }catch(err){ if(temp.parentNode) temp.parentNode.removeChild(temp); alert('Download failed: '+err.message); }
 }
-
 function openSelectedEdit(){
   var sid=Number(document.getElementById('qr-session-select').value);
   if(!sid){ alert('Please select a session first.'); return; }
@@ -1493,7 +1538,6 @@ function openSelectedEdit(){
       '</div>'+
     '</div>';
 }
-
 async function deleteSelectedSession(){
   var sid=Number(document.getElementById('qr-session-select').value);
   if(!sid){ alert('Please select a session first.'); return; }
@@ -1501,7 +1545,6 @@ async function deleteSelectedSession(){
   if(!s) return;
   await deleteSession(sid,s.name);
 }
-
 function toggleNewSessionForm(open){
   document.getElementById('new-session-form').classList.toggle('open',open);
   document.getElementById('btn-show-new-form').style.display=open?'none':'flex';
@@ -1510,7 +1553,6 @@ function toggleNewSessionForm(open){
     document.getElementById('new-sess-loc').value='Building1';
   }
 }
-
 async function createSession(){
   busy('btn-create-session','Creating…');
   try{
@@ -1533,7 +1575,6 @@ async function createSession(){
   }catch(e){ alert('Error: '+e.message); }
   finally{ restore('btn-create-session'); }
 }
-
 async function saveSession(sid){
   var btnId='btn-save-'+sid; busy(btnId,'Saving…');
   try{
@@ -1553,7 +1594,6 @@ async function saveSession(sid){
   }catch(e){ alert('Error: '+e.message); }
   finally{ restore(btnId); }
 }
-
 async function deleteSession(sid,name){
   if(!confirm('Delete "'+name+'"?\n\nThis will hide the session. Existing stamps are preserved.')) return;
   try{
@@ -1563,14 +1603,12 @@ async function deleteSession(sid,name){
     renderAdmin();
   }catch(e){ alert('Error: '+e.message); }
 }
-
 // ── Admin participants list ──
 function renderAdminParticipants(){
   var query=(document.getElementById('a-search').value||'').toLowerCase();
   var parts=adminParticipants;
   var filtered=parts;
   if(query) filtered=filtered.filter(function(p){ return p.name.toLowerCase().indexOf(query)!==-1||p.email.toLowerCase().indexOf(query)!==-1; });
-
   var tbl=document.getElementById('a-table'); tbl.innerHTML='';
   if(!filtered.length){ tbl.innerHTML='<div class="no-results"><i class="ti ti-search-off"></i>No participants found.</div>'; return; }
   filtered.forEach(function(p){
@@ -1598,14 +1636,12 @@ function renderAdminParticipants(){
     tbl.appendChild(card);
   });
 }
-
 function rewardBlock(p,m){
   var right=m.redeemed
     ?'<div style="text-align:right;"><span class="rbadge done"><i class="ti ti-check" style="font-size:10px;"></i> Redeemed</span>'+(m.redeemedAt?'<div class="redeemed-date">'+htmlAttr(m.redeemedAt)+'</div>':'')+'</div>'
     :(m.eligible?'<button class="btn-mark" onclick="markRedeemed(\''+p.id+'\','+m.index+')">Mark redeemed</button>':'<span class="rbadge locked">Locked</span>');
   return '<div class="rrow"><div class="rleft"><div class="ricon"><i class="ti '+htmlAttr(m.icon)+'" style="font-size:13px;"></i></div><div><div class="rname">'+htmlAttr(m.name)+'</div><div class="rsub">Eligible at '+m.position+' stamps</div></div></div>'+right+'</div>';
 }
-
 async function markRedeemed(userId,milestoneIndex){
   try{
     var data=await apiRequest('markRedeemed',{adminEmail:currentUser.email,trackId:currentTrackId,userId,milestoneIndex});
@@ -1614,7 +1650,6 @@ async function markRedeemed(userId,milestoneIndex){
     renderAdmin();
   }catch(e){ alert(e.message); }
 }
-
 // ── CSV export ──
 function csvEscape(v){ var s=String(v==null?'':v); return (s.indexOf('"')!==-1||s.indexOf(',')!==-1||s.indexOf('\n')!==-1)?'"'+s.replace(/"/g,'""')+'"':s; }
 function downloadCsv(filename,rows){
@@ -1651,7 +1686,6 @@ function downloadAllSessionScanHistory(){
   });
   downloadCsv('all-session-scan-history.csv',rows);
 }
-
 // ─────────────────────────────────────────────────────────────
 // DEMO VIEW — "Preview as Participant" (strictly read-only)
 // ─────────────────────────────────────────────────────────────
@@ -1669,7 +1703,6 @@ function openDemoView(){
     milestones: adminTemplate.milestones.map(function(m,idx){ return { index:idx, position:m.position, name:m.name, icon:m.icon, eligible:false, redeemed:false, redeemedAt:null }; })
   };
   renderStampCard('demo-track-lbl','demo-fill','demo-dots','demo-stamps','demo-count','demo-total','demo-reward-cards', demoProgress, true);
-
   var grid=document.getElementById('demo-sessions');
   grid.innerHTML='';
   allSessions.slice(0,SESSION_PAGE_SIZE).forEach(function(s,idx){
@@ -1697,13 +1730,11 @@ function openDemoView(){
   if(!allSessions.length){
     grid.innerHTML='<p style="font-size:12px;color:var(--ts);text-align:center;padding:16px 0;">No sessions configured for this track yet.</p>';
   }
-
   document.getElementById('demo-overlay').classList.add('open');
 }
 function closeDemoView(){
   document.getElementById('demo-overlay').classList.remove('open');
 }
 </script>
-
 </body>
 </html>
