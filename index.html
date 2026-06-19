@@ -1343,7 +1343,7 @@ async function registerAdminUI(){
     var name=document.getElementById('reg-admin-name').value.trim();
     var email=document.getElementById('reg-admin-email').value.trim().toLowerCase();
     var password=document.getElementById('reg-admin-password').value;
-    if(!name){ showErr('reg-admin-error','Enter the admin\\'s full name.'); return; }
+    if(!name){ showErr('reg-admin-error', "Enter the admin's full name."); return; }
     if(!email||!email.includes('@')){ showErr('reg-admin-error','Enter a valid email.'); return; }
     if(password.length<8){ showErr('reg-admin-error','Password must be at least 8 characters.'); return; }
     var data = await apiRequest('registerAdmin', { adminEmail: currentUser.email, name:name, email:email, password:password });
