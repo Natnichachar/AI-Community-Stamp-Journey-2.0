@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Community — Stamp Journey 2.0</title>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
@@ -15,6 +15,7 @@
   --primary-orange:#FF6727;
   --primary-gray:#63666F;
   --primary-muted:#989AA5;
+  --text-dark:#2F3137;
   --white:#FFFFFF;
   --secondary-orange:#FF9956;
   --deep-orange:#C43400;
@@ -22,11 +23,14 @@
   --soft-gray:#EBECF0;
   --mid-gray:#D9DAE4;
   --cool-gray:#C9CAD4;
+  --reward-green:#00704A;
+  --reward-green-l:#EAF7F0;
+  --reward-green-d:#004D33;
 
   /* Legacy variable mapping used throughout the app */
   --terra:var(--primary-orange);--terra-l:var(--secondary-orange);--terra-p:var(--near-white);
   --cream:var(--near-white);--cream-d:var(--soft-gray);
-  --tm:var(--primary-gray);--ts:var(--primary-muted);
+  --tm:var(--text-dark);--ts:var(--primary-gray);
   --green:var(--primary-orange);--green-l:var(--near-white);--green-d:var(--deep-orange);
   --navy:var(--primary-gray);--blue:var(--primary-gray);--blue-l:var(--soft-gray);--blue-d:var(--primary-gray);
   --gray:var(--primary-muted);--gray-l:var(--soft-gray);
@@ -35,7 +39,7 @@
   --purple:var(--primary-gray);--purple-l:var(--soft-gray);--purple-d:var(--primary-gray);
 
   /* Typography */
-  --font-main:'Source Serif 4','Source Serif Pro',Georgia,serif;
+  --font-main:'Open Sans',Arial,sans-serif;
   --font-secondary:'Open Sans',Arial,sans-serif;
   --font:var(--font-main);
 
@@ -43,7 +47,7 @@
   --shadow:0 2px 12px rgba(99,102,111,.10);
   --shadow-lg:0 8px 32px rgba(99,102,111,.16);
 }
-body{background:var(--mid-gray);min-height:100vh;display:flex;justify-content:center;font-family:var(--font);}
+body{background:var(--mid-gray);min-height:100vh;display:flex;justify-content:center;font-family:var(--font);color:var(--tm);}
 .app{width:100%;max-width:430px;min-height:100vh;background:var(--cream);display:flex;flex-direction:column;}
 .screen{display:none;flex-direction:column;min-height:100vh;}
 .screen.active{display:flex;}
@@ -150,13 +154,14 @@ body{background:var(--mid-gray);min-height:100vh;display:flex;justify-content:ce
 .tdots{display:flex;justify-content:space-between;margin-top:6px;}
 .dot{width:13px;height:13px;border-radius:50%;border:2.5px solid var(--terra-l);background:var(--white);transition:.3s;}
 .dot.r{background:var(--terra);border-color:var(--terra);}
-.dot.reached{background:var(--green);border-color:var(--green);}
+.dot.reached{background:var(--reward-green);border-color:var(--reward-green);}
 /* STAMP GRID */
 .sgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;}
 .stamp{width:100%;aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
 .stamp.col{background:var(--terra-p);border:2.5px solid var(--terra);color:var(--terra);}
 .stamp.unc{background:var(--white);border:2.5px dashed var(--terra-l);}
-.stamp.col.milestone{border-color:var(--green);background:var(--green-l);color:var(--green);}
+.stamp.col.milestone{border-color:var(--reward-green);background:var(--reward-green-l);color:var(--reward-green);}
+.stamp.unc.milestone{border-color:var(--reward-green);background:var(--white);color:var(--reward-green);}
 .stamp-cat-svg{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:68%;height:54%;color:currentColor;opacity:.18;z-index:1;pointer-events:none;}
 .stamp-cat-svg path{fill:currentColor;}
 .snum{font-size:22px;font-weight:700;line-height:1;opacity:.7;display:block;text-align:center;}
@@ -386,7 +391,7 @@ body{background:var(--mid-gray);min-height:100vh;display:flex;justify-content:ce
 .btn-remove-admin:hover{background:var(--red-l);}
 .you-tag{font-size:9px;font-weight:700;color:var(--terra);background:var(--terra-p);border-radius:99px;padding:2px 7px;margin-left:6px;text-transform:uppercase;letter-spacing:.4px;}
 
-/* Brand font roles: Source Serif for headings/core identity, Open Sans for UI/supporting text */
+/* Typography: Open Sans used across all UI, headings, inputs, and buttons */
 button,input,select,textarea,
 .form-label,.form-hint,.error-msg,.success-msg,
 .top-bar-subtitle,.top-bar-sub,.slabel,.role-chip,
