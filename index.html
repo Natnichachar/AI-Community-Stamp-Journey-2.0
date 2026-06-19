@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Community — Stamp Journey</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --terra:#C4622D;--terra-l:#E8A882;--terra-p:#F5E6DC;
+  --cream:#FAF7F2;--cream-d:#F0EAE0;
+  --tm:#2C1F14;--ts:#7A5C44;
+  --green:#00704A;--green-l:#EAF7F0;--green-d:#004D33;
+  --navy:#1A3A5C;--blue:#2D6EC4;--blue-l:#EAF3FF;--blue-d:#0C447C;
+  --gray:#6B7280;--gray-l:#F3F4F6;
+  --red:#DC2626;--red-l:#FEE2E2;
+  --amber:#D97706;--amber-l:#FEF3C7;
+  --font:'Montserrat',sans-serif;
+  --r-sm:10px;--r-md:14px;--r-lg:20px;--r-xl:26px;
+  --shadow:0 2px 12px rgba(44,31,20,.08);
+  --shadow-lg:0 8px 32px rgba(44,31,20,.14);
+}
+body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;font-family:var(--font);}
+.app{width:100%;max-width:430px;min-height:100vh;background:var(--cream);display:flex;flex-direction:column;}
+.screen{display:none;flex-direction:column;min-height:100vh;}
+.screen.active{display:flex;}
+
+/* AUTH */
+.auth-hero{background:var(--terra);padding:48px 28px 36px;text-align:center;}
+.auth-hero-icon{width:64px;height:64px;background:rgba(255,255,255,.2);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+.auth-hero-icon i{font-size:32px;color:#fff;}
+.auth-hero h1{font-size:26px;font-weight:700;color:#fff;margin-bottom:4px;}
+.auth-hero h2{font-size:16px;font-weight:500;color:rgba(255,255,255,.8);margin-bottom:10px;}
+.auth-hero p{font-size:13px;color:rgba(255,255,255,.65);line-height:1.6;}
+.auth-body{padding:28px 24px 40px;flex:1;}
+.auth-tabs{display:flex;background:var(--cream-d);border-radius:var(--r-md);padding:4px;margin-bottom:24px;}
+.auth-tab{flex:1;padding:10px 0;font-size:13px;font-weight:700;text-align:center;cursor:pointer;border:none;background:transparent;border-radius:10px;color:var(--ts);font-family:var(--font);transition:.2s;}
+.auth-tab.active{background:#fff;color:var(--terra);box-shadow:var(--shadow);}
+.form-group{margin-bottom:16px;}
+.form-label{font-size:12px;font-weight:700;color:var(--ts);margin-bottom:6px;display:block;text-transform:uppercase;letter-spacing:.8px;}
+.form-input{width:100%;padding:13px 16px;border:1.5px solid var(--cream-d);border-radius:var(--r-md);font-size:14px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;transition:border-color .2s;}
+.form-input:focus{border-color:var(--terra);}
+.form-input::placeholder{color:#C4B5A8;}
+.form-select{width:100%;padding:13px 16px;border:1.5px solid var(--cream-d);border-radius:var(--r-md);font-size:14px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;appearance:none;}
+.form-select:focus{border-color:var(--terra);}
+.form-hint{font-size:11px;color:var(--ts);margin-top:5px;line-height:1.5;}
+.btn-primary{width:100%;padding:16px;background:var(--terra);color:#fff;border:none;border-radius:var(--r-md);font-size:15px;font-weight:700;font-family:var(--font);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:opacity .2s;}
+.btn-primary:hover{opacity:.9;}
+.btn-primary:disabled{opacity:.45;cursor:not-allowed;}
+.error-msg{background:var(--red-l);border:1px solid #FCA5A5;border-radius:var(--r-sm);padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:14px;display:none;}
+.success-msg{background:var(--green-l);border:1px solid #BFE3D0;border-radius:var(--r-sm);padding:10px 14px;font-size:12px;color:var(--green-d);margin-bottom:14px;display:none;}
+
+/* PARTICIPANT HEADER */
+.p-header{background:var(--terra);padding:24px 20px 22px;}
+.p-header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.p-header-brand{display:flex;align-items:center;gap:10px;}
+.p-header-icon{width:38px;height:38px;background:rgba(255,255,255,.2);border-radius:11px;display:flex;align-items:center;justify-content:center;}
+.p-header-icon i{font-size:20px;color:#fff;}
+.p-header-title{font-size:16px;font-weight:700;color:#fff;}
+.p-header-subtitle{font-size:12px;color:rgba(255,255,255,.7);}
+.btn-ghost{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:9px;padding:7px 12px;font-size:12px;font-weight:600;color:#fff;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:5px;}
+.p-header-welcome{font-size:22px;font-weight:700;color:#fff;margin-bottom:3px;}
+.p-header-sub{font-size:13px;color:rgba(255,255,255,.7);}
+.p-body{flex:1;padding-bottom:80px;}
+.section{padding:20px 16px 0;}
+.slabel{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--ts);margin-bottom:12px;}
+.card{background:#fff;border-radius:var(--r-lg);border:.5px solid #E8DDD4;padding:18px;box-shadow:var(--shadow);}
+
+/* TRACK */
+.track{margin-bottom:20px;}
+.track-lbl{display:flex;justify-content:space-between;margin-bottom:5px;flex-wrap:wrap;gap:4px;}
+.tl{font-size:10px;font-weight:700;color:var(--ts);}
+.tline{height:8px;background:var(--cream-d);border-radius:99px;position:relative;}
+.tfill{height:100%;background:var(--terra);border-radius:99px;transition:width .5s;}
+.tdots{display:flex;justify-content:space-between;margin-top:6px;position:relative;}
+.dot{width:13px;height:13px;border-radius:50%;border:2.5px solid var(--terra-l);background:#fff;transition:.3s;}
+.dot.r{background:var(--terra);border-color:var(--terra);}
+.dot.reached{background:var(--green);border-color:var(--green);}
+
+/* STAMP GRID — dynamic count */
+.sgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;}
+.stamp{width:100%;aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.stamp.col{background:var(--terra-p);border:2.5px solid var(--terra);color:var(--terra);}
+.stamp.unc{background:#fff;border:2.5px dashed var(--terra-l);}
+.stamp.milestone.col{border-color:var(--green);background:var(--green-l);color:var(--green);}
+.stamp-cat-svg{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:68%;height:54%;color:currentColor;opacity:.18;z-index:1;pointer-events:none;}
+.stamp-cat-svg path{fill:currentColor;}
+.snum{font-size:22px;font-weight:700;line-height:1;opacity:.7;display:block;text-align:center;}
+.stamp-milestone-badge{position:absolute;top:-3px;right:-3px;width:16px;height:16px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;z-index:2;}
+.ptxt{font-size:14px;color:var(--ts);}
+.ptxt strong{color:var(--tm);font-weight:700;}
+
+/* REWARD QR SECTION — dynamic cards */
+.qr-section{margin-top:16px;border-top:1px solid var(--cream-d);padding-top:16px;}
+.qr-section h4{font-size:13px;font-weight:700;color:var(--tm);margin-bottom:4px;}
+.qr-section p{font-size:12px;color:var(--ts);margin-bottom:12px;line-height:1.5;}
+.qr-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.qr-card{border-radius:var(--r-md);border:1.5px solid #E8DDD4;padding:14px;text-align:center;transition:.3s;}
+.qr-card.active-qr{border-color:var(--terra);background:var(--terra-p);}
+.qr-card.locked{opacity:.4;}
+.qr-card.redeemed-qr{border-color:#999;background:#F5F2EE;}
+.qr-box{width:76px;height:76px;border-radius:12px;background:#fff;border:1.5px solid var(--cream-d);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.qr-card.active-qr .qr-box{border-color:var(--terra-l);background:#fff;}
+.qr-card.redeemed-qr .qr-box{background:#F0EDEA;border-color:#ccc;}
+.qr-box svg{opacity:1;}
+.qr-lbl{font-size:12px;font-weight:700;color:var(--tm);margin-bottom:3px;}
+.qr-sub{font-size:11px;color:var(--ts);}
+.qr-card.redeemed-qr .qr-lbl,.qr-card.redeemed-qr .qr-sub{color:#999;}
+.redeemed-tag{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;background:#E0D8D0;color:#888;margin-top:6px;}
+
+/* SESSION LIST (participant) */
+.sess-grid{display:grid;gap:10px;}
+.sess-card{background:#fff;border-radius:var(--r-md);border:.5px solid #E8DDD4;padding:14px 15px;display:flex;gap:12px;align-items:flex-start;box-shadow:var(--shadow);}
+.sess-ic{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sess-ic.col{background:var(--terra-p);}.sess-ic.col i{color:var(--terra);}
+.sess-ic.avl{background:var(--blue-l);}.sess-ic.avl i{color:var(--blue);}
+.sess-ic.upc{background:var(--cream-d);}.sess-ic.upc i{color:#A09080;}
+.sname{font-size:14px;font-weight:700;color:var(--tm);}
+.stype{font-size:11px;color:var(--ts);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:2px 0 3px;}
+.sdesc{font-size:12px;color:var(--ts);line-height:1.5;margin-bottom:6px;}
+.stop{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:2px;}
+.pb{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--blue-l);color:var(--blue);}
+.spill{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;}
+.spill.col{background:var(--green-l);color:var(--green-d);}
+.spill.avl{background:var(--blue-l);color:var(--blue-d);}
+.spill.upc{background:var(--cream-d);color:var(--ts);}
+.sess-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+.sess-meta-pill{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:var(--ts);}
+.sess-meta-pill i{font-size:11px;color:var(--terra-l);}
+.scan-ts{font-size:11px;color:var(--ts);margin-top:5px;display:flex;align-items:center;gap:4px;}
+.scan-ts i{font-size:12px;color:var(--terra-l);}
+
+.sess-pager{display:flex;align-items:center;justify-content:space-between;margin-top:10px;gap:8px;}
+.sess-pager-info{font-size:12px;color:var(--ts);font-weight:600;text-align:center;flex:1;}
+.btn-pager{width:36px;height:36px;border:1.5px solid var(--cream-d);border-radius:50%;background:#fff;color:var(--ts);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:.2s;flex-shrink:0;}
+.btn-pager:hover:not(:disabled){background:var(--cream-d);color:var(--tm);}
+.btn-pager:disabled{opacity:.3;cursor:not-allowed;}
+
+.p-actions{padding:20px 16px 0;display:flex;flex-direction:column;gap:10px;}
+.btn-scan{background:transparent;color:var(--terra);border:1.5px solid var(--terra);border-radius:var(--r-md);padding:13px 16px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;font-family:var(--font);transition:background .2s,color .2s;}
+.btn-scan:hover{background:var(--terra-p);}
+.btn-scan:disabled{opacity:.35;cursor:not-allowed;}
+
+.feedback-card{background:#fff;border-radius:var(--r-md);border:.5px solid #E8DDD4;padding:16px;box-shadow:var(--shadow);}
+.feedback-card h4{font-size:13px;font-weight:700;color:var(--tm);margin-bottom:5px;}
+.feedback-card p{font-size:12px;color:var(--ts);margin-bottom:13px;}
+.feedback-inner{display:flex;gap:13px;align-items:center;}
+.qr-mock{width:56px;height:56px;border-radius:9px;background:var(--cream-d);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.btn-feedback{background:#fff;color:var(--terra);border:1.5px solid var(--terra-l);border-radius:var(--r-sm);padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:var(--font);margin-top:8px;transition:background .2s;}
+.btn-feedback:hover{background:var(--terra-p);}
+
+/* QR SCANNER MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.scanner-modal{background:#fff;border-radius:var(--r-xl);width:100%;max-width:380px;overflow:hidden;box-shadow:var(--shadow-lg);}
+.scanner-header{background:var(--tm);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;}
+.scanner-header h3{font-size:16px;font-weight:700;color:#fff;}
+.btn-close-modal{background:rgba(255,255,255,.15);border:none;border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:18px;}
+.scanner-body{padding:20px;}
+.scanner-viewfinder{position:relative;width:100%;padding-bottom:100%;border-radius:var(--r-lg);overflow:hidden;background:#000;margin-bottom:16px;}
+.scanner-viewfinder video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.scanner-viewfinder canvas{position:absolute;inset:0;width:100%;height:100%;display:none;}
+.scan-guide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.scan-guide-box{width:55%;height:55%;border:3px solid rgba(255,255,255,.85);border-radius:12px;box-shadow:0 0 0 2000px rgba(0,0,0,.4);}
+.scanner-status{text-align:center;font-size:13px;color:var(--ts);margin-bottom:14px;min-height:20px;font-weight:500;}
+.scanner-status.error{color:var(--red);}
+.scanner-note{font-size:11px;color:var(--ts);text-align:center;line-height:1.6;}
+.scan-result-card{display:none;background:var(--green-l);border:1.5px solid var(--green);border-radius:var(--r-md);padding:16px;text-align:center;margin-bottom:14px;}
+.scan-result-card.error-card{background:var(--red-l);border-color:var(--red);}
+.scan-result-icon{font-size:32px;margin-bottom:8px;}
+.scan-result-card h4{font-size:15px;font-weight:700;color:var(--green-d);margin-bottom:4px;}
+.scan-result-card.error-card h4{color:var(--red);}
+.scan-result-card p{font-size:12px;color:var(--green-d);line-height:1.5;}
+.scan-result-card.error-card p{color:var(--red);}
+
+/* ADMIN HEADER */
+.a-header{background:var(--navy);padding:24px 20px 20px;}
+.a-header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.a-header h2{font-size:20px;font-weight:700;color:#fff;}
+.a-header p{font-size:13px;color:rgba(255,255,255,.65);}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.stat-card{background:#fff;border-radius:var(--r-md);border:.5px solid #E8DDD4;padding:14px 16px;text-align:center;box-shadow:var(--shadow);}
+.stat-num{font-size:28px;font-weight:700;color:var(--terra);}
+.stat-num.green{color:var(--green);}
+.stat-lbl{font-size:11px;color:var(--ts);font-weight:600;margin-top:3px;}
+
+/* ADMIN TABS */
+.admin-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+.admin-tabs::-webkit-scrollbar{display:none;}
+.admin-tab-btn{flex-shrink:0;padding:9px 14px;border-radius:99px;border:1.5px solid var(--cream-d);background:#fff;font-size:12px;font-weight:700;color:var(--ts);cursor:pointer;font-family:var(--font);white-space:nowrap;transition:.2s;display:flex;align-items:center;gap:5px;}
+.admin-tab-btn.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+.admin-tab-panel{display:none;}
+.admin-tab-panel.active{display:block;}
+
+/* QR PANEL */
+.qr-panel{background:#fff;border-radius:var(--r-lg);border:.5px solid #E8DDD4;padding:16px;box-shadow:var(--shadow);}
+.qr-panel-select-row{display:flex;gap:8px;align-items:center;margin-bottom:14px;}
+.qr-session-select{flex:1;padding:10px 12px;border:1.5px solid var(--cream-d);border-radius:var(--r-md);font-size:13px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;appearance:none;}
+.qr-session-select:focus{border-color:var(--terra);}
+.qr-panel-body{display:grid;grid-template-columns:124px minmax(0,1fr);gap:12px;align-items:start;}
+@media(max-width:380px){.qr-panel-body{grid-template-columns:1fr;}}
+.qr-display-wrap{display:flex;flex-direction:column;gap:8px;align-items:center;}
+.qr-display-box{width:124px;height:124px;background:#fff;border:1px solid #E8DDD4;border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:6px;}
+.qr-display-box img,.qr-display-box canvas{width:100%;height:100%;image-rendering:pixelated;}
+.btn-download-qr{width:124px;padding:8px;background:#fff;color:var(--navy);border:1.5px solid var(--blue);border-radius:var(--r-sm);font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:5px;transition:background .2s;white-space:nowrap;}
+.btn-download-qr:hover{background:var(--blue-l);}
+.qr-controls{display:flex;flex-direction:column;gap:8px;}
+.qr-status-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.qr-status-pill{font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;}
+.qr-status-pill.inactive{background:var(--gray-l);color:var(--gray);}
+.qr-status-pill.active{background:var(--green-l);color:var(--green-d);}
+.scan-count-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;background:var(--blue-l);color:var(--blue-d);border-radius:99px;padding:3px 9px;}
+.selected-session-mini{font-size:11px;color:var(--ts);line-height:1.45;padding:1px 0 2px;}
+.selected-session-mini strong{font-size:12px;color:var(--tm);font-weight:700;}
+.qr-primary-row{display:grid;grid-template-columns:minmax(108px,.75fr) minmax(0,1fr);gap:8px;align-items:center;}
+.qr-primary-row .duration-select,.qr-primary-row .btn-activate{height:38px;}
+.duration-select{width:100%;padding:8px 10px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:12px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
+.duration-select:focus{border-color:var(--terra);}
+.btn-activate{width:100%;padding:9px 12px;background:var(--terra);color:#fff;border:none;border-radius:var(--r-sm);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .2s;}
+.btn-activate:hover{opacity:.9;}
+.btn-activate:disabled{opacity:.4;cursor:not-allowed;}
+.countdown{font-size:12px;font-weight:700;color:var(--amber);display:flex;align-items:center;gap:4px;}
+.countdown.expired{color:var(--red);}
+.countdown i{font-size:14px;}
+.qr-action-row{display:grid;grid-template-columns:1fr 38px 38px;gap:8px;align-items:center;}
+.btn-mini-icon{width:38px;height:38px;background:#fff;color:var(--ts);border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;}
+.btn-mini-icon:hover{background:var(--cream-d);}
+.btn-mini-icon.danger{color:var(--red);border-color:#F3B6B6;}
+.btn-mini-icon.danger:hover{background:var(--red-l);}
+.selected-session-edit-slot{margin-top:10px;}
+.selected-session-edit-slot:empty{display:none;}
+
+/* ADD SESSION FORM */
+.btn-add-session{width:100%;padding:11px;background:#fff;color:var(--terra);border:1.5px dashed var(--terra-l);border-radius:var(--r-md);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:10px;transition:background .2s;}
+.btn-add-session:hover{background:var(--terra-p);}
+.new-session-form{background:#fff;border-radius:var(--r-md);border:1.5px solid var(--terra);padding:16px;margin-bottom:10px;display:none;flex-direction:column;gap:10px;box-shadow:var(--shadow);}
+.new-session-form.open{display:flex;}
+.new-session-form h4{font-size:13px;font-weight:700;color:var(--tm);}
+.new-form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.new-form-input{width:100%;padding:10px 12px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:13px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
+.new-form-input:focus{border-color:var(--terra);}
+.new-form-select{width:100%;padding:10px 12px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:13px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;appearance:none;}
+.new-form-select:focus{border-color:var(--terra);}
+.new-form-actions{display:flex;gap:8px;}
+.btn-create{flex:1;padding:10px;background:var(--terra);color:#fff;border:none;border-radius:var(--r-sm);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .2s;}
+.btn-create:hover{opacity:.9;}
+.btn-create:disabled{opacity:.4;cursor:not-allowed;}
+.btn-cancel-new{padding:10px 14px;background:#fff;color:var(--ts);border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);}
+
+/* INLINE EDIT FORM */
+.sess-edit-form{background:var(--cream);border-radius:var(--r-md);padding:12px;margin-top:10px;border:1.5px solid var(--terra-l);display:none;flex-direction:column;gap:9px;}
+.sess-edit-form.open{display:flex;}
+.edit-form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.edit-form-input{width:100%;padding:9px 11px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:12px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
+.edit-form-input:focus{border-color:var(--terra);}
+.edit-form-select{width:100%;padding:9px 11px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:12px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;appearance:none;}
+.edit-form-select:focus{border-color:var(--terra);}
+.edit-form-actions{display:flex;gap:7px;}
+.btn-save{flex:1;padding:9px;background:var(--terra);color:#fff;border:none;border-radius:var(--r-sm);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:5px;transition:opacity .2s;}
+.btn-save:hover{opacity:.9;}
+.btn-cancel-edit{padding:9px 14px;background:#fff;color:var(--ts);border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);}
+.btn-cancel-edit:hover{background:var(--cream-d);}
+
+/* DATA / DOWNLOAD PANEL */
+.data-panel{background:#fff;border-radius:var(--r-lg);border:.5px solid #E8DDD4;padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;}
+.data-panel-row{display:grid;grid-template-columns:1fr;gap:9px;}
+.btn-download-history{width:100%;padding:9px 12px;background:#fff;color:var(--green-d);border:1.5px solid var(--green);border-radius:var(--r-sm);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px;transition:background .2s;white-space:nowrap;}
+.btn-download-history:hover{background:var(--green-l);}
+
+/* ADMIN PARTICIPANTS */
+.search-wrap{position:relative;margin-bottom:12px;}
+.search-input{width:100%;padding:12px 16px 12px 42px;border:1.5px solid var(--cream-d);border-radius:var(--r-md);font-size:14px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;transition:border-color .2s;}
+.search-input:focus{border-color:var(--terra);}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ts);font-size:18px;pointer-events:none;}
+.filter-row{display:flex;gap:7px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;}
+.filter-row::-webkit-scrollbar{display:none;}
+.fbtn{flex-shrink:0;padding:8px 14px;border-radius:99px;border:1.5px solid var(--cream-d);background:#fff;font-size:12px;font-weight:700;color:var(--ts);cursor:pointer;font-family:var(--font);white-space:nowrap;transition:.2s;}
+.fbtn.active{background:var(--terra);border-color:var(--terra);color:#fff;}
+.a-table{display:flex;flex-direction:column;gap:10px;}
+.a-card{background:#fff;border-radius:var(--r-md);border:.5px solid #E8DDD4;padding:16px;box-shadow:var(--shadow);}
+.a-card-top{display:flex;align-items:center;gap:11px;margin-bottom:12px;}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--terra-p);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--terra);flex-shrink:0;}
+.a-pname{font-size:14px;font-weight:700;color:var(--tm);}
+.a-pmeta{font-size:11px;color:var(--ts);}
+.a-stamp-bar{margin-bottom:12px;}
+.a-stamp-label{display:flex;justify-content:space-between;margin-bottom:4px;}
+.a-stamp-lbl{font-size:11px;font-weight:600;color:var(--ts);}
+.a-stamp-val{font-size:11px;font-weight:700;color:var(--tm);}
+.mini-bar{height:6px;background:var(--cream-d);border-radius:99px;}
+.mini-fill{height:100%;background:var(--terra);border-radius:99px;}
+.stamp-history{margin-bottom:10px;border-radius:var(--r-sm);background:var(--cream);overflow:hidden;}
+.stamp-history-title{font-size:11px;font-weight:700;color:var(--ts);text-transform:uppercase;letter-spacing:.8px;padding:9px 10px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;}
+.stamp-history-title::-webkit-details-marker{display:none;}
+.stamp-history-title::after{content:'⌄';font-size:13px;color:var(--terra);transition:transform .2s;}
+.stamp-history[open] .stamp-history-title::after{transform:rotate(180deg);}
+.history-count{font-size:10px;font-weight:700;letter-spacing:0;text-transform:none;border-radius:99px;background:var(--blue-l);color:var(--blue-d);padding:3px 8px;margin-left:auto;}
+.stamp-history-rows{display:flex;flex-direction:column;gap:4px;padding:0 8px 8px;}
+.shrow{display:flex;align-items:center;justify-content:space-between;font-size:11px;padding:5px 8px;border-radius:7px;background:var(--cream);}
+.shrow-name{color:var(--tm);font-weight:600;}
+.shrow-ts{color:var(--ts);display:flex;align-items:center;gap:3px;}
+.shrow-ts i{font-size:11px;color:var(--terra-l);}
+.reward-rows{display:flex;flex-direction:column;gap:7px;}
+.rrow{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;border-radius:var(--r-sm);background:var(--cream);}
+.rleft{display:flex;align-items:center;gap:8px;}
+.ricon{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--navy);color:#fff;font-size:13px;}
+.rname{font-size:12px;font-weight:700;color:var(--tm);}
+.rsub{font-size:10px;color:var(--ts);}
+.rbadge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;white-space:nowrap;}
+.rbadge.done{background:var(--green-l);color:var(--green-d);}
+.rbadge.locked{background:var(--gray-l);color:var(--gray);}
+.btn-mark{font-size:11px;font-weight:700;padding:6px 12px;border-radius:99px;border:1.5px solid var(--terra);background:#fff;color:var(--terra);cursor:pointer;font-family:var(--font);transition:.2s;white-space:nowrap;}
+.btn-mark:hover{background:var(--terra-p);}
+.redeemed-date{font-size:10px;color:var(--ts);margin-top:2px;}
+.no-results{text-align:center;padding:32px 20px;color:var(--ts);font-size:14px;}
+.no-results i{font-size:40px;display:block;margin-bottom:10px;color:var(--terra-l);}
+.mt-16{margin-top:16px;}.mt-12{margin-top:12px;}
+
+/* TEMPLATE BUILDER */
+.tb-card{background:#fff;border-radius:var(--r-lg);border:.5px solid #E8DDD4;padding:16px;box-shadow:var(--shadow);}
+.tb-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.tb-field label{font-size:11px;font-weight:700;color:var(--ts);text-transform:uppercase;letter-spacing:.6px;display:block;margin-bottom:6px;}
+.tb-field input{width:100%;padding:10px 12px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:13px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
+.tb-field input:focus{border-color:var(--terra);}
+.tb-preview-wrap{background:var(--cream);border-radius:var(--r-md);padding:14px;margin-bottom:16px;}
+.tb-preview-title{font-size:11px;font-weight:700;color:var(--ts);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;}
+.tb-preview-track{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;}
+.tb-preview-stamp{flex-shrink:0;width:34px;height:34px;border-radius:50%;border:2px dashed var(--terra-l);background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--ts);position:relative;}
+.tb-preview-stamp.milestone{border:2px solid var(--green);background:var(--green-l);color:var(--green-d);}
+.tb-preview-stamp .mi{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--green-d);}
+.tb-milestones-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
+.tb-milestone-row{background:var(--cream);border-radius:var(--r-md);padding:12px;display:flex;flex-direction:column;gap:8px;border:1.5px solid var(--cream-d);}
+.tb-milestone-top{display:grid;grid-template-columns:70px 1fr 36px;gap:8px;align-items:end;}
+.tb-milestone-top input,.tb-milestone-top select{width:100%;padding:9px 10px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:12px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
+.tb-mini-label{font-size:9px;font-weight:700;color:var(--ts);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px;}
+.btn-remove-milestone{width:36px;height:36px;border:1.5px solid #F3B6B6;border-radius:var(--r-sm);background:#fff;color:var(--red);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;}
+.btn-remove-milestone:hover{background:var(--red-l);}
+.btn-add-milestone{width:100%;padding:10px;background:#fff;color:var(--green-d);border:1.5px dashed #BFE3D0;border-radius:var(--r-md);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:14px;transition:background .2s;}
+.btn-add-milestone:hover{background:var(--green-l);}
+.btn-save-template{width:100%;padding:13px;background:var(--navy);color:#fff;border:none;border-radius:var(--r-md);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:7px;transition:opacity .2s;}
+.btn-save-template:hover{opacity:.9;}
+.btn-save-template:disabled{opacity:.4;cursor:not-allowed;}
+.tb-divider{height:1px;background:var(--cream-d);margin:18px 0;}
+.tb-bulk-row{display:flex;gap:8px;align-items:stretch;}
+.tb-bulk-row input{flex:1;padding:10px 12px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:13px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
+.btn-bulk-create{padding:10px 16px;background:var(--terra);color:#fff;border:none;border-radius:var(--r-sm);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:6px;white-space:nowrap;transition:opacity .2s;}
+.btn-bulk-create:hover{opacity:.9;}
+.btn-bulk-create:disabled{opacity:.4;cursor:not-allowed;}
+.tb-admin-form{display:flex;flex-direction:column;gap:10px;}
+.tb-admin-form input{width:100%;padding:10px 12px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:13px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
+.tb-admin-form input:focus{border-color:var(--terra);}
+.btn-register-admin{width:100%;padding:11px;background:var(--navy);color:#fff;border:none;border-radius:var(--r-sm);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .2s;}
+.btn-register-admin:hover{opacity:.9;}
+.btn-register-admin:disabled{opacity:.4;cursor:not-allowed;}
+.tb-section-title{font-size:13px;font-weight:700;color:var(--tm);margin-bottom:4px;display:flex;align-items:center;gap:6px;}
+.tb-section-sub{font-size:11px;color:var(--ts);margin-bottom:12px;line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- AUTH -->
+<div class="screen active" id="screen-auth">
+  <div class="auth-hero">
+    <div class="auth-hero-icon"><i class="ti ti-robot"></i></div>
+    <h1>AI Community</h1><h2>Stamp Journey</h2>
+    <p>Collect stamps as you join each AI Community session and unlock rewards.</p>
+  </div>
+  <div class="auth-body">
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('login')">Sign In</button>
+      <button class="auth-tab" onclick="switchAuthTab('signup')">Create Account</button>
+    </div>
+    <div id="form-login">
+      <div id="login-error" class="error-msg"></div>
+      <div class="form-group"><label class="form-label">Organisation Email</label><input class="form-input" id="login-email" type="email" placeholder="you@company.com"></div>
+      <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="login-password" type="password" placeholder="••••••••"></div>
+      <button class="btn-primary" id="btn-login" onclick="handleLogin()"><i class="ti ti-login"></i> Sign In</button>
+    </div>
+    <div id="form-signup" style="display:none;">
+      <div id="signup-error" class="error-msg"></div>
+      <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" id="su-name" type="text" placeholder="e.g. Arisa Tanaka"></div>
+      <div class="form-group"><label class="form-label">Facility</label>
+        <select class="form-select" id="su-facility"><option value="">Select your facility</option><option>Bangkok HQ</option><option>Chiang Mai Branch</option><option>Phuket Office</option><option>Remote / WFH</option></select></div>
+      <div class="form-group"><label class="form-label">Organisation Email</label><input class="form-input" id="su-email" type="email" placeholder="you@company.com"><p class="form-hint">Use your official company email address.</p></div>
+      <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="su-password" type="password" placeholder="Min. 8 characters"></div>
+      <button class="btn-primary" id="btn-signup" onclick="handleSignUp()"><i class="ti ti-user-plus"></i> Create Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- PARTICIPANT -->
+<div class="screen" id="screen-participant">
+  <div class="p-header">
+    <div class="p-header-top">
+      <div class="p-header-brand">
+        <div class="p-header-icon"><i class="ti ti-robot"></i></div>
+        <div><div class="p-header-title">AI Community</div><div class="p-header-subtitle">Stamp Journey</div></div>
+      </div>
+      <button class="btn-ghost" onclick="logout()"><i class="ti ti-logout" style="font-size:13px;"></i> Sign out</button>
+    </div>
+    <div class="p-header-welcome" id="p-welcome">Hello 👋</div>
+    <div class="p-header-sub" id="p-facility"></div>
+  </div>
+  <div class="p-body">
+    <div class="section">
+      <div class="slabel">Your stamp card</div>
+      <div class="card">
+        <div class="track">
+          <div class="track-lbl" id="p-track-lbl"></div>
+          <div class="tline"><div class="tfill" id="p-fill"></div></div>
+          <div class="tdots" id="p-tdots"></div>
+        </div>
+        <div class="sgrid" id="p-stamps"></div>
+        <p class="ptxt">Collected: <strong id="p-count">0</strong> / <strong id="p-total">0</strong> stamps</p>
+        <div class="qr-section">
+          <h4>Your rewards</h4>
+          <p>Show your QR code to the facilitator to redeem. Only the facilitator can mark it as redeemed.</p>
+          <div class="qr-cards" id="p-reward-cards"></div>
+        </div>
+      </div>
+    </div>
+    <div class="section mt-16">
+      <div class="slabel">Sessions</div>
+      <div class="sess-grid" id="p-sessions"></div>
+      <div class="sess-pager" id="sess-pager" style="display:none;">
+        <button class="btn-pager" id="btn-prev-sess" onclick="changeSessionPage(-1)" aria-label="Previous sessions"><i class="ti ti-chevron-left"></i></button>
+        <span class="sess-pager-info" id="sess-pager-info"></span>
+        <button class="btn-pager" id="btn-next-sess" onclick="changeSessionPage(1)" aria-label="Next sessions"><i class="ti ti-chevron-right"></i></button>
+      </div>
+    </div>
+    <div class="p-actions">
+      <button class="btn-scan" id="btn-open-scanner" onclick="openScanner()">
+        <i class="ti ti-qrcode-scan"></i> Scan Session QR Code
+      </button>
+      <div class="feedback-card">
+        <h4>Give feedback</h4><p>Share your thoughts to help us improve the AI Community sessions.</p>
+        <div class="feedback-inner">
+          <div class="qr-mock"><i class="ti ti-qrcode" style="font-size:32px;color:var(--ts);"></i></div>
+          <div>
+            <p style="font-size:12px;font-weight:700;color:var(--tm);margin-bottom:3px;">Scan to give feedback</p>
+            <p style="font-size:11px;color:var(--ts);">Or open the form directly</p>
+            <button class="btn-feedback" onclick="alert('Feedback form opens here.')"><i class="ti ti-message-circle"></i> Open form</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="screen" id="screen-admin">
+  <div class="a-header">
+    <div class="a-header-top">
+      <div><h2><i class="ti ti-shield-check" style="font-size:18px;margin-right:6px;"></i>Admin Panel</h2><p id="a-logged-as"></p></div>
+      <button class="btn-ghost" onclick="logout()"><i class="ti ti-logout" style="font-size:13px;"></i> Sign out</button>
+    </div>
+  </div>
+  <div class="p-body">
+    <div class="section">
+      <div class="slabel">Overview</div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-num" id="a-total">0</div><div class="stat-lbl">Total participants</div></div>
+        <div class="stat-card"><div class="stat-num green" id="a-redeemed">0</div><div class="stat-lbl">Rewards redeemed</div></div>
+        <div class="stat-card"><div class="stat-num" id="a-eligible" style="color:var(--blue);">0</div><div class="stat-lbl">Eligible, not redeemed</div></div>
+        <div class="stat-card"><div class="stat-num" id="a-pending" style="color:var(--gray);">0</div><div class="stat-lbl">Not yet eligible</div></div>
+      </div>
+    </div>
+
+    <div class="section mt-16">
+      <div class="admin-tabs">
+        <button class="admin-tab-btn active" data-tab="sessions" onclick="setAdminTab('sessions')"><i class="ti ti-qrcode"></i> Sessions</button>
+        <button class="admin-tab-btn" data-tab="template" onclick="setAdminTab('template')"><i class="ti ti-stack-2"></i> Template Builder</button>
+        <button class="admin-tab-btn" data-tab="participants" onclick="setAdminTab('participants')"><i class="ti ti-users"></i> Participants</button>
+      </div>
+    </div>
+
+    <!-- TAB: SESSIONS -->
+    <div class="admin-tab-panel active" id="tab-sessions">
+      <div class="section mt-16">
+        <div class="slabel">Manage Sessions</div>
+        <div class="qr-panel">
+          <div class="qr-panel-select-row">
+            <select class="qr-session-select" id="qr-session-select" onchange="renderQRPanel()">
+              <option value="">— Select a session —</option>
+            </select>
+          </div>
+          <div id="qr-panel-content" style="display:none;">
+            <div class="qr-panel-body">
+              <div class="qr-display-wrap">
+                <div class="qr-display-box" id="qr-panel-box"></div>
+                <button class="btn-download-qr" id="btn-dl-qr" onclick="downloadPanelQR()"><i class="ti ti-download"></i> Download PNG</button>
+              </div>
+              <div class="qr-controls">
+                <div class="qr-status-row">
+                  <span class="qr-status-pill inactive" id="qr-panel-status">Inactive</span>
+                  <span class="scan-count-badge" id="qr-panel-count"><i class="ti ti-users" style="font-size:10px;"></i> 0 scanned</span>
+                </div>
+                <div class="selected-session-mini" id="selected-session-mini"></div>
+                <div class="qr-primary-row">
+                  <select class="duration-select" id="qr-panel-dur">
+                    <option value="5">5 minutes</option><option value="10">10 minutes</option>
+                    <option value="15" selected>15 minutes</option><option value="30">30 minutes</option>
+                    <option value="60">1 hour</option><option value="120">2 hours</option>
+                  </select>
+                  <button class="btn-activate" id="btn-panel-activate" onclick="activatePanelQR()"><i class="ti ti-qrcode"></i> Activate QR</button>
+                </div>
+                <div class="countdown" id="qr-panel-countdown" style="display:none;"><i class="ti ti-clock"></i> <span></span></div>
+                <div class="qr-action-row">
+                  <span></span>
+                  <button class="btn-mini-icon" id="btn-selected-edit" title="Edit session" onclick="openSelectedEdit()"><i class="ti ti-pencil"></i></button>
+                  <button class="btn-mini-icon danger" id="btn-selected-delete" title="Delete session" onclick="deleteSelectedSession()"><i class="ti ti-trash"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="selected-session-edit-slot" id="selected-session-card"></div>
+          </div>
+        </div>
+
+        <button class="btn-add-session" id="btn-show-new-form" onclick="toggleNewSessionForm(true)" style="margin-top:12px;"><i class="ti ti-plus"></i> Add New Session</button>
+        <div class="new-session-form" id="new-session-form">
+          <h4><i class="ti ti-plus" style="font-size:13px;color:var(--terra);margin-right:4px;"></i>New Session</h4>
+          <div><label class="form-label" style="font-size:11px;">Session Name</label><input class="new-form-input" id="new-sess-name" type="text" placeholder="e.g. Session 11"></div>
+          <div class="new-form-row">
+            <div><label class="form-label" style="font-size:11px;display:block;margin-bottom:5px;">Type</label>
+              <select class="new-form-select" id="new-sess-type"><option value="Sharing">Sharing</option><option value="Workshop">Workshop</option><option value="Sharing &amp; Workshop">Sharing &amp; Workshop</option></select></div>
+            <div><label class="form-label" style="font-size:11px;display:block;margin-bottom:5px;">Time</label><input class="new-form-input" id="new-sess-time" type="text" placeholder="e.g. 09:00–10:00"></div>
+          </div>
+          <div><label class="form-label" style="font-size:11px;display:block;margin-bottom:5px;">Location</label>
+            <select class="new-form-select" id="new-sess-loc"><option value="Building1">Building1</option><option value="Building2">Building2</option><option value="Building3">Building3</option></select></div>
+          <div><label class="form-label" style="font-size:11px;display:block;margin-bottom:5px;">Description</label><input class="new-form-input" id="new-sess-desc" type="text" placeholder="Short description"></div>
+          <div class="new-form-actions">
+            <button class="btn-create" id="btn-create-session" onclick="createSession()"><i class="ti ti-check"></i> Create Session</button>
+            <button class="btn-cancel-new" onclick="toggleNewSessionForm(false)">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section mt-16">
+        <div class="slabel">Data collections</div>
+        <div class="data-panel">
+          <div class="data-panel-row">
+            <select class="qr-session-select" id="data-session-select">
+              <option value="all">All sessions</option>
+            </select>
+            <button class="btn-download-history" onclick="downloadSelectedScanHistory()"><i class="ti ti-table-export"></i> Download scan history</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: TEMPLATE BUILDER -->
+    <div class="admin-tab-panel" id="tab-template">
+      <div class="section mt-16">
+        <div class="slabel">Stamp Track Template</div>
+        <div class="tb-card">
+          <div class="tb-section-title"><i class="ti ti-stack-2" style="color:var(--terra);"></i> Track setup</div>
+          <p class="tb-section-sub">Choose the total number of stamps in the journey, then add as many reward milestones as you like — each one fires at a specific stamp number.</p>
+
+          <div class="tb-row">
+            <div class="tb-field">
+              <label>Total Stamps</label>
+              <input type="number" id="tb-total-stamps" min="1" max="100" value="10" oninput="renderTemplatePreview()">
+            </div>
+          </div>
+
+          <div class="tb-preview-wrap">
+            <div class="tb-preview-title">Live preview</div>
+            <div class="tb-preview-track" id="tb-preview-track"></div>
+          </div>
+
+          <div class="tb-section-title" style="margin-top:4px;"><i class="ti ti-gift" style="color:var(--green-d);"></i> Reward milestones</div>
+          <div class="tb-milestones-list" id="tb-milestones-list"></div>
+          <button class="btn-add-milestone" onclick="addMilestoneRow()"><i class="ti ti-plus"></i> Add milestone</button>
+
+          <div id="tb-save-error" class="error-msg"></div>
+          <div id="tb-save-success" class="success-msg"></div>
+          <button class="btn-save-template" id="btn-save-template" onclick="saveTemplate()"><i class="ti ti-device-floppy"></i> Save Template</button>
+
+          <div class="tb-divider"></div>
+
+          <div class="tb-section-title"><i class="ti ti-copy" style="color:var(--terra);"></i> Bulk-create sessions</div>
+          <p class="tb-section-sub">Quickly generate placeholder sessions ("Session N") matching your track. Edit each one afterwards in the Sessions tab to set time, location, and description.</p>
+          <div class="tb-bulk-row">
+            <input type="number" id="tb-bulk-count" min="1" max="50" placeholder="e.g. 10">
+            <button class="btn-bulk-create" id="btn-bulk-create" onclick="bulkCreateSessionsUI()"><i class="ti ti-plus"></i> Generate sessions</button>
+          </div>
+          <div id="tb-bulk-msg" class="success-msg" style="margin-top:10px;"></div>
+
+          <div class="tb-divider"></div>
+
+          <div class="tb-section-title"><i class="ti ti-user-shield" style="color:var(--navy);"></i> Register a new admin</div>
+          <p class="tb-section-sub">Create another admin account so a co-facilitator can manage sessions and rewards too.</p>
+          <div class="tb-admin-form">
+            <input type="text" id="reg-admin-name" placeholder="Full name">
+            <input type="email" id="reg-admin-email" placeholder="Organisation email">
+            <input type="password" id="reg-admin-password" placeholder="Temporary password (min. 8 chars)">
+            <div id="reg-admin-error" class="error-msg"></div>
+            <div id="reg-admin-success" class="success-msg"></div>
+            <button class="btn-register-admin" id="btn-register-admin" onclick="registerAdminUI()"><i class="ti ti-user-plus"></i> Register Admin</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: PARTICIPANTS -->
+    <div class="admin-tab-panel" id="tab-participants">
+      <div class="section mt-16">
+        <div class="slabel">Participants</div>
+        <div class="search-wrap"><i class="ti ti-search search-icon"></i><input class="search-input" id="a-search" type="text" placeholder="Search by name or email…" oninput="renderAdminParticipants()"></div>
+        <div class="filter-row">
+          <button class="fbtn active" onclick="setFilter(this,'all')">All</button>
+          <button class="fbtn" onclick="setFilter(this,'eligible')">Eligible — not redeemed</button>
+          <button class="fbtn" onclick="setFilter(this,'redeemed')">Has redeemed something</button>
+        </div>
+      </div>
+      <div class="section mt-12"><div class="a-table" id="a-table"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- QR SCANNER MODAL -->
+<div class="modal-overlay" id="scanner-overlay">
+  <div class="scanner-modal">
+    <div class="scanner-header">
+      <h3><i class="ti ti-qrcode-scan" style="margin-right:6px;"></i>Scan Session QR</h3>
+      <button class="btn-close-modal" onclick="closeScanner()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="scanner-body">
+      <div id="scan-result-card" class="scan-result-card" style="display:none;">
+        <div class="scan-result-icon" id="scan-result-icon">✅</div>
+        <h4 id="scan-result-title">Stamp collected!</h4>
+        <p id="scan-result-body"></p>
+      </div>
+      <div id="scanner-live-area">
+        <div class="scanner-viewfinder">
+          <video id="scanner-video" autoplay muted playsinline></video>
+          <canvas id="scanner-canvas"></canvas>
+          <div class="scan-guide"><div class="scan-guide-box"></div></div>
+        </div>
+        <div class="scanner-status" id="scanner-status">Initialising camera…</div>
+        <p class="scanner-note">Point your camera at the QR code displayed by the facilitator.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbx9FDwSPE9aAROR2MU_MYpTI_xP_ZtbqokQTd98Ajx5KnkYqCrp1xqakisNwiHh7Ki9kw/exec';
+
+var currentUser = null, allSessions = [], adminUsers = [], activeFilter = 'all';
+var scanStream = null, scanAnimFrame = null, scanDone = false;
+var countdownTimer = null;
+var sessionPage = 0;
+var SESSION_PAGE_SIZE = 3;
+var LOCATION_OPTIONS = ['Building1','Building2','Building3'];
+var currentTemplate = { totalStamps: 10, milestones: [] };
+var builderMilestones = []; // working copy while editing in Template Builder
+
+function apiRequest(action, payload) {
+  payload = payload || {};
+  payload.action = action;
+  return fetch(GAS_URL, { method:'POST', redirect:'follow', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload) })
+    .then(function(r){ if(!r.ok) throw new Error('Network error'); return r.json(); })
+    .then(function(res){ if(res.ok!==true) throw new Error(res.message||'Request failed.'); return res; })
+    .catch(function(err){ throw new Error(err.message||String(err)); });
+}
+function busy(id,lbl){ var b=document.getElementById(id); if(!b) return; b.dataset.orig=b.innerHTML; b.disabled=true; b.innerHTML='<i class="ti ti-loader-2"></i> '+lbl; }
+function restore(id){ var b=document.getElementById(id); if(!b) return; if(b.dataset.orig) b.innerHTML=b.dataset.orig; b.disabled=false; }
+
+function normalizeUser(u){
+  var name=String(u.name||u.full_name||'');
+  var init=name.split(' ').filter(Boolean).map(function(w){return w[0];}).join('').toUpperCase().slice(0,2)||'U';
+  return { id:String(u.id||u.user_id||''), name:name, initials:init, facility:String(u.facility||''),
+    email:String(u.email||'').toLowerCase(), role:String(u.role||'participant').toLowerCase(),
+    stamps:Number(u.stamps||0), totalStamps:Number(u.totalStamps||10),
+    claimedSessions:Array.isArray(u.claimedSessions)?u.claimedSessions.map(Number):[],
+    scanTimestamps:u.scanTimestamps||{},
+    rewards: Array.isArray(u.rewards) ? u.rewards.map(function(r){
+      return { id:String(r.id||''), position:Number(r.position||0), name:String(r.name||'Reward'),
+        icon:String(r.icon||'ti-gift'), eligible:Boolean(r.eligible), redeemed:Boolean(r.redeemed),
+        redeemedAt:r.redeemedAt||null };
+    }) : []
+  };
+}
+function normalizeSession(s){
+  return { id:Number(s.id||s.session_id||0), name:String(s.name||s.session_name||'Session'),
+    type:String(s.type||s.session_type||'Sharing'), desc:String(s.desc||s.description||''),
+    icon:String(s.icon||'ti-brain'), location:String(s.location||''), time:String(s.time||''),
+    qrActive:Boolean(s.qrActive), qrExpiresAt:Number(s.qrExpiresAt||0), qrToken:String(s.qrToken||'') };
+}
+function normalizeTemplate(t){
+  if(!t) return { totalStamps:10, milestones:[] };
+  return {
+    totalStamps: Number(t.totalStamps||10),
+    milestones: Array.isArray(t.milestones) ? t.milestones.map(function(m){
+      return { id:String(m.id||('m'+m.position)), position:Number(m.position), name:String(m.name||'Reward'), icon:String(m.icon||'ti-gift') };
+    }).sort(function(a,b){ return a.position-b.position; }) : []
+  };
+}
+function htmlAttr(v){ return String(v||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function buildLocationOptions(selected){
+  selected=String(selected||'');
+  return LOCATION_OPTIONS.map(function(loc){
+    return '<option value="'+htmlAttr(loc)+'"'+(loc===selected?' selected':'')+'>'+loc+'</option>';
+  }).join('');
+}
+function formatDateOnly(ts){
+  if(!ts) return '';
+  var d=new Date(ts);
+  if(!isNaN(d.getTime()))
+    return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();
+  var mo={Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12};
+  var p=ts.split(' ');
+  if(p.length>=3) return String(p[0]).padStart(2,'0')+'/'+(mo[p[1]]?String(mo[p[1]]).padStart(2,'0'):'00')+'/'+p[2];
+  return ts;
+}
+
+(function init(){
+  var saved=localStorage.getItem('aiStampSession');
+  if(saved){ try{ currentUser=normalizeUser(JSON.parse(saved)); bootUser(); }catch(e){ localStorage.removeItem('aiStampSession'); } }
+})();
+
+function switchAuthTab(tab){
+  document.querySelectorAll('.auth-tab').forEach(function(el,i){ el.classList.toggle('active',['login','signup'][i]===tab); });
+  document.getElementById('form-login').style.display=tab==='login'?'block':'none';
+  document.getElementById('form-signup').style.display=tab==='signup'?'block':'none';
+}
+function showErr(id,msg){ var el=document.getElementById(id); el.textContent=msg; el.style.display='block'; setTimeout(function(){ el.style.display='none'; },5000); }
+function showOk(id,msg){ var el=document.getElementById(id); el.textContent=msg; el.style.display='block'; setTimeout(function(){ el.style.display='none'; },4000); }
+
+async function handleLogin(){
+  busy('btn-login','Signing in…');
+  try{
+    var email=document.getElementById('login-email').value.trim().toLowerCase();
+    var password=document.getElementById('login-password').value;
+    if(!email||!password){ showErr('login-error','Enter your email and password.'); return; }
+    finishAuth(await apiRequest('login',{email,password}));
+  }catch(e){ showErr('login-error',e.message); }
+  finally{ restore('btn-login'); }
+}
+async function handleSignUp(){
+  busy('btn-signup','Creating…');
+  try{
+    var name=document.getElementById('su-name').value.trim();
+    var facility=document.getElementById('su-facility').value;
+    var email=document.getElementById('su-email').value.trim().toLowerCase();
+    var password=document.getElementById('su-password').value;
+    if(!name){ showErr('signup-error','Please enter your full name.'); return; }
+    if(!facility){ showErr('signup-error','Please select your facility.'); return; }
+    if(!email||!email.includes('@')){ showErr('signup-error','Enter a valid email.'); return; }
+    if(password.length<8){ showErr('signup-error','Password must be at least 8 characters.'); return; }
+    finishAuth(await apiRequest('signup',{name,facility,email,password}));
+  }catch(e){ showErr('signup-error',e.message); }
+  finally{ restore('btn-signup'); }
+}
+function finishAuth(data){
+  currentUser=normalizeUser(data.user);
+  allSessions=(data.sessions||[]).map(normalizeSession);
+  localStorage.setItem('aiStampSession',JSON.stringify(currentUser));
+  bootUser();
+}
+function logout(){
+  localStorage.removeItem('aiStampSession');
+  currentUser=null; allSessions=[]; adminUsers=[]; activeFilter='all';
+  if(countdownTimer){ clearInterval(countdownTimer); countdownTimer=null; }
+  showScreen('auth');
+}
+async function bootUser(){
+  if(!currentUser) return;
+  if(currentUser.role==='admin'){
+    try{
+      var data=await apiRequest('getAdminParticipants',{adminEmail:currentUser.email});
+      adminUsers=(data.participants||[]).map(normalizeUser);
+      allSessions=(data.sessions||[]).map(normalizeSession);
+      currentTemplate=normalizeTemplate(data.template);
+    }catch(e){ console.error(e); }
+    document.getElementById('a-logged-as').textContent=currentUser.name+' · '+currentUser.email;
+    renderAdmin(); showScreen('admin');
+  } else {
+    sessionPage=0;
+    try{
+      var prof=await apiRequest('getProfile',{userId:currentUser.id,email:currentUser.email});
+      currentUser=normalizeUser(prof.user);
+      allSessions=(prof.sessions||[]).map(normalizeSession);
+      localStorage.setItem('aiStampSession',JSON.stringify(currentUser));
+    }catch(e){ console.error(e); }
+    renderParticipant(); showScreen('participant');
+  }
+}
+function showScreen(name){ document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); }); document.getElementById('screen-'+name).classList.add('active'); }
+
+// ══ PARTICIPANT ══
+function renderParticipant(){
+  var u=currentUser;
+  document.getElementById('p-welcome').textContent='Hello, '+u.name.split(' ')[0]+' 👋';
+  document.getElementById('p-facility').textContent=u.facility+' · '+u.email;
+  renderStamps(); renderSessions();
+}
+
+function renderStamps(){
+  var u=currentUser;
+  var total = u.totalStamps || 10;
+  var milestonePositions = {};
+  u.rewards.forEach(function(r){ milestonePositions[r.position] = r; });
+
+  var grid=document.getElementById('p-stamps');
+  grid.innerHTML='';
+  for(var i=1;i<=total;i++){
+    var filled=i<=u.stamps, div=document.createElement('div');
+    var isMilestone = !!milestonePositions[i];
+    div.className='stamp '+(filled?'col':'unc')+(isMilestone?' milestone':'');
+    var badge = isMilestone ? '<span class="stamp-milestone-badge"><i class="ti ti-gift"></i></span>' : '';
+    div.innerHTML=badge+'<span class="snum">'+i+'</span>'+(filled?'<svg class="stamp-cat-svg" viewBox="0 0 100 100"><path d="M14 18 Q14 13 19 12 L39 19 Q45 21 50 21 Q55 21 61 19 L81 12 Q86 13 86 18 L83 48 Q87 56 85 63 L83 68 L92 68 Q94 68 94 70 L94 71 Q94 73 92 73 L82 73 L80 76 L92 80 Q94 81 93 83 L92 85 Q91 87 88 86 L77 82 Q67 96 50 96 Q33 96 23 82 L12 86 Q9 87 8 85 L7 83 Q6 81 8 80 L20 76 L18 73 L8 73 Q6 73 6 71 L6 70 Q6 68 8 68 L17 68 L15 63 Q13 56 17 48 Z" fill="currentColor"/></svg>':'');
+    grid.appendChild(div);
+  }
+  document.getElementById('p-count').textContent=u.stamps;
+  document.getElementById('p-total').textContent=total;
+  document.getElementById('p-fill').style.width=Math.min(100, total ? (u.stamps/total*100) : 0)+'%';
+
+  // Track labels + dots: Start + one per milestone
+  var lblWrap=document.getElementById('p-track-lbl');
+  var dotsWrap=document.getElementById('p-tdots');
+  lblWrap.innerHTML='<span class="tl">Start</span>'+u.rewards.map(function(r){
+    return '<span class="tl">'+r.position+' pts</span>';
+  }).join('');
+  dotsWrap.innerHTML='<div class="dot r"></div>'+u.rewards.map(function(r){
+    return '<div class="dot'+(u.stamps>=r.position?' reached':'')+'"></div>';
+  }).join('');
+
+  document.getElementById('btn-open-scanner').disabled = total>0 && u.stamps>=total;
+
+  renderRewardCards();
+}
+
+function renderRewardCards(){
+  var u=currentUser;
+  var wrap=document.getElementById('p-reward-cards');
+  wrap.innerHTML='';
+  if(!u.rewards.length){
+    wrap.innerHTML='<p style="font-size:12px;color:var(--ts);">No rewards configured yet.</p>';
+    return;
+  }
+  u.rewards.forEach(function(r,idx){
+    var card=document.createElement('div');
+    card.className='qr-card';
+    var svgId='reward-qr-'+idx;
+    if(r.redeemed){
+      card.classList.add('redeemed-qr');
+      card.innerHTML=
+        '<div class="qr-box"><i class="ti '+r.icon+'" style="font-size:28px;color:#999;"></i></div>'+
+        '<div class="qr-lbl">'+htmlAttr(r.name)+'</div>'+
+        '<div class="qr-sub"><span class="redeemed-tag"><i class="ti ti-check" style="font-size:10px;"></i> Redeemed</span></div>';
+    } else if(r.eligible){
+      card.classList.add('active-qr');
+      card.innerHTML=
+        '<div class="qr-box"><svg width="60" height="60" viewBox="0 0 60 60" id="'+svgId+'"></svg></div>'+
+        '<div class="qr-lbl">'+htmlAttr(r.name)+'</div>'+
+        '<div class="qr-sub">Show to facilitator</div>';
+    } else {
+      card.classList.add('locked');
+      card.innerHTML=
+        '<div class="qr-box"><i class="ti '+r.icon+'" style="font-size:28px;color:var(--ts);"></i></div>'+
+        '<div class="qr-lbl">'+htmlAttr(r.name)+'</div>'+
+        '<div class="qr-sub">'+r.position+' stamps needed</div>';
+    }
+    wrap.appendChild(card);
+    if(r.eligible && !r.redeemed) drawSVGQR(svgId, r.position + idx);
+  });
+}
+
+function drawSVGQR(svgId,seed){
+  var svg=document.getElementById(svgId); if(!svg) return; svg.innerHTML='';
+  var G=7,CS=8,PAD=2,pat=[];
+  for(var r=0;r<G;r++){pat.push([]);for(var c=0;c<G;c++)pat[r].push(((seed*31+r*17+c*7+r*c*seed)%3)===0?1:0);}
+  [[0,0],[4,0],[0,4]].forEach(function(p){for(var rr=0;rr<3;rr++)for(var cc=0;cc<3;cc++)pat[p[0]+rr][p[1]+cc]=(rr===1&&cc===1)?0:1;});
+  for(var r2=0;r2<G;r2++)for(var c2=0;c2<G;c2++){
+    if(!pat[r2][c2]) continue;
+    var rect=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    rect.setAttribute('x',String(PAD+c2*CS)); rect.setAttribute('y',String(PAD+r2*CS));
+    rect.setAttribute('width',String(CS-1)); rect.setAttribute('height',String(CS-1));
+    rect.setAttribute('fill','#2C1F14'); svg.appendChild(rect);
+  }
+}
+
+function renderSessions(){
+  var u=currentUser, grid=document.getElementById('p-sessions');
+  grid.innerHTML='';
+  var total=allSessions.length;
+  var totalPages=Math.max(1,Math.ceil(total/SESSION_PAGE_SIZE));
+  if(sessionPage>=totalPages) sessionPage=0;
+  if(sessionPage<0) sessionPage=totalPages-1;
+  var start=sessionPage*SESSION_PAGE_SIZE;
+  var visible=allSessions.slice(start,start+SESSION_PAGE_SIZE);
+  visible.forEach(function(s){
+    var claimed=u.claimedSessions.indexOf(s.id)!==-1;
+    var status=claimed?'col':(s.qrActive?'avl':'upc');
+    var lbl=claimed?'Collected':(s.qrActive?'QR Active':'Upcoming');
+    var icon=claimed?'ti-check':(s.qrActive?'ti-qrcode-scan':'ti-clock');
+    var rawTs=u.scanTimestamps&&u.scanTimestamps[s.id]?u.scanTimestamps[s.id]:'';
+    var dateOnly=rawTs?formatDateOnly(rawTs):'';
+    var tsHtml=dateOnly?'<div class="scan-ts"><i class="ti ti-calendar"></i>Stamped: '+dateOnly+'</div>':'';
+    var metaParts=[];
+    if(s.time)     metaParts.push('<span class="sess-meta-pill"><i class="ti ti-clock"></i>'+s.time+'</span>');
+    if(s.location) metaParts.push('<span class="sess-meta-pill"><i class="ti ti-map-pin"></i>'+s.location+'</span>');
+    var metaHtml=metaParts.length?'<div class="sess-meta">'+metaParts.join('')+'</div>':'';
+    var card=document.createElement('div');
+    card.className='sess-card';
+    card.innerHTML=
+      '<div class="sess-ic '+status+'"><i class="ti '+s.icon+'" style="font-size:17px;"></i></div>'+
+      '<div style="flex:1;min-width:0;">'+
+        '<div class="stop"><span class="sname">'+s.name+'</span><span class="pb">1 pt</span></div>'+
+        '<div class="stype">'+s.type+'</div>'+
+        '<div class="sdesc">'+s.desc+'</div>'+
+        metaHtml+
+        '<span class="spill '+status+'" style="margin-top:6px;"><i class="ti '+icon+'" style="font-size:10px;"></i> '+lbl+'</span>'+
+        tsHtml+
+      '</div>';
+    grid.appendChild(card);
+  });
+  var pager=document.getElementById('sess-pager');
+  var prevBtn=document.getElementById('btn-prev-sess');
+  var nextBtn=document.getElementById('btn-next-sess');
+  var info=document.getElementById('sess-pager-info');
+  if(total>SESSION_PAGE_SIZE){
+    pager.style.display='flex';
+    prevBtn.disabled=(sessionPage===0);
+    nextBtn.disabled=(sessionPage>=totalPages-1);
+    info.textContent=(start+1)+'–'+Math.min(total,start+SESSION_PAGE_SIZE)+' of '+total;
+  } else {
+    pager.style.display='none';
+  }
+}
+
+function changeSessionPage(dir){
+  var total=allSessions.length;
+  var totalPages=Math.max(1,Math.ceil(total/SESSION_PAGE_SIZE));
+  sessionPage=Math.max(0,Math.min(totalPages-1,sessionPage+dir));
+  renderSessions();
+}
+
+// ── QR Scanner ──
+function openScanner(){
+  document.getElementById('scanner-overlay').classList.add('open');
+  document.getElementById('scan-result-card').style.display='none';
+  document.getElementById('scanner-live-area').style.display='block';
+  document.getElementById('scanner-status').textContent='Initialising camera…';
+  document.getElementById('scanner-status').className='scanner-status';
+  scanDone=false; startCamera();
+}
+function closeScanner(){ document.getElementById('scanner-overlay').classList.remove('open'); stopCamera(); }
+function startCamera(){
+  navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}})
+    .then(function(stream){
+      scanStream=stream;
+      var v=document.getElementById('scanner-video'); v.srcObject=stream; v.play();
+      document.getElementById('scanner-status').textContent='Align QR code inside the frame';
+      requestAnimationFrame(scanFrame);
+    })
+    .catch(function(err){ document.getElementById('scanner-status').textContent='Camera error: '+err.message; document.getElementById('scanner-status').className='scanner-status error'; });
+}
+function stopCamera(){
+  if(scanAnimFrame){ cancelAnimationFrame(scanAnimFrame); scanAnimFrame=null; }
+  if(scanStream){ scanStream.getTracks().forEach(function(t){ t.stop(); }); scanStream=null; }
+  var v=document.getElementById('scanner-video'); if(v) v.srcObject=null;
+}
+function scanFrame(){
+  if(scanDone) return;
+  var v=document.getElementById('scanner-video'), c=document.getElementById('scanner-canvas');
+  if(!v||!c) return;
+  if(v.readyState!==v.HAVE_ENOUGH_DATA){ scanAnimFrame=requestAnimationFrame(scanFrame); return; }
+  c.width=v.videoWidth; c.height=v.videoHeight;
+  var ctx=c.getContext('2d'); ctx.drawImage(v,0,0,c.width,c.height);
+  var img=ctx.getImageData(0,0,c.width,c.height);
+  var code=jsQR(img.data,img.width,img.height,{inversionAttempts:'dontInvert'});
+  if(code&&code.data){ scanDone=true; stopCamera(); submitQRToken(code.data); }
+  else { scanAnimFrame=requestAnimationFrame(scanFrame); }
+}
+async function submitQRToken(token){
+  document.getElementById('scanner-status').textContent='Verifying…';
+  try{
+    var data=await apiRequest('scanQR',{userId:currentUser.id,email:currentUser.email,qrToken:token});
+    currentUser=normalizeUser(data.user);
+    if(data.sessions) allSessions=data.sessions.map(normalizeSession);
+    localStorage.setItem('aiStampSession',JSON.stringify(currentUser));
+    document.getElementById('scanner-live-area').style.display='none';
+    var rc=document.getElementById('scan-result-card');
+    rc.className='scan-result-card'; rc.style.display='block';
+    document.getElementById('scan-result-icon').textContent='✅';
+    document.getElementById('scan-result-title').textContent='Stamp collected!';
+    document.getElementById('scan-result-body').textContent=data.sessionName+'\nStamped on: '+formatDateOnly(data.scannedAt||'');
+    renderParticipant();
+    setTimeout(function(){ closeScanner(); },3000);
+  }catch(e){
+    document.getElementById('scanner-live-area').style.display='none';
+    var rc=document.getElementById('scan-result-card');
+    rc.className='scan-result-card error-card'; rc.style.display='block';
+    document.getElementById('scan-result-icon').textContent='❌';
+    document.getElementById('scan-result-title').textContent='Could not claim stamp';
+    document.getElementById('scan-result-body').textContent=e.message;
+    setTimeout(function(){ rc.style.display='none'; document.getElementById('scanner-live-area').style.display='block'; scanDone=false; startCamera(); },3000);
+  }
+}
+
+// ══ ADMIN ══
+function renderAdmin(){
+  populateQRSessionSelect(); populateDataSessionSelect(); renderQRPanel(); renderAdminParticipants();
+  syncTemplateBuilderFromCurrent();
+}
+
+function setAdminTab(tab){
+  document.querySelectorAll('.admin-tab-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.tab===tab); });
+  document.querySelectorAll('.admin-tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('tab-'+tab).classList.add('active');
+  if(tab==='template') syncTemplateBuilderFromCurrent();
+}
+
+// ── Session dropdowns ──
+function populateQRSessionSelect(){
+  var sel=document.getElementById('qr-session-select');
+  var current=sel.value;
+  sel.innerHTML='<option value="">— Select a session —</option>';
+  allSessions.forEach(function(s){
+    var opt=document.createElement('option');
+    opt.value=s.id; opt.textContent=s.name+(s.location?' · '+s.location:'');
+    sel.appendChild(opt);
+  });
+  if(current) sel.value=current;
+}
+function populateDataSessionSelect(){
+  var sel=document.getElementById('data-session-select'); if(!sel) return;
+  var current=sel.value||'all';
+  sel.innerHTML='<option value="all">All sessions</option>';
+  allSessions.forEach(function(s){
+    var opt=document.createElement('option');
+    opt.value=s.id; opt.textContent=s.name+(s.location?' · '+s.location:'');
+    sel.appendChild(opt);
+  });
+  sel.value=Array.prototype.some.call(sel.options,function(o){ return o.value===current; })?current:'all';
+}
+
+function renderQRPanel(){
+  if(countdownTimer){ clearInterval(countdownTimer); countdownTimer=null; }
+  var sid=Number(document.getElementById('qr-session-select').value);
+  var content=document.getElementById('qr-panel-content');
+  if(!sid){ content.style.display='none'; document.getElementById('selected-session-card').innerHTML=''; return; }
+  var s=allSessions.find(function(x){ return x.id===sid; });
+  if(!s){ content.style.display='none'; document.getElementById('selected-session-card').innerHTML=''; return; }
+  content.style.display='block';
+
+  var isActive=s.qrActive&&s.qrExpiresAt>Date.now();
+  var claimCount=adminUsers.filter(function(u){ return u.claimedSessions.indexOf(sid)!==-1; }).length;
+
+  var pill=document.getElementById('qr-panel-status');
+  pill.textContent=isActive?'Active':'Inactive';
+  pill.className='qr-status-pill '+(isActive?'active':'inactive');
+  document.getElementById('qr-panel-count').innerHTML='<i class="ti ti-users" style="font-size:10px;"></i> '+claimCount+' scanned';
+
+  var mini=document.getElementById('selected-session-mini');
+  mini.innerHTML='<strong>'+htmlAttr(s.name)+'</strong>'+(s.type?' &nbsp;·&nbsp; '+htmlAttr(s.type):'')+(s.time?' &nbsp;·&nbsp; '+htmlAttr(s.time):'')+(s.location?' &nbsp;·&nbsp; '+htmlAttr(s.location):'');
+
+  document.getElementById('btn-panel-activate').innerHTML='<i class="ti ti-qrcode"></i> '+(isActive?'Refresh QR':'Activate QR');
+
+  var box=document.getElementById('qr-panel-box');
+  box.innerHTML='';
+  if(isActive&&s.qrToken){
+    try{ new QRCode(box,{text:s.qrToken,width:148,height:148,colorDark:'#2C1F14',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.L}); }catch(e){}
+    document.getElementById('btn-dl-qr').style.display='flex';
+  } else {
+    box.style.fontSize='11px'; box.style.color='var(--ts)'; box.style.textAlign='center'; box.style.padding='8px';
+    box.textContent='No QR active';
+    document.getElementById('btn-dl-qr').style.display='none';
+  }
+
+  var cdEl=document.getElementById('qr-panel-countdown');
+  if(isActive){
+    cdEl.style.display='flex';
+    function tick(){
+      var rem=Math.max(0,Math.floor((s.qrExpiresAt-Date.now())/1000));
+      var m=Math.floor(rem/60), sec=rem%60;
+      var sp=cdEl.querySelector('span');
+      if(sp) sp.textContent='Expires in '+m+':'+(sec<10?'0':'')+sec;
+      cdEl.className='countdown'+(rem<60?' expired':'');
+      if(rem===0){ clearInterval(countdownTimer); countdownTimer=null; setTimeout(refreshAdminData,1000); }
+    }
+    tick();
+    countdownTimer=setInterval(tick,1000);
+    cdEl.innerHTML='<i class="ti ti-clock"></i> <span></span>';
+    tick();
+  } else {
+    cdEl.style.display='none';
+  }
+}
+
+async function activatePanelQR(){
+  var sid=Number(document.getElementById('qr-session-select').value);
+  if(!sid){ alert('Please select a session first.'); return; }
+  var dur=Number(document.getElementById('qr-panel-dur').value||15);
+  busy('btn-panel-activate','Generating…');
+  try{
+    var data=await apiRequest('generateQRToken',{adminEmail:currentUser.email,sessionId:sid,durationMinutes:dur});
+    var idx=allSessions.findIndex(function(s){ return s.id===sid; });
+    if(idx!==-1){ allSessions[idx].qrActive=true; allSessions[idx].qrExpiresAt=data.expiresAtMs; allSessions[idx].qrToken=data.token; }
+    renderQRPanel();
+  }catch(e){ alert('Error: '+e.message); }
+  finally{ restore('btn-panel-activate'); }
+}
+
+function downloadPanelQR(){
+  var sid=Number(document.getElementById('qr-session-select').value);
+  var s=allSessions.find(function(x){ return x.id===sid; });
+  if(!s||!s.qrToken){ alert('No active QR for this session.'); return; }
+  var temp=document.createElement('div'); temp.style.cssText='position:fixed;left:-99999px;top:0;';
+  document.body.appendChild(temp);
+  try{
+    new QRCode(temp,{text:s.qrToken,width:1200,height:1200,colorDark:'#2C1F14',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.L});
+    setTimeout(function(){
+      try{
+        var canvas=temp.querySelector('canvas'), img2=temp.querySelector('img');
+        var href=canvas?canvas.toDataURL('image/png'):(img2?img2.src:'');
+        if(!href) throw new Error('Could not generate PNG.');
+        var link=document.createElement('a'); link.href=href; link.download=sanitizeFilename(s.name)+'-qr.png';
+        document.body.appendChild(link); link.click(); document.body.removeChild(link);
+      }catch(err){ alert('Download failed: '+err.message); }
+      finally{ if(temp.parentNode) temp.parentNode.removeChild(temp); }
+    },50);
+  }catch(err){ if(temp.parentNode) temp.parentNode.removeChild(temp); alert('Download failed: '+err.message); }
+}
+
+function openSelectedEdit(){
+  var sid=Number(document.getElementById('qr-session-select').value);
+  if(!sid){ alert('Please select a session first.'); return; }
+  var s=allSessions.find(function(x){ return x.id===sid; });
+  if(!s) return;
+  var slot=document.getElementById('selected-session-card');
+  var typeOpts=['Sharing','Workshop','Sharing & Workshop'].map(function(t){
+    return '<option value="'+htmlAttr(t)+'"'+(t===s.type?' selected':'')+'>'+t+'</option>';
+  }).join('');
+  slot.innerHTML=
+    '<div class="sess-edit-form open" id="edit-form-'+s.id+'">'+
+      '<div><label class="form-label" style="font-size:10px;">Session Name</label>'+
+      '<input class="edit-form-input" id="ef-name-'+s.id+'" value="'+htmlAttr(s.name)+'" placeholder="Session name"></div>'+
+      '<div class="edit-form-row">'+
+        '<div><label class="form-label" style="font-size:10px;">Type</label>'+
+        '<select class="edit-form-select" id="ef-type-'+s.id+'">'+typeOpts+'</select></div>'+
+        '<div><label class="form-label" style="font-size:10px;">Time</label>'+
+        '<input class="edit-form-input" id="ef-time-'+s.id+'" value="'+htmlAttr(s.time)+'" placeholder="09:00–10:00"></div>'+
+      '</div>'+
+      '<div><label class="form-label" style="font-size:10px;">Location</label>'+
+      '<select class="edit-form-select" id="ef-loc-'+s.id+'">'+buildLocationOptions(s.location)+'</select></div>'+
+      '<div><label class="form-label" style="font-size:10px;">Description</label>'+
+      '<input class="edit-form-input" id="ef-desc-'+s.id+'" value="'+htmlAttr(s.desc)+'" placeholder="Description"></div>'+
+      '<div class="edit-form-actions">'+
+        '<button class="btn-save" id="btn-save-'+s.id+'" onclick="saveSession('+s.id+')"><i class="ti ti-check"></i> Save Changes</button>'+
+        '<button class="btn-cancel-edit" onclick="document.getElementById(\'selected-session-card\').innerHTML=\'\'">Cancel</button>'+
+      '</div>'+
+    '</div>';
+}
+
+async function deleteSelectedSession(){
+  var sid=Number(document.getElementById('qr-session-select').value);
+  if(!sid){ alert('Please select a session first.'); return; }
+  var s=allSessions.find(function(x){ return x.id===sid; });
+  if(!s) return;
+  await deleteSession(sid,s.name);
+}
+
+function toggleNewSessionForm(open){
+  document.getElementById('new-session-form').classList.toggle('open',open);
+  document.getElementById('btn-show-new-form').style.display=open?'none':'flex';
+  if(!open){
+    ['new-sess-name','new-sess-desc','new-sess-time'].forEach(function(id){ document.getElementById(id).value=''; });
+    document.getElementById('new-sess-loc').value='Building1';
+  }
+}
+
+async function createSession(){
+  busy('btn-create-session','Creating…');
+  try{
+    var name=document.getElementById('new-sess-name').value.trim();
+    var type=document.getElementById('new-sess-type').value;
+    var time=document.getElementById('new-sess-time').value.trim();
+    var location=document.getElementById('new-sess-loc').value.trim();
+    var desc=document.getElementById('new-sess-desc').value.trim();
+    if(!name){ alert('Please enter a session name.'); return; }
+    if(LOCATION_OPTIONS.indexOf(location)===-1){ alert('Please select a valid location.'); return; }
+    var existingIds={};
+    allSessions.forEach(function(s){ existingIds[s.id]=true; });
+    var data=await apiRequest('createSession',{adminEmail:currentUser.email,sessionName:name,sessionType:type,time:time,location:location,description:desc});
+    adminUsers=(data.participants||[]).map(normalizeUser);
+    allSessions=(data.sessions||[]).map(normalizeSession);
+    var created=allSessions.find(function(s){ return !existingIds[s.id]; })||allSessions[allSessions.length-1];
+    toggleNewSessionForm(false);
+    renderAdmin();
+    if(created){ document.getElementById('qr-session-select').value=created.id; renderQRPanel(); }
+  }catch(e){ alert('Error: '+e.message); }
+  finally{ restore('btn-create-session'); }
+}
+
+async function saveSession(sid){
+  var btnId='btn-save-'+sid; busy(btnId,'Saving…');
+  try{
+    var name=document.getElementById('ef-name-'+sid).value.trim();
+    var type=document.getElementById('ef-type-'+sid).value;
+    var time=document.getElementById('ef-time-'+sid).value.trim();
+    var location=document.getElementById('ef-loc-'+sid).value.trim();
+    var desc=document.getElementById('ef-desc-'+sid).value.trim();
+    if(!name){ alert('Session name is required.'); return; }
+    if(LOCATION_OPTIONS.indexOf(location)===-1){ alert('Please select a valid location.'); return; }
+    var data=await apiRequest('updateSession',{adminEmail:currentUser.email,sessionId:sid,sessionName:name,sessionType:type,time:time,location:location,description:desc});
+    adminUsers=(data.participants||[]).map(normalizeUser);
+    allSessions=(data.sessions||[]).map(normalizeSession);
+    document.getElementById('selected-session-card').innerHTML='';
+    renderAdmin();
+    document.getElementById('qr-session-select').value=sid; renderQRPanel();
+  }catch(e){ alert('Error: '+e.message); }
+  finally{ restore(btnId); }
+}
+
+async function deleteSession(sid,name){
+  if(!confirm('Delete "'+name+'"?\n\nThis will hide the session. Existing stamps are preserved.')) return;
+  try{
+    var data=await apiRequest('deleteSession',{adminEmail:currentUser.email,sessionId:sid});
+    adminUsers=(data.participants||[]).map(normalizeUser);
+    allSessions=(data.sessions||[]).map(normalizeSession);
+    renderAdmin();
+  }catch(e){ alert('Error: '+e.message); }
+}
+
+async function refreshAdminData(){
+  try{
+    var data=await apiRequest('getAdminParticipants',{adminEmail:currentUser.email});
+    adminUsers=(data.participants||[]).map(normalizeUser);
+    allSessions=(data.sessions||[]).map(normalizeSession);
+    currentTemplate=normalizeTemplate(data.template);
+    renderAdmin();
+  }catch(e){ console.error(e); }
+}
+
+// ── TEMPLATE BUILDER ──
+function syncTemplateBuilderFromCurrent(){
+  document.getElementById('tb-total-stamps').value = currentTemplate.totalStamps || 10;
+  builderMilestones = (currentTemplate.milestones||[]).map(function(m){
+    return { position: m.position, name: m.name, icon: m.icon };
+  });
+  if(!builderMilestones.length){
+    builderMilestones = [{ position: 5, name: 'Reward 1', icon: 'ti-gift' }];
+  }
+  renderMilestoneRows();
+  renderTemplatePreview();
+}
+
+function renderMilestoneRows(){
+  var list=document.getElementById('tb-milestones-list');
+  list.innerHTML='';
+  builderMilestones.forEach(function(m, idx){
+    var row=document.createElement('div');
+    row.className='tb-milestone-row';
+    row.innerHTML=
+      '<div class="tb-milestone-top">'+
+        '<div><span class="tb-mini-label">At stamp</span><input type="number" min="1" value="'+m.position+'" oninput="updateMilestoneField('+idx+',\'position\',this.value)"></div>'+
+        '<div><span class="tb-mini-label">Reward name</span><input type="text" value="'+htmlAttr(m.name)+'" placeholder="e.g. Starbucks Card" oninput="updateMilestoneField('+idx+',\'name\',this.value)"></div>'+
+        '<button class="btn-remove-milestone" title="Remove milestone" onclick="removeMilestoneRow('+idx+')"><i class="ti ti-x"></i></button>'+
+      '</div>'+
+      '<div><span class="tb-mini-label">Icon (Tabler icon class)</span><input type="text" value="'+htmlAttr(m.icon)+'" placeholder="ti-gift, ti-coffee, ti-device-laptop…" oninput="updateMilestoneField('+idx+',\'icon\',this.value)"></div>';
+    list.appendChild(row);
+  });
+}
+
+function updateMilestoneField(idx, field, value){
+  if(field==='position') value = Math.max(1, Number(value)||1);
+  builderMilestones[idx][field] = value;
+  renderTemplatePreview();
+}
+
+function addMilestoneRow(){
+  var total = Number(document.getElementById('tb-total-stamps').value)||10;
+  builderMilestones.push({ position: total, name: 'New Reward', icon: 'ti-gift' });
+  renderMilestoneRows();
+  renderTemplatePreview();
+}
+
+function removeMilestoneRow(idx){
+  builderMilestones.splice(idx,1);
+  renderMilestoneRows();
+  renderTemplatePreview();
+}
+
+function renderTemplatePreview(){
+  var total = Math.max(1, Math.min(100, Number(document.getElementById('tb-total-stamps').value)||10));
+  var track=document.getElementById('tb-preview-track');
+  track.innerHTML='';
+  var positions={};
+  builderMilestones.forEach(function(m){ positions[Number(m.position)] = m; });
+  for(var i=1;i<=total;i++){
+    var isM = !!positions[i];
+    var div=document.createElement('div');
+    div.className='tb-preview-stamp'+(isM?' milestone':'');
+    div.innerHTML=(isM?'<span class="mi"><i class="ti ti-gift"></i></span>':'')+i;
+    track.appendChild(div);
+  }
+}
+
+async function saveTemplate(){
+  busy('btn-save-template','Saving…');
+  try{
+    var total = Number(document.getElementById('tb-total-stamps').value);
+    var milestonesPayload = builderMilestones.map(function(m){
+      return { position: Number(m.position), name: String(m.name||'').trim(), icon: String(m.icon||'ti-gift').trim() };
+    });
+    var data = await apiRequest('saveTemplateConfig', { adminEmail: currentUser.email, totalStamps: total, milestones: milestonesPayload });
+    currentTemplate = normalizeTemplate(data.config);
+    showOk('tb-save-success','Template saved! Participants will see the updated track next time they refresh.');
+    await refreshAdminData();
+  }catch(e){ showErr('tb-save-error', e.message); }
+  finally{ restore('btn-save-template'); }
+}
+
+async function bulkCreateSessionsUI(){
+  busy('btn-bulk-create','Creating…');
+  try{
+    var count = Number(document.getElementById('tb-bulk-count').value);
+    if(!count || count<1){ showErr('tb-save-error','Enter how many sessions to create.'); return; }
+    var data = await apiRequest('bulkCreateSessions', { adminEmail: currentUser.email, count: count });
+    adminUsers=(data.participants||[]).map(normalizeUser);
+    allSessions=(data.sessions||[]).map(normalizeSession);
+    document.getElementById('tb-bulk-msg').textContent = data.message || (count+' sessions created.');
+    document.getElementById('tb-bulk-msg').style.display='block';
+    setTimeout(function(){ document.getElementById('tb-bulk-msg').style.display='none'; }, 5000);
+    document.getElementById('tb-bulk-count').value='';
+    populateQRSessionSelect(); populateDataSessionSelect();
+  }catch(e){ alert('Error: '+e.message); }
+  finally{ restore('btn-bulk-create'); }
+}
+
+async function registerAdminUI(){
+  busy('btn-register-admin','Registering…');
+  try{
+    var name=document.getElementById('reg-admin-name').value.trim();
+    var email=document.getElementById('reg-admin-email').value.trim().toLowerCase();
+    var password=document.getElementById('reg-admin-password').value;
+    if(!name){ showErr('reg-admin-error','Enter the admin\\'s full name.'); return; }
+    if(!email||!email.includes('@')){ showErr('reg-admin-error','Enter a valid email.'); return; }
+    if(password.length<8){ showErr('reg-admin-error','Password must be at least 8 characters.'); return; }
+    var data = await apiRequest('registerAdmin', { adminEmail: currentUser.email, name:name, email:email, password:password });
+    showOk('reg-admin-success', data.message || 'Admin account created.');
+    document.getElementById('reg-admin-name').value='';
+    document.getElementById('reg-admin-email').value='';
+    document.getElementById('reg-admin-password').value='';
+  }catch(e){ showErr('reg-admin-error', e.message); }
+  finally{ restore('btn-register-admin'); }
+}
+
+// ── Participants tab ──
+function renderAdminParticipants(){
+  var query=(document.getElementById('a-search').value||'').toLowerCase();
+  var parts=adminUsers.filter(function(u){ return u.role==='participant'; });
+  var eligible=parts.filter(function(p){ return p.rewards.some(function(r){ return r.eligible && !r.redeemed; }); });
+  var redeemed=parts.filter(function(p){ return p.rewards.some(function(r){ return r.redeemed; }); });
+  var notYet=parts.filter(function(p){ return !p.rewards.some(function(r){ return r.eligible; }); });
+  document.getElementById('a-total').textContent=parts.length;
+  document.getElementById('a-eligible').textContent=eligible.length;
+  document.getElementById('a-redeemed').textContent=redeemed.length;
+  document.getElementById('a-pending').textContent=notYet.length;
+
+  var filtered=parts;
+  if(activeFilter==='eligible') filtered=eligible;
+  if(activeFilter==='redeemed') filtered=redeemed;
+  if(query) filtered=filtered.filter(function(p){ return p.name.toLowerCase().indexOf(query)!==-1||p.email.toLowerCase().indexOf(query)!==-1; });
+
+  var tbl=document.getElementById('a-table'); tbl.innerHTML='';
+  if(!filtered.length){ tbl.innerHTML='<div class="no-results"><i class="ti ti-search-off"></i>No participants found.</div>'; return; }
+  filtered.forEach(function(p){
+    var card=document.createElement('div'); card.className='a-card';
+    var historyRows='';
+    if(p.claimedSessions.length>0){
+      historyRows='<details class="stamp-history"><summary class="stamp-history-title"><span>Scan history</span><span class="history-count">'+p.claimedSessions.length+' scans</span></summary><div class="stamp-history-rows">';
+      p.claimedSessions.forEach(function(sid){
+        var sess=allSessions.find(function(s){ return s.id===sid; });
+        var sname=sess?sess.name:'Session '+sid;
+        var ts=(p.scanTimestamps && p.scanTimestamps[sid])?p.scanTimestamps[sid]:'—';
+        historyRows+='<div class="shrow"><span class="shrow-name">'+sname+'</span><span class="shrow-ts"><i class="ti ti-clock-hour-4"></i>'+ts+'</span></div>';
+      });
+      historyRows+='</div></details>';
+    }
+    var rewardRows = p.rewards.map(function(r){ return rewardBlock(p, r); }).join('');
+    card.innerHTML=
+      '<div class="a-card-top"><div class="avatar">'+p.initials+'</div>'+
+      '<div><div class="a-pname">'+p.name+'</div><div class="a-pmeta">'+p.facility+' · '+p.email+'</div></div></div>'+
+      '<div class="a-stamp-bar"><div class="a-stamp-label"><span class="a-stamp-lbl">Stamps collected</span><span class="a-stamp-val">'+p.stamps+' / '+p.totalStamps+'</span></div>'+
+      '<div class="mini-bar"><div class="mini-fill" style="width:'+(p.totalStamps?Math.min(100,p.stamps/p.totalStamps*100):0)+'%;"></div></div></div>'+
+      historyRows+
+      '<div class="reward-rows">'+(rewardRows || '<p style="font-size:11px;color:var(--ts);">No rewards configured.</p>')+'</div>';
+    tbl.appendChild(card);
+  });
+}
+
+function rewardBlock(p, r){
+  var right = r.redeemed
+    ? '<div style="text-align:right;"><span class="rbadge done"><i class="ti ti-check" style="font-size:10px;"></i> Redeemed</span>'+(r.redeemedAt?'<div class="redeemed-date">'+r.redeemedAt+'</div>':'')+' </div>'
+    : (r.eligible
+        ? '<button class="btn-mark" onclick="markRedeemed(\''+p.id+'\',\''+r.id+'\')">Mark redeemed</button>'
+        : '<span class="rbadge locked">Locked</span>');
+  return '<div class="rrow"><div class="rleft"><div class="ricon"><i class="ti '+r.icon+'"></i></div>'+
+    '<div><div class="rname">'+htmlAttr(r.name)+'</div><div class="rsub">Eligible at '+r.position+' stamps</div></div></div>'+right+'</div>';
+}
+
+async function markRedeemed(userId,rewardId){
+  try{
+    var data=await apiRequest('markRedeemed',{adminEmail:currentUser.email,userId,rewardId:rewardId});
+    adminUsers=(data.participants||[]).map(normalizeUser);
+    allSessions=(data.sessions||[]).map(normalizeSession);
+    currentTemplate=normalizeTemplate(data.template);
+    renderAdmin();
+  }catch(e){ alert(e.message); }
+}
+
+function setFilter(btn,filter){
+  document.querySelectorAll('.fbtn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active'); activeFilter=filter; renderAdminParticipants();
+}
+
+function sanitizeFilename(name){ return String(name||'file').trim().replace(/[^a-z0-9-_]+/gi,'-').replace(/^-+|-+$/g,'')||'file'; }
+function csvEscape(v){ var s=String(v==null?'':v); return (s.indexOf('"')!==-1||s.indexOf(',')!==-1||s.indexOf('\n')!==-1)?'"'+s.replace(/"/g,'""')+'"':s; }
+function downloadCsv(filename,rows){
+  var csv=rows.map(function(r){ return r.map(csvEscape).join(','); }).join('\n');
+  var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  var url=URL.createObjectURL(blob), link=document.createElement('a');
+  link.href=url; link.download=filename;
+  document.body.appendChild(link); link.click(); document.body.removeChild(link); URL.revokeObjectURL(url);
+}
+function downloadSelectedScanHistory(){
+  var sel=document.getElementById('data-session-select');
+  var value=sel?sel.value:'all';
+  if(value==='all') downloadAllSessionScanHistory();
+  else downloadSessionScanHistory(Number(value));
+}
+function downloadSessionScanHistory(sessionId){
+  var session=allSessions.find(function(s){ return Number(s.id)===Number(sessionId); });
+  if(!session){ alert('Session not found.'); return; }
+  var rows=[['Session ID','Session Name','Participant Name','Facility','Email','Scanned At']];
+  var scanned=adminUsers.filter(function(u){ return u.scanTimestamps&&u.scanTimestamps[sessionId]; })
+    .sort(function(a,b){ return String(a.scanTimestamps[sessionId]||'').localeCompare(String(b.scanTimestamps[sessionId]||'')); });
+  scanned.forEach(function(u){ rows.push([session.id,session.name,u.name,u.facility,u.email,u.scanTimestamps[sessionId]||'']); });
+  if(!scanned.length) rows.push([session.id,session.name,'','','','No scans yet']);
+  downloadCsv(sanitizeFilename(session.name)+'-scan-history.csv',rows);
+}
+function downloadAllSessionScanHistory(){
+  var rows=[['Session ID','Session Name','Participant Name','Facility','Email','Scanned At']];
+  allSessions.forEach(function(session){
+    var found=false;
+    adminUsers.forEach(function(u){
+      if(u.scanTimestamps&&u.scanTimestamps[session.id]){ found=true; rows.push([session.id,session.name,u.name,u.facility,u.email,u.scanTimestamps[session.id]||'']); }
+    });
+    if(!found) rows.push([session.id,session.name,'','','','No scans yet']);
+  });
+  downloadCsv('all-session-scan-history.csv',rows);
+}
+</script>
+</body>
+</html>
