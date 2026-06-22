@@ -214,7 +214,8 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .scan-result-card p{font-size:12px;color:var(--green-d);line-height:1.5;}
 .scan-result-card.error-card p{color:var(--red);}
 /* ADMIN HEADER */
-.a-header{background:var(--navy);padding:24px 20px 20px;}
+.a-header{background:var(--gray);padding:24px 20px 20px;}
+.a-header.role-manager{background:var(--purple);}
 .a-header p{font-size:13px;color:rgba(255,255,255,.65);}
 .stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
 .stat-card{background:#fff;border-radius:var(--r-md);border:.5px solid #E8DDD4;padding:14px 16px;text-align:center;box-shadow:var(--shadow);}
@@ -500,9 +501,9 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 </div>
 <!-- ADMIN -->
 <div class="screen" id="screen-admin">
-  <div class="a-header">
+  <div class="a-header" id="a-header">
     <div class="top-bar-row">
-      <div><h2 style="font-size:20px;font-weight:700;color:#fff;"><i class="ti ti-shield-check" style="font-size:18px;margin-right:6px;"></i>Admin Panel</h2><p id="a-logged-as"></p></div>
+      <div><h2 style="font-size:20px;font-weight:700;color:#fff;" id="a-header-title"><i class="ti ti-shield-check" style="font-size:18px;margin-right:6px;"></i>Admin Panel</h2><p id="a-logged-as"></p></div>
       <div class="top-bar-actions">
         <button class="btn-ghost" onclick="goToDashboard()"><i class="ti ti-layout-grid" style="font-size:13px;"></i> Dashboard</button>
       </div>
@@ -1274,6 +1275,11 @@ function renderAdmin(){
   document.getElementById('a-logged-as').textContent=currentUser.name+' · '+currentUser.email;
   document.getElementById('a-track-name').textContent=adminTrackInfo.trackName;
   document.getElementById('a-access-code').textContent=adminTrackInfo.accessCode;
+  var headerEl=document.getElementById('a-header');
+  var isManager=currentTrackRole==='manager';
+  headerEl.classList.toggle('role-manager', isManager);
+  document.getElementById('a-header-title').innerHTML=
+    '<i class="ti '+(isManager?'ti-crown':'ti-shield-check')+'" style="font-size:18px;margin-right:6px;"></i>'+(isManager?'Manager Panel':'Admin Panel');
   renderAdminStats();
   renderAdminList();
   renderTemplateEditor();
