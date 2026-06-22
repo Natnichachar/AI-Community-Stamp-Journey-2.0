@@ -367,6 +367,10 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .btn-remove-admin{flex-shrink:0;font-size:11px;font-weight:700;padding:5px 11px;border-radius:99px;border:1.5px solid #F3B6B6;background:#fff;color:var(--red);cursor:pointer;font-family:var(--font);transition:.2s;white-space:nowrap;}
 .btn-remove-admin:hover{background:var(--red-l);}
 .you-tag{font-size:9px;font-weight:700;color:var(--terra);background:var(--terra-p);border-radius:99px;padding:2px 7px;margin-left:6px;text-transform:uppercase;letter-spacing:.4px;}
+/* DELETE TRACK — solid red, white text */
+.btn-delete-track{flex-shrink:0;width:auto;padding:0 16px;height:42px;background:var(--red);color:#fff;border:1.5px solid var(--red);border-radius:var(--r-md);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;transition:opacity .2s, transform .15s;}
+.btn-delete-track:hover{opacity:.88;}
+.btn-delete-track:active{transform:translateY(1px);}
 </style>
 </head>
 <body>
@@ -414,7 +418,20 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
     <div class="top-bar-sub" id="dash-sub"></div>
   </div>
   <div class="p-body">
-    <div class="section">
+    <div class="section" id="dash-manager-section" style="display:none;">
+      <div class="slabel">Track Manager tools</div>
+      <button class="btn-create-track" onclick="openCreateTrackModal()"><i class="ti ti-plus"></i> Create New Track</button>
+
+      <div class="card mt-12" id="delete-track-card" style="display:none;">
+        <h4 style="font-size:13px;font-weight:700;color:var(--tm);margin-bottom:4px;"><i class="ti ti-trash" style="color:var(--red);margin-right:5px;"></i>Delete a track</h4>
+        <p style="font-size:12px;color:var(--ts);margin-bottom:12px;line-height:1.5;">This permanently removes the track, its sessions, stamps, and redemptions. This cannot be undone.</p>
+        <div style="display:flex;gap:8px;">
+          <select class="qr-session-select" id="delete-track-select" style="flex:1;"></select>
+          <button class="btn-delete-track" title="Delete selected track" onclick="handleDeleteTrack()"><i class="ti ti-trash"></i> Delete</button>
+        </div>
+      </div>
+    </div>
+    <div class="section mt-16">
       <div class="slabel">Your tracks</div>
       <div class="track-list" id="dash-track-list"></div>
     </div>
@@ -427,19 +444,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
         <div class="join-row">
           <input class="access-code-input" id="join-code-input" type="text" maxlength="8" placeholder="CODE">
           <button class="btn-join" id="btn-join-track" onclick="handleJoinTrack()"><i class="ti ti-arrow-right"></i> Join</button>
-        </div>
-      </div>
-    </div>
-    <div class="section mt-16" id="dash-manager-section" style="display:none;">
-      <div class="slabel">Track Manager tools</div>
-      <button class="btn-create-track" onclick="openCreateTrackModal()"><i class="ti ti-plus"></i> Create New Track</button>
-      
-      <div class="card mt-12" id="delete-track-card" style="display:none;">
-        <h4 style="font-size:13px;font-weight:700;color:var(--tm);margin-bottom:4px;"><i class="ti ti-trash" style="color:var(--red);margin-right:5px;"></i>Delete a track</h4>
-        <p style="font-size:12px;color:var(--ts);margin-bottom:12px;line-height:1.5;">This permanently removes the track, its sessions, stamps, and redemptions. This cannot be undone.</p>
-        <div style="display:flex;gap:8px;">
-          <select class="qr-session-select" id="delete-track-select" style="flex:1;"></select>
-          <button class="btn-mini-icon danger" style="width:42px;height:42px;flex-shrink:0;" title="Delete selected track" onclick="handleDeleteTrack()"><i class="ti ti-trash"></i></button>
         </div>
       </div>
     </div>
