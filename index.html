@@ -27,6 +27,19 @@
 }
 body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;font-family:var(--font);}
 .app{width:100%;max-width:430px;min-height:100vh;background:var(--cream);display:flex;flex-direction:column;}
+/* Responsive widening for tablets/laptops/desktops:
+   below 700px (phones) the app stays a fixed mobile-card width (430px).
+   at 700px+ it grows to 70% of the viewport width, bounded so it never
+   gets uncomfortably narrow or absurdly wide on very large screens. */
+@media (min-width:700px){
+  .app{max-width:70vw;}
+}
+@media (min-width:700px) and (max-width:899px){
+  .app{max-width:560px;} /* floor: keeps tablets from looking too cramped */
+}
+@media (min-width:1900px){
+  .app{max-width:1100px;} /* ceiling: keeps ultra-wide monitors from over-stretching */
+}
 .screen{display:none;flex-direction:column;min-height:100vh;}
 .screen.active{display:flex;}
 /* AUTH */
@@ -214,8 +227,7 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .scan-result-card p{font-size:12px;color:var(--green-d);line-height:1.5;}
 .scan-result-card.error-card p{color:var(--red);}
 /* ADMIN HEADER */
-.a-header{background:var(--gray);padding:24px 20px 20px;}
-.a-header.role-manager{background:var(--purple);}
+.a-header{background:var(--navy);padding:24px 20px 20px;}
 .a-header p{font-size:13px;color:rgba(255,255,255,.65);}
 .stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
 .stat-card{background:#fff;border-radius:var(--r-md);border:.5px solid #E8DDD4;padding:14px 16px;text-align:center;box-shadow:var(--shadow);}
@@ -310,6 +322,15 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 .demo-overlay{position:fixed;inset:0;background:#E4DDD5;z-index:2000;display:none;flex-direction:column;align-items:center;overflow-y:auto;}
 .demo-overlay.open{display:flex;}
 .demo-frame{width:100%;max-width:430px;min-height:100vh;background:var(--cream);position:relative;}
+@media (min-width:700px){
+  .demo-frame{max-width:70vw;}
+}
+@media (min-width:700px) and (max-width:899px){
+  .demo-frame{max-width:560px;}
+}
+@media (min-width:1900px){
+  .demo-frame{max-width:1100px;}
+}
 .demo-watermark-bar{position:sticky;top:0;z-index:50;background:var(--tm);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;}
 .demo-watermark-bar span{display:flex;align-items:center;gap:6px;}
 .demo-watermark-bar button{background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:6px 12px;color:#fff;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:5px;}
@@ -501,9 +522,9 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 </div>
 <!-- ADMIN -->
 <div class="screen" id="screen-admin">
-  <div class="a-header" id="a-header">
+  <div class="a-header">
     <div class="top-bar-row">
-      <div><h2 style="font-size:20px;font-weight:700;color:#fff;" id="a-header-title"><i class="ti ti-shield-check" style="font-size:18px;margin-right:6px;"></i>Admin Panel</h2><p id="a-logged-as"></p></div>
+      <div><h2 style="font-size:20px;font-weight:700;color:#fff;"><i class="ti ti-shield-check" style="font-size:18px;margin-right:6px;"></i>Admin Panel</h2><p id="a-logged-as"></p></div>
       <div class="top-bar-actions">
         <button class="btn-ghost" onclick="goToDashboard()"><i class="ti ti-layout-grid" style="font-size:13px;"></i> Dashboard</button>
       </div>
@@ -1275,11 +1296,6 @@ function renderAdmin(){
   document.getElementById('a-logged-as').textContent=currentUser.name+' · '+currentUser.email;
   document.getElementById('a-track-name').textContent=adminTrackInfo.trackName;
   document.getElementById('a-access-code').textContent=adminTrackInfo.accessCode;
-  var headerEl=document.getElementById('a-header');
-  var isManager=currentTrackRole==='manager';
-  headerEl.classList.toggle('role-manager', isManager);
-  document.getElementById('a-header-title').innerHTML=
-    '<i class="ti '+(isManager?'ti-crown':'ti-shield-check')+'" style="font-size:18px;margin-right:6px;"></i>'+(isManager?'Manager Panel':'Admin Panel');
   renderAdminStats();
   renderAdminList();
   renderTemplateEditor();
