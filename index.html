@@ -487,6 +487,11 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
     <div class="top-bar-sub" id="p-facility"></div>
   </div>
   <div class="p-body">
+    <div class="p-actions" id="p-actions-real">
+      <button class="btn-scan" id="btn-open-scanner" onclick="openScanner()">
+        <i class="ti ti-qrcode-scan"></i> Scan Session QR Code
+      </button>
+    </div>
     <div class="section">
       <div class="slabel">Your stamp card</div>
       <div class="card">
@@ -512,11 +517,6 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
         <span class="sess-pager-info" id="sess-pager-info"></span>
         <button class="btn-pager" id="btn-next-sess" onclick="changeSessionPage(1)" aria-label="Next sessions"><i class="ti ti-chevron-right"></i></button>
       </div>
-    </div>
-    <div class="p-actions" id="p-actions-real">
-      <button class="btn-scan" id="btn-open-scanner" onclick="openScanner()">
-        <i class="ti ti-qrcode-scan"></i> Scan Session QR Code
-      </button>
     </div>
   </div>
 </div>
