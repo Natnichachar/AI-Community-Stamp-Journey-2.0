@@ -30,8 +30,8 @@
   --shadow:0 2px 12px rgba(44,31,20,.08);
   --shadow-lg:0 8px 32px rgba(44,31,20,.14);
 }
-body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;font-family:var(--font);}
-.app{width:100%;max-width:430px;min-height:100vh;background:var(--cream);display:flex;flex-direction:column;}
+body{background:#E0E1E5;min-height:100vh;display:flex;justify-content:center;font-family:var(--font);}
+.app{width:100%;max-width:430px;min-height:100vh;background:#FFFFFF;display:flex;flex-direction:column;}
 /* Responsive widening for tablets/laptops/desktops:
    below 700px (phones) the app stays a fixed mobile-card width (430px).
    at 700px+ it grows to 70% of the viewport width, bounded so it never
@@ -324,9 +324,9 @@ body{background:#E4DDD5;min-height:100vh;display:flex;justify-content:center;fon
 /* DEMO VIEW (read-only participant preview inside admin panel) */
 .btn-demo-view{width:100%;padding:13px;background:#fff;color:var(--navy);border:1.5px solid var(--navy);border-radius:var(--r-md);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s;}
 .btn-demo-view:hover{background:var(--blue-l);}
-.demo-overlay{position:fixed;inset:0;background:#E4DDD5;z-index:2000;display:none;flex-direction:column;align-items:center;overflow-y:auto;}
+.demo-overlay{position:fixed;inset:0;background:#E0E1E5;z-index:2000;display:none;flex-direction:column;align-items:center;overflow-y:auto;}
 .demo-overlay.open{display:flex;}
-.demo-frame{width:100%;max-width:430px;min-height:100vh;background:var(--cream);position:relative;}
+.demo-frame{width:100%;max-width:430px;min-height:100vh;background:#FFFFFF;position:relative;}
 @media (min-width:700px){
   .demo-frame{max-width:70vw;}
 }
