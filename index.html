@@ -21,7 +21,7 @@
   --amber:#D97706;--amber-l:#FEF3C7;
   --purple:#6D3FA0;--purple-l:#F1E9F8;--purple-d:#4A2470;
   /* Brand accent set */
-  --brand-orange:#FF6727;--brand-orange-l:#FFE8DC;
+  --brand-orange:#FF9956;--brand-orange-l:#FFE8DC;
   --brand-rust:#C43400;--brand-rust-l:#FBE2D8;
   --brand-slate:#63666F;--brand-slate-l:#E9EAEC;
   --brand-white:#FFFFFF;
@@ -321,6 +321,8 @@ body{background:#E0E1E5;min-height:100vh;display:flex;justify-content:center;fon
 .template-total-row input{width:70px;padding:8px 10px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:14px;font-weight:700;text-align:center;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
 .btn-save-template{width:100%;padding:12px;background:var(--terra);color:#fff;border:none;border-radius:var(--r-md);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:7px;transition:opacity .2s;}
 .btn-save-template:hover{opacity:.9;}
+.btn-download-history{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:var(--r-md);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:7px;transition:opacity .2s;}
+.btn-download-history:hover{opacity:.9;}
 /* DEMO VIEW (read-only participant preview inside admin panel) */
 .btn-demo-view{width:100%;padding:13px;background:#fff;color:var(--navy);border:1.5px solid var(--navy);border-radius:var(--r-md);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s;}
 .btn-demo-view:hover{background:var(--blue-l);}
@@ -632,7 +634,7 @@ body{background:#E0E1E5;min-height:100vh;display:flex;justify-content:center;fon
         <select class="qr-session-select" id="data-session-select">
           <option value="all">All sessions</option>
         </select>
-        <button class="btn-download-history" style="width:100%;padding:9px 12px;background:#fff;color:var(--green-d);border:1.5px solid var(--green);border-radius:var(--r-sm);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px;" onclick="downloadSelectedScanHistory()"><i class="ti ti-table-export"></i> Download scan history</button>
+        <button class="btn-download-history" onclick="downloadSelectedScanHistory()"><i class="ti ti-table-export"></i> Download scan history</button>
       </div>
     </div>
     <div class="section mt-16">
