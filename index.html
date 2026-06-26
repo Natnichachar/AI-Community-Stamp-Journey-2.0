@@ -544,7 +544,18 @@ body{background:#E0E1E5;min-height:100vh;display:flex;justify-content:center;fon
       <div class="slabel">Overview</div>
       <div class="stat-grid" id="a-stat-grid"></div>
     </div>
-    
+
+    <div class="section mt-16">
+      <div class="slabel">Session Attendance</div>
+      <div class="card" id="sess-chart-card">
+        <div id="sess-chart-wrap" style="position:relative;"></div>
+        <div id="sess-chart-empty" style="display:none;text-align:center;padding:24px 10px;">
+          <i class="ti ti-chart-line" style="font-size:32px;color:var(--terra-l);display:block;margin-bottom:8px;"></i>
+          <p style="font-size:13px;color:var(--ts);">No sessions yet — once you add sessions, attendance will show here.</p>
+        </div>
+      </div>
+    </div>
+
     <div class="section mt-16">
       <details class="stamp-history" id="admin-list-details" style="background:#fff;border:.5px solid #E8DDD4;box-shadow:var(--shadow);">
         <summary class="stamp-history-title" style="padding:14px 16px;">
@@ -1304,6 +1315,7 @@ function renderAdmin(){
   document.getElementById('a-track-name').textContent=adminTrackInfo.trackName;
   document.getElementById('a-access-code').textContent=adminTrackInfo.accessCode;
   renderAdminStats();
+  renderSessionsChart();
   renderAdminList();
   renderTemplateEditor();
   populateQRSessionSelect();
@@ -1323,6 +1335,97 @@ function renderAdminStats(){
     '<div class="stat-card"><div class="stat-num green">'+redeemedAny.length+'</div><div class="stat-lbl">Rewards redeemed</div></div>'+
     '<div class="stat-card"><div class="stat-num" style="color:var(--blue);">'+eligible.length+'</div><div class="stat-lbl">Eligible, not redeemed</div></div>'+
     '<div class="stat-card"><div class="stat-num" style="color:var(--gray);">'+notYet.length+'</div><div class="stat-lbl">Not yet eligible</div></div>';
+}
+
+// ── Session Attendance line chart (interactive SVG, no extra libs) ──
+// Counts, for each session, how many participants currently hold a stamp for it
+// (i.e. that session id appears in their claimedSessions array). Purely derived
+// from data already loaded into adminParticipants/allSessions — no new API calls.
+function renderSessionsChart(){
+  var wrap=document.getElementById('sess-chart-wrap');
+  var empty=document.getElementById('sess-chart-empty');
+  if(!allSessions.length){
+    wrap.style.display='none'; empty.style.display='block';
+    return;
+  }
+  wrap.style.display='block'; empty.style.display='none';
+
+  var counts=allSessions.map(function(s){
+    var n=0;
+    adminParticipants.forEach(function(p){ if(p.claimedSessions.indexOf(s.id)!==-1) n++; });
+    return { id:s.id, name:s.name, count:n };
+  });
+
+  var maxCount=Math.max(1, Math.max.apply(null, counts.map(function(c){ return c.count; })));
+  var W=Math.max(320, counts.length*72), H=200;
+  var padL=34, padR=14, padT=18, padB=34;
+  var plotW=W-padL-padR, plotH=H-padT-padB;
+  var stepX = counts.length>1 ? plotW/(counts.length-1) : 0;
+
+  function xAt(i){ return padL + (counts.length>1 ? i*stepX : plotW/2); }
+  function yAt(v){ return padT + plotH - (v/maxCount)*plotH; }
+
+  var gridLines='', yLabels='';
+  var bands=4;
+  for(var g=0; g<=bands; g++){
+    var val=Math.round((maxCount/bands)*g);
+    var y=yAt(val);
+    gridLines += '<line x1="'+padL+'" y1="'+y+'" x2="'+(W-padR)+'" y2="'+y+'" stroke="var(--cream-d)" stroke-width="1"/>';
+    yLabels += '<text x="'+(padL-8)+'" y="'+(y+3)+'" text-anchor="end" font-size="10" font-family="Open Sans, sans-serif" fill="var(--ts)">'+val+'</text>';
+  }
+
+  var linePts=counts.map(function(c,i){ return xAt(i)+','+yAt(c.count); }).join(' ');
+  var areaPts = padL+','+(padT+plotH)+' '+linePts+' '+(W-padR)+','+(padT+plotH);
+
+  var pointsSvg='', hitSvg='', xLabels='';
+  counts.forEach(function(c,i){
+    var x=xAt(i), y=yAt(c.count);
+    pointsSvg += '<circle cx="'+x+'" cy="'+y+'" r="4" fill="var(--terra)" stroke="#fff" stroke-width="1.5"/>';
+    hitSvg += '<circle class="sess-chart-hit" data-idx="'+i+'" cx="'+x+'" cy="'+y+'" r="14" fill="transparent" style="cursor:pointer;"/>';
+    var shortName = c.name.length>10 ? c.name.slice(0,9)+'…' : c.name;
+    xLabels += '<text x="'+x+'" y="'+(H-padB+16)+'" text-anchor="middle" font-size="10" font-family="Open Sans, sans-serif" fill="var(--ts)">'+htmlAttr(shortName)+'</text>';
+  });
+
+  var svg=
+    '<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" style="display:block;overflow:visible;" preserveAspectRatio="none">'+
+      gridLines+
+      '<polygon points="'+areaPts+'" fill="var(--terra-p)" opacity="0.45"/>'+
+      '<polyline points="'+linePts+'" fill="none" stroke="var(--terra)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>'+
+      pointsSvg+
+      yLabels+
+      xLabels+
+      hitSvg+
+    '</svg>';
+
+  // Horizontally scrollable so the chart never squashes when there are many sessions.
+  wrap.innerHTML =
+    '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">'+
+      '<div style="min-width:'+W+'px;">'+svg+'</div>'+
+    '</div>'+
+    '<div id="sess-chart-tooltip" style="display:none;position:absolute;pointer-events:none;background:var(--tm);color:#fff;font-size:12px;font-weight:600;padding:6px 10px;border-radius:8px;white-space:nowrap;box-shadow:var(--shadow-lg);z-index:5;transform:translate(-50%,-100%);"></div>';
+
+  var tooltip=document.getElementById('sess-chart-tooltip');
+  var scaleHost=wrap.querySelector('svg');
+  wrap.querySelectorAll('.sess-chart-hit').forEach(function(hit){
+    hit.addEventListener('mouseenter', function(){ showTip(hit); });
+    hit.addEventListener('touchstart', function(e){ e.preventDefault(); showTip(hit); }, {passive:false});
+    hit.addEventListener('mouseleave', function(){ tooltip.style.display='none'; });
+  });
+  function showTip(hit){
+    var idx=Number(hit.getAttribute('data-idx'));
+    var c=counts[idx];
+    var svgRect=scaleHost.getBoundingClientRect();
+    var scrollHost=wrap.querySelector('div[style*="overflow-x"]');
+    var hostRect=scrollHost.getBoundingClientRect();
+    var scaleX = svgRect.width / W;
+    var cx = Number(hit.getAttribute('cx')), cy = Number(hit.getAttribute('cy'));
+    var left = (svgRect.left - hostRect.left + scrollHost.scrollLeft) + cx*scaleX;
+    var top  = (svgRect.top - hostRect.top) + cy*scaleX;
+    tooltip.style.left=left+'px';
+    tooltip.style.top=(top-8)+'px';
+    tooltip.textContent=c.name+': '+c.count+' joined';
+    tooltip.style.display='block';
+  }
 }
 
 // ── Manage Admins (collapsible list) ──
