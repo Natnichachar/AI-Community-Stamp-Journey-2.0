@@ -211,6 +211,18 @@ body{background:#E0E1E5;min-height:100vh;display:flex;justify-content:center;fon
 .btn-scan{background:transparent;color:var(--brand-orange);border:1.5px solid var(--brand-orange);border-radius:var(--r-md);padding:13px 16px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;font-family:var(--font);transition:background .2s,color .2s;}
 .btn-scan:hover{background:var(--brand-orange-l);}
 .btn-scan:disabled{opacity:.35;cursor:not-allowed;}
+/* CHECK-IN BY CODE (participant — parallel action to btn-scan) */
+.btn-checkin-code{background:transparent;color:var(--navy);border:1.5px solid var(--navy);border-radius:var(--r-md);padding:13px 16px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;font-family:var(--font);transition:background .2s,color .2s;}
+.btn-checkin-code:hover{background:var(--blue-l);}
+.btn-checkin-code:disabled{opacity:.35;cursor:not-allowed;}
+.checkin-modal{background:#fff;border-radius:var(--r-xl);width:100%;max-width:380px;overflow:hidden;box-shadow:var(--shadow-lg);}
+.checkin-modal .modal-header{background:var(--navy);}
+.checkin-code-input{width:100%;padding:16px;border:1.5px solid var(--cream-d);border-radius:var(--r-md);font-size:24px;font-weight:700;letter-spacing:5px;text-transform:uppercase;text-align:center;font-family:var(--font);color:var(--tm);background:#fff;outline:none;margin-bottom:14px;}
+.checkin-code-input:focus{border-color:var(--navy);}
+.checkin-code-input::placeholder{letter-spacing:2px;font-weight:600;color:#C4B5A8;}
+.btn-submit-checkin{width:100%;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:var(--r-md);font-size:15px;font-weight:700;font-family:var(--font);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s;}
+.btn-submit-checkin:hover{opacity:.9;}
+.btn-submit-checkin:disabled{opacity:.45;cursor:not-allowed;}
 /* QR SCANNER MODAL */
 .scanner-modal{background:#fff;border-radius:var(--r-xl);width:100%;max-width:380px;overflow:hidden;box-shadow:var(--shadow-lg);}
 .scanner-header{background:var(--tm);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;}
@@ -276,6 +288,17 @@ body{background:#E0E1E5;min-height:100vh;display:flex;justify-content:center;fon
 .btn-mini-icon.danger:hover{background:var(--red-l);}
 .selected-session-edit-slot{margin-top:10px;}
 .selected-session-edit-slot:empty{display:none;}
+/* CHECK-IN CODE PANEL (admin — sits alongside the QR panel for the same session) */
+.panel-divider{display:flex;align-items:center;gap:10px;margin:16px 0;}
+.panel-divider::before,.panel-divider::after{content:'';flex:1;height:1px;background:var(--cream-d);}
+.panel-divider span{font-size:11px;font-weight:700;color:var(--ts);text-transform:uppercase;letter-spacing:1px;}
+.code-panel-body{display:grid;grid-template-columns:124px minmax(0,1fr);gap:12px;align-items:start;}
+@media(max-width:380px){.code-panel-body{grid-template-columns:1fr;}}
+.code-display-wrap{display:flex;flex-direction:column;gap:8px;align-items:center;}
+.code-display-box{width:124px;height:84px;background:var(--cream);border:1.5px dashed var(--navy);border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:6px;}
+.code-display-box .code-value{font-size:22px;font-weight:700;letter-spacing:3px;color:var(--navy);font-family:var(--font);}
+.code-display-box .code-placeholder{font-size:11px;color:var(--ts);text-align:center;padding:6px;}
+.qr-status-pill.code-pill.active{background:var(--blue-l);color:var(--blue-d);}
 /* ADD SESSION FORM */
 .btn-add-session{width:100%;padding:11px;background:#fff;color:var(--terra);border:1.5px dashed var(--terra-l);border-radius:var(--r-md);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:10px;transition:background .2s;}
 .btn-add-session:hover{background:var(--terra-p);}
@@ -529,6 +552,9 @@ body{background:#E0E1E5;min-height:100vh;display:flex;justify-content:center;fon
       <button class="btn-scan" id="btn-open-scanner" onclick="openScanner()">
         <i class="ti ti-qrcode-scan"></i> Scan Session QR Code
       </button>
+      <button class="btn-checkin-code" id="btn-open-checkin" onclick="openCheckInModal()">
+        <i class="ti ti-keyboard"></i> Check In With Code
+      </button>
     </div>
   </div>
 </div>
@@ -620,12 +646,36 @@ body{background:#E0E1E5;min-height:100vh;display:flex;justify-content:center;fon
                 <button class="btn-activate" id="btn-panel-activate" onclick="activatePanelQR()"><i class="ti ti-qrcode"></i> Activate QR</button>
               </div>
               <div class="countdown" id="qr-panel-countdown" style="display:none;"><i class="ti ti-clock"></i> <span></span></div>
-              <div class="qr-action-row">
-                <span></span>
-                <button class="btn-mini-icon" id="btn-selected-edit" title="Edit session" onclick="openSelectedEdit()"><i class="ti ti-pencil"></i></button>
-                <button class="btn-mini-icon danger" id="btn-selected-delete" title="Delete session" onclick="deleteSelectedSession()"><i class="ti ti-trash"></i></button>
-              </div>
             </div>
+          </div>
+
+          <div class="panel-divider"><span>Or check in with code</span></div>
+
+          <div class="code-panel-body">
+            <div class="code-display-wrap">
+              <div class="code-display-box" id="code-panel-box"><span class="code-placeholder">No code active</span></div>
+            </div>
+            <div class="qr-controls">
+              <div class="qr-status-row">
+                <span class="qr-status-pill code-pill inactive" id="code-panel-status">Inactive</span>
+                <span class="scan-count-badge" id="code-panel-count"><i class="ti ti-users" style="font-size:10px;"></i> 0 scanned</span>
+              </div>
+              <div class="qr-primary-row">
+                <select class="duration-select" id="code-panel-dur">
+                  <option value="5">5 minutes</option><option value="10">10 minutes</option>
+                  <option value="15" selected>15 minutes</option><option value="30">30 minutes</option>
+                  <option value="60">1 hour</option><option value="120">2 hours</option>
+                </select>
+                <button class="btn-activate" id="btn-panel-activate-code" onclick="activatePanelCheckInCode()"><i class="ti ti-keyboard"></i> Activate Code</button>
+              </div>
+              <div class="countdown" id="code-panel-countdown" style="display:none;"><i class="ti ti-clock"></i> <span></span></div>
+            </div>
+          </div>
+
+          <div class="qr-action-row" style="margin-top:10px;">
+            <span></span>
+            <button class="btn-mini-icon" id="btn-selected-edit" title="Edit session" onclick="openSelectedEdit()"><i class="ti ti-pencil"></i></button>
+            <button class="btn-mini-icon danger" id="btn-selected-delete" title="Delete session" onclick="deleteSelectedSession()"><i class="ti ti-trash"></i></button>
           </div>
           <div class="selected-session-edit-slot" id="selected-session-card"></div>
         </div>
@@ -685,6 +735,28 @@ body{background:#E0E1E5;min-height:100vh;display:flex;justify-content:center;fon
         </div>
         <div class="scanner-status" id="scanner-status">Initialising camera…</div>
         <p class="scanner-note">Point your camera at the QR code displayed by the facilitator.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CHECK-IN BY CODE MODAL (participant) -->
+<div class="modal-overlay" id="checkin-overlay">
+  <div class="checkin-modal">
+    <div class="modal-header">
+      <h3><i class="ti ti-keyboard" style="margin-right:6px;"></i>Check In With Code</h3>
+      <button class="btn-close-modal" onclick="closeCheckInModal()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div id="checkin-result-card" class="scan-result-card" style="display:none;">
+        <div class="scan-result-icon" id="checkin-result-icon">✅</div>
+        <h4 id="checkin-result-title">Stamp collected!</h4>
+        <p id="checkin-result-body"></p>
+      </div>
+      <div id="checkin-form-area">
+        <p style="font-size:13px;color:var(--ts);margin-bottom:14px;line-height:1.5;">Ask the facilitator for this session's check-in code and enter it below.</p>
+        <div id="checkin-error" class="error-msg"></div>
+        <input class="checkin-code-input" id="checkin-code-input" type="text" maxlength="8" placeholder="CODE" autocomplete="off" autocapitalize="characters" onkeydown="if(event.key==='Enter'){event.preventDefault();submitCheckInCode();}">
+        <button class="btn-submit-checkin" id="btn-submit-checkin" onclick="submitCheckInCode()"><i class="ti ti-check"></i> Submit Code</button>
       </div>
     </div>
   </div>
@@ -787,7 +859,8 @@ var adminTemplate = null;      // { totalStamps, milestones:[{position,name,icon
 var adminParticipants = [];    // participants with progress, for currentTrackId
 var adminTrackAdmins = [];     // [{id,name,facility,email}] admins enrolled on currentTrackId
 var scanStream = null, scanAnimFrame = null, scanDone = false;
-var countdownTimer = null;
+var countdownTimer = null;       // QR panel countdown (admin)
+var codeCountdownTimer = null;   // Check-in code panel countdown (admin)
 var adminRefreshTimer = null;
 var sessionPage = 0;
 var SESSION_PAGE_SIZE = 3;
@@ -830,7 +903,8 @@ function normalizeSession(s){
   return { id:Number(s.id||0), trackId:Number(s.trackId||0), name:String(s.name||'Session'),
     type:String(s.type||'Sharing'), desc:String(s.desc||''), icon:String(s.icon||'ti-brain'),
     location:String(s.location||''), time:String(s.time||''),
-    qrActive:Boolean(s.qrActive), qrExpiresAt:Number(s.qrExpiresAt||0), qrToken:String(s.qrToken||'') };
+    qrActive:Boolean(s.qrActive), qrExpiresAt:Number(s.qrExpiresAt||0), qrToken:String(s.qrToken||''),
+    codeActive:Boolean(s.codeActive), codeExpiresAt:Number(s.codeExpiresAt||0), codeValue:String(s.codeValue||'') };
 }
 function normalizeProgress(p){
   return { trackId:Number(p.trackId), trackName:String(p.trackName||''), totalStamps:Number(p.totalStamps||10),
@@ -932,6 +1006,7 @@ function logout(){
   currentUser=null; myTracks=[]; currentTrackId=null; currentTrackRole=null;
   trackProgress=null; allSessions=[]; adminTrackInfo=null; adminTemplate=null; adminParticipants=[]; adminTrackAdmins=[];
   if(countdownTimer){ clearInterval(countdownTimer); countdownTimer=null; }
+  if(codeCountdownTimer){ clearInterval(codeCountdownTimer); codeCountdownTimer=null; }
   stopAdminAutoRefresh();
   showScreen('auth');
 }
@@ -954,6 +1029,7 @@ async function refreshDashboardAndShow(){
 // ─────────────────────────────────────────────────────────────
 function goToDashboard(){
   if(countdownTimer){ clearInterval(countdownTimer); countdownTimer=null; }
+  if(codeCountdownTimer){ clearInterval(codeCountdownTimer); codeCountdownTimer=null; }
   stopAdminAutoRefresh();
   currentTrackId=null; currentTrackRole=null;
   refreshDashboardAndShow();
@@ -1120,7 +1196,9 @@ function renderParticipant(){
   document.getElementById('p-facility').textContent=currentUser.facility+' · '+currentUser.email;
   renderStampCard('p-track-lbl','p-fill','p-dots','p-stamps','p-count','p-total','p-reward-cards',p,false);
   renderSessions();
-  document.getElementById('btn-open-scanner').disabled = p.stamps>=p.totalStamps;
+  var capped = p.stamps>=p.totalStamps;
+  document.getElementById('btn-open-scanner').disabled = capped;
+  document.getElementById('btn-open-checkin').disabled = capped;
 }
 // Shared renderer used by both the real participant view and the read-only demo view.
 function renderStampCard(lblId,fillId,dotsId,stampsId,countId,totalId,rewardsId,progress,readOnlyDemo){
@@ -1200,9 +1278,10 @@ function renderSessions(){
   var visible=allSessions.slice(start,start+SESSION_PAGE_SIZE);
   visible.forEach(function(s){
     var claimed=trackProgress.claimedSessions.indexOf(s.id)!==-1;
-    var status=claimed?'col':(s.qrActive?'avl':'upc');
-    var lbl=claimed?'Collected':(s.qrActive?'QR Active':'Upcoming');
-    var icon=claimed?'ti-check':(s.qrActive?'ti-qrcode-scan':'ti-clock');
+    var checkInAvailable = s.qrActive || s.codeActive;
+    var status=claimed?'col':(checkInAvailable?'avl':'upc');
+    var lbl=claimed?'Collected':(checkInAvailable?'Check-in Open':'Upcoming');
+    var icon=claimed?'ti-check':(checkInAvailable?'ti-qrcode-scan':'ti-clock');
     var rawTs=trackProgress.scanTimestamps&&trackProgress.scanTimestamps[s.id]?trackProgress.scanTimestamps[s.id]:'';
     var dateOnly=rawTs?formatDateOnly(rawTs):'';
     var tsHtml=dateOnly?'<div class="scan-ts"><i class="ti ti-calendar"></i>Stamped: '+dateOnly+'</div>':'';
@@ -1313,6 +1392,40 @@ async function submitQRToken(token){
     setTimeout(function(){ rc.style.display='none'; document.getElementById('scanner-live-area').style.display='block'; scanDone=false; startCamera(); },3000);
   }
 }
+// ── Check-In With Code (participant) — parallel flow to the QR scanner ──
+function openCheckInModal(){
+  document.getElementById('checkin-overlay').classList.add('open');
+  document.getElementById('checkin-result-card').style.display='none';
+  document.getElementById('checkin-form-area').style.display='block';
+  document.getElementById('checkin-error').style.display='none';
+  var input=document.getElementById('checkin-code-input');
+  input.value='';
+  setTimeout(function(){ input.focus(); },50);
+}
+function closeCheckInModal(){ document.getElementById('checkin-overlay').classList.remove('open'); }
+async function submitCheckInCode(){
+  var input=document.getElementById('checkin-code-input');
+  var code=input.value.trim().toUpperCase();
+  if(!code){ showErr('checkin-error','Please enter a check-in code.'); return; }
+  busy('btn-submit-checkin','Checking in…');
+  try{
+    var data=await apiRequest('checkInByCode',{userId:currentUser.id,email:currentUser.email,checkInCode:code});
+    trackProgress=normalizeProgress(data.progress);
+    if(data.sessions) allSessions=data.sessions.map(normalizeSession);
+    document.getElementById('checkin-form-area').style.display='none';
+    var rc=document.getElementById('checkin-result-card');
+    rc.className='scan-result-card'; rc.style.display='block';
+    document.getElementById('checkin-result-icon').textContent='✅';
+    document.getElementById('checkin-result-title').textContent='Stamp collected!';
+    document.getElementById('checkin-result-body').textContent=data.sessionName+'\nStamped on: '+formatDateOnly(data.scannedAt||'');
+    renderParticipant();
+    setTimeout(function(){ closeCheckInModal(); },3000);
+  }catch(e){
+    showErr('checkin-error',e.message);
+  }finally{
+    restore('btn-submit-checkin');
+  }
+}
 // ─────────────────────────────────────────────────────────────
 // ADMIN VIEW
 // ─────────────────────────────────────────────────────────────
@@ -1400,6 +1513,10 @@ function renderAdminStats(){
 // Counts, for each session, how many participants currently hold a stamp for it
 // (i.e. that session id appears in their claimedSessions array). Purely derived
 // from data already loaded into adminParticipants/allSessions — no new API calls.
+// Note: a stamp here may have come from either the QR-scan path or the
+// check-in-code path; the chart (and CSV export below) intentionally don't
+// distinguish between the two, since attendance is attendance regardless of
+// which channel the participant used to check in.
 function renderSessionsChart(){
   var wrap=document.getElementById('sess-chart-wrap');
   var empty=document.getElementById('sess-chart-empty');
@@ -1623,14 +1740,24 @@ function populateDataSessionSelect(){
   });
   sel.value=Array.prototype.some.call(sel.options,function(o){ return o.value===current; })?current:'all';
 }
+// renderQRPanel() now drives BOTH the QR half and the check-in-code half of
+// the "Manage Sessions" panel for whichever session is selected, since both
+// controls act on the same selected session and the edit/delete buttons are
+// shared between them.
 function renderQRPanel(){
   if(countdownTimer){ clearInterval(countdownTimer); countdownTimer=null; }
+  if(codeCountdownTimer){ clearInterval(codeCountdownTimer); codeCountdownTimer=null; }
   var sid=Number(document.getElementById('qr-session-select').value);
   var content=document.getElementById('qr-panel-content');
   if(!sid){ content.style.display='none'; document.getElementById('selected-session-card').innerHTML=''; return; }
   var s=allSessions.find(function(x){ return x.id===sid; });
   if(!s){ content.style.display='none'; document.getElementById('selected-session-card').innerHTML=''; return; }
   content.style.display='block';
+
+  renderQRHalf(s, sid);
+  renderCheckInCodeHalf(s, sid);
+}
+function renderQRHalf(s, sid){
   var isActive=s.qrActive&&s.qrExpiresAt>Date.now();
   var claimCount=adminParticipants.filter(function(u){ return u.claimedSessions.indexOf(sid)!==-1; }).length;
   var pill=document.getElementById('qr-panel-status');
@@ -1668,6 +1795,42 @@ function renderQRPanel(){
     cdEl.style.display='none';
   }
 }
+// Check-in-code half — mirrors renderQRHalf but for the typed-code channel.
+// Kept as its own function (rather than folded into renderQRHalf) since the
+// two channels have independent expiries/timers and independently
+// activate/deactivate without affecting one another.
+function renderCheckInCodeHalf(s, sid){
+  var isActive=s.codeActive&&s.codeExpiresAt>Date.now();
+  var claimCount=adminParticipants.filter(function(u){ return u.claimedSessions.indexOf(sid)!==-1; }).length;
+  var pill=document.getElementById('code-panel-status');
+  pill.textContent=isActive?'Active':'Inactive';
+  pill.className='qr-status-pill code-pill '+(isActive?'active':'inactive');
+  document.getElementById('code-panel-count').innerHTML='<i class="ti ti-users" style="font-size:10px;"></i> '+claimCount+' scanned';
+  document.getElementById('btn-panel-activate-code').innerHTML='<i class="ti ti-keyboard"></i> '+(isActive?'Refresh Code':'Activate Code');
+  var box=document.getElementById('code-panel-box');
+  if(isActive&&s.codeValue){
+    box.innerHTML='<span class="code-value">'+htmlAttr(s.codeValue)+'</span>';
+  } else {
+    box.innerHTML='<span class="code-placeholder">No code active</span>';
+  }
+  var cdEl=document.getElementById('code-panel-countdown');
+  if(isActive){
+    cdEl.style.display='flex';
+    function tick(){
+      var rem=Math.max(0,Math.floor((s.codeExpiresAt-Date.now())/1000));
+      var m=Math.floor(rem/60), sec=rem%60;
+      var sp=cdEl.querySelector('span');
+      if(sp) sp.textContent='Expires in '+m+':'+(sec<10?'0':'')+sec;
+      cdEl.className='countdown'+(rem<60?' expired':'');
+      if(rem===0){ clearInterval(codeCountdownTimer); codeCountdownTimer=null; setTimeout(refreshAdminData,1000); }
+    }
+    cdEl.innerHTML='<i class="ti ti-clock"></i> <span></span>';
+    tick();
+    codeCountdownTimer=setInterval(tick,1000);
+  } else {
+    cdEl.style.display='none';
+  }
+}
 async function activatePanelQR(){
   var sid=Number(document.getElementById('qr-session-select').value);
   if(!sid){ alert('Please select a session first.'); return; }
@@ -1680,6 +1843,23 @@ async function activatePanelQR(){
     renderQRPanel();
   }catch(e){ alert('Error: '+e.message); }
   finally{ restore('btn-panel-activate'); }
+}
+// Activates (or refreshes) the typed check-in code for the selected session.
+// Mirrors activatePanelQR() exactly, just calling the code-generation action
+// and updating the codeActive/codeExpiresAt/codeValue fields on the local
+// session object instead of the qr* fields.
+async function activatePanelCheckInCode(){
+  var sid=Number(document.getElementById('qr-session-select').value);
+  if(!sid){ alert('Please select a session first.'); return; }
+  var dur=Number(document.getElementById('code-panel-dur').value||15);
+  busy('btn-panel-activate-code','Generating…');
+  try{
+    var data=await apiRequest('generateCheckInCode',{adminEmail:currentUser.email,trackId:currentTrackId,sessionId:sid,durationMinutes:dur});
+    var idx=allSessions.findIndex(function(s){ return s.id===sid; });
+    if(idx!==-1){ allSessions[idx].codeActive=true; allSessions[idx].codeExpiresAt=data.expiresAtMs; allSessions[idx].codeValue=data.codeValue; }
+    renderQRPanel();
+  }catch(e){ alert('Error: '+e.message); }
+  finally{ restore('btn-panel-activate-code'); }
 }
 function downloadPanelQR(){
   var sid=Number(document.getElementById('qr-session-select').value);
