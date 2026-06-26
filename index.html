@@ -783,6 +783,7 @@ var adminParticipants = [];    // participants with progress, for currentTrackId
 var adminTrackAdmins = [];     // [{id,name,facility,email}] admins enrolled on currentTrackId
 var scanStream = null, scanAnimFrame = null, scanDone = false;
 var countdownTimer = null;
+var adminRefreshTimer = null;
 var sessionPage = 0;
 var SESSION_PAGE_SIZE = 3;
 var LOCATION_OPTIONS = ['Building1','Building2','Building3'];
@@ -918,6 +919,7 @@ function logout(){
   currentUser=null; myTracks=[]; currentTrackId=null; currentTrackRole=null;
   trackProgress=null; allSessions=[]; adminTrackInfo=null; adminTemplate=null; adminParticipants=[]; adminTrackAdmins=[];
   if(countdownTimer){ clearInterval(countdownTimer); countdownTimer=null; }
+  stopAdminAutoRefresh();
   showScreen('auth');
 }
 async function refreshDashboardAndShow(){
@@ -939,6 +941,7 @@ async function refreshDashboardAndShow(){
 // ─────────────────────────────────────────────────────────────
 function goToDashboard(){
   if(countdownTimer){ clearInterval(countdownTimer); countdownTimer=null; }
+  stopAdminAutoRefresh();
   currentTrackId=null; currentTrackRole=null;
   refreshDashboardAndShow();
 }
@@ -1277,7 +1280,7 @@ async function submitQRToken(token){
     document.getElementById('scan-result-title').textContent='Stamp collected!';
     document.getElementById('scan-result-body').textContent=data.sessionName+'\nStamped on: '+formatDateOnly(data.scannedAt||'');
     renderParticipant();
-    setTimeout(function(){ closeScanner(); },3000);
+    setTimeout(function(){ closeScanner(); },1500);
   }catch(e){
     document.getElementById('scanner-live-area').style.display='none';
     var rc=document.getElementById('scan-result-card');
@@ -1301,6 +1304,7 @@ async function bootAdminView(){
     allSessions=(data.sessions||[]).map(normalizeSession);
     renderAdmin();
     showScreen('admin');
+    startAdminAutoRefresh();
   }catch(e){ alert('Could not open admin panel: '+e.message); }
 }
 async function refreshAdminData(){
@@ -1313,6 +1317,16 @@ async function refreshAdminData(){
     allSessions=(data.sessions||[]).map(normalizeSession);
     renderAdmin();
   }catch(e){ console.error(e); }
+}
+// Polls the admin view periodically so scans made on participant devices
+// (stamp counts, the attendance chart, participant list) show up here
+// without the admin needing to trigger a manual action first.
+function startAdminAutoRefresh(){
+  stopAdminAutoRefresh();
+  adminRefreshTimer = setInterval(refreshAdminData, 8000);
+}
+function stopAdminAutoRefresh(){
+  if(adminRefreshTimer){ clearInterval(adminRefreshTimer); adminRefreshTimer=null; }
 }
 function renderAdmin(){
   document.getElementById('a-logged-as').textContent=currentUser.name+' · '+currentUser.email;
@@ -1761,7 +1775,7 @@ function renderAdminParticipants(){
         var sess=allSessions.find(function(s){ return s.id===sid; });
         var sname=sess?sess.name:'Session '+sid;
         var ts=(p.scanTimestamps&&p.scanTimestamps[sid])?p.scanTimestamps[sid]:'—';
-        historyRows+='<div class="shrow"><span class="shrow-name">'+htmlAttr(sname)+'</span><span class="shrow-ts"><i class="ti ti-clock-hour-4"></i>'+htmlAttr(ts)+'</span></div>';
+        historyRows+='<div class="shrow"><span class="shrow-name"><i class="ti ti-check" style="color:var(--green);font-size:12px;margin-right:4px;"></i>'+htmlAttr(sname)+'</span><span class="shrow-ts"><i class="ti ti-clock-hour-4"></i>'+htmlAttr(ts)+'</span></div>';
       });
       historyRows+='</div></details>';
     }
