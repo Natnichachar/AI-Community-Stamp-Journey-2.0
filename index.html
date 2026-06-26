@@ -800,14 +800,15 @@ var pendingAdminEmails = [];
 function apiRequest(action, payload) {
   payload = payload || {};
   payload.action = action;
-  // GAS web apps respond to POST with a redirect to a script.googleusercontent.com
-  // URL that actually serves the JSON. Browsers can cache that redirected response,
-  // which means a stale result can come back even on a brand-new page load if the
-  // same action+payload was requested before. cache:'no-store' plus a unique
-  // per-request nonce guarantees this call always reaches the live execution
-  // instead of a cached one.
+  // GAS web apps respond to POST with a redirect to a one-time
+  // script.googleusercontent.com URL that actually serves the JSON. A unique
+  // per-request nonce in the payload guarantees the request body is never
+  // identical twice, which is enough on its own to defeat any caching —
+  // forcing cache:'no-store' on top of that interfered with the redirect
+  // handshake under rapid polling (manifested as ERR_NAME_NOT_RESOLVED on
+  // the googleusercontent.com redirect target), so it has been removed.
   payload._ts = Date.now() + '_' + Math.random().toString(36).slice(2);
-  return fetch(GAS_URL, { method:'POST', redirect:'follow', cache:'no-store', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload) })
+  return fetch(GAS_URL, { method:'POST', redirect:'follow', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload) })
     .then(function(r){ if(!r.ok) throw new Error('Network error'); return r.json(); })
     .then(function(res){ if(res.ok!==true) throw new Error(res.message||'Request failed.'); return res; })
     .catch(function(err){ throw new Error(err.message||String(err)); });
@@ -1328,7 +1329,7 @@ async function bootAdminView(){
     startAdminAutoRefresh();
   }catch(e){ alert('Could not open admin panel: '+e.message); }
 }
-async function refreshAdminData(){
+async function refreshAdminData(retryOnFail){
   try{
     var data=await apiRequest('getAdminView',{adminEmail:currentUser.email,trackId:currentTrackId});
     adminTrackInfo=data.track;
@@ -1337,17 +1338,26 @@ async function refreshAdminData(){
     adminTrackAdmins=(data.admins||[]).map(normalizeTrackAdmin);
     allSessions=(data.sessions||[]).map(normalizeSession);
     renderAdmin();
-  }catch(e){ console.error(e); }
+  }catch(e){
+    console.error(e);
+    // One quick retry: a single dropped request shouldn't leave the screen
+    // stale until the next full polling interval.
+    if(retryOnFail!==false){
+      setTimeout(function(){ refreshAdminData(false); }, 1500);
+    }
+  }
 }
-// Polls the admin view frequently so scans made on participant devices
+// Polls the admin view periodically so scans made on participant devices
 // (stamp counts, the attendance chart, participant list) show up here
-// without the admin needing to trigger a manual action first. True
-// instant push isn't possible without a server-push channel (the scan
-// happens on a different device entirely), so this is a fast poll —
-// short enough that a fresh scan reliably shows up within a few seconds.
+// without the admin needing to trigger a manual action first. Polling too
+// frequently overloads Apps Script's POST -> one-time-redirect mechanism
+// (it intermittently fails to mint a valid script.googleusercontent.com
+// redirect under rapid repeated requests, surfacing as
+// net::ERR_NAME_NOT_RESOLVED) — 15s is a safe interval that still feels
+// responsive, backed up by an instant refresh when the tab regains focus.
 function startAdminAutoRefresh(){
   stopAdminAutoRefresh();
-  adminRefreshTimer = setInterval(refreshAdminData, 3000);
+  adminRefreshTimer = setInterval(refreshAdminData, 15000);
   document.addEventListener('visibilitychange', handleAdminVisibilityChange);
 }
 function stopAdminAutoRefresh(){
