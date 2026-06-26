@@ -307,6 +307,9 @@ body{background:#E0E1E5;min-height:100vh;display:flex;justify-content:center;fon
 .btn-cancel-edit:hover{background:var(--cream-d);}
 /* REWARD TEMPLATE EDITOR */
 .milestone-row{display:flex;gap:8px;align-items:flex-start;background:var(--cream);border-radius:var(--r-md);padding:12px;margin-bottom:8px;}
+.milestone-list-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;}
+.milestone-list-grid .milestone-row{margin-bottom:0;}
+@media (max-width:380px){.milestone-list-grid{grid-template-columns:1fr;}}
 .milestone-row-fields{flex:1;display:flex;flex-direction:column;gap:7px;}
 .milestone-row-line1{display:grid;grid-template-columns:72px 1fr;gap:7px;}
 .milestone-input{width:100%;padding:8px 10px;border:1.5px solid var(--cream-d);border-radius:var(--r-sm);font-size:13px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;}
@@ -348,7 +351,9 @@ body{background:#E0E1E5;min-height:100vh;display:flex;justify-content:center;fon
 .search-input{width:100%;padding:12px 16px 12px 42px;border:1.5px solid var(--cream-d);border-radius:var(--r-md);font-size:15px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;transition:border-color .2s;}
 .search-input:focus{border-color:var(--terra);}
 .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ts);font-size:19px;pointer-events:none;}
-.a-table{display:flex;flex-direction:column;gap:10px;}
+.a-table{display:grid;grid-template-columns:1fr;gap:10px;}
+@media (min-width:700px){.a-table{grid-template-columns:1fr 1fr;}}
+@media (min-width:1900px){.a-table{grid-template-columns:1fr 1fr 1fr;}}
 .a-card{background:#fff;border-radius:var(--r-md);border:.5px solid #E8DDD4;padding:16px;box-shadow:var(--shadow);}
 .a-card-top{display:flex;align-items:center;gap:11px;margin-bottom:12px;}
 .avatar{width:38px;height:38px;border-radius:50%;background:var(--terra-p);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--terra);flex-shrink:0;}
@@ -1260,9 +1265,18 @@ function scanFrame(){
   var v=document.getElementById('scanner-video'), c=document.getElementById('scanner-canvas');
   if(!v||!c) return;
   if(v.readyState!==v.HAVE_ENOUGH_DATA){ scanAnimFrame=requestAnimationFrame(scanFrame); return; }
-  c.width=v.videoWidth; c.height=v.videoHeight;
-  var ctx=c.getContext('2d'); ctx.drawImage(v,0,0,c.width,c.height);
-  var img=ctx.getImageData(0,0,c.width,c.height);
+  // Decoding at full camera resolution (often 1080p+) is the main bottleneck —
+  // jsQR doesn't need that much detail, so we downscale before reading pixels.
+  // This cuts per-frame decode time dramatically and lets scans complete much sooner.
+  var SCAN_MAX_DIM=480;
+  var vw=v.videoWidth, vh=v.videoHeight;
+  var scale=Math.min(1, SCAN_MAX_DIM/Math.max(vw,vh));
+  var cw=Math.max(1,Math.round(vw*scale)), ch=Math.max(1,Math.round(vh*scale));
+  if(c.width!==cw) c.width=cw;
+  if(c.height!==ch) c.height=ch;
+  var ctx=c.getContext('2d', {willReadFrequently:true});
+  ctx.drawImage(v,0,0,cw,ch);
+  var img=ctx.getImageData(0,0,cw,ch);
   var code=jsQR(img.data,img.width,img.height,{inversionAttempts:'dontInvert'});
   if(code&&code.data){ scanDone=true; stopCamera(); submitQRToken(code.data); }
   else { scanAnimFrame=requestAnimationFrame(scanFrame); }
@@ -1273,14 +1287,16 @@ async function submitQRToken(token){
     var data=await apiRequest('scanQR',{userId:currentUser.id,email:currentUser.email,qrToken:token});
     trackProgress=normalizeProgress(data.progress);
     if(data.sessions) allSessions=data.sessions.map(normalizeSession);
+    // Update the stamp card behind the modal right away, before the modal even
+    // starts closing, so the new stamp is already visible the instant it's revealed.
+    renderParticipant();
     document.getElementById('scanner-live-area').style.display='none';
     var rc=document.getElementById('scan-result-card');
     rc.className='scan-result-card'; rc.style.display='block';
     document.getElementById('scan-result-icon').textContent='✅';
     document.getElementById('scan-result-title').textContent='Stamp collected!';
     document.getElementById('scan-result-body').textContent=data.sessionName+'\nStamped on: '+formatDateOnly(data.scannedAt||'');
-    renderParticipant();
-    setTimeout(function(){ closeScanner(); },1500);
+    setTimeout(function(){ closeScanner(); },600);
   }catch(e){
     document.getElementById('scanner-live-area').style.display='none';
     var rc=document.getElementById('scan-result-card');
@@ -1318,15 +1334,25 @@ async function refreshAdminData(){
     renderAdmin();
   }catch(e){ console.error(e); }
 }
-// Polls the admin view periodically so scans made on participant devices
+// Polls the admin view frequently so scans made on participant devices
 // (stamp counts, the attendance chart, participant list) show up here
-// without the admin needing to trigger a manual action first.
+// without the admin needing to trigger a manual action first. True
+// instant push isn't possible without a server-push channel (the scan
+// happens on a different device entirely), so this is a fast poll —
+// short enough that a fresh scan reliably shows up within a few seconds.
 function startAdminAutoRefresh(){
   stopAdminAutoRefresh();
-  adminRefreshTimer = setInterval(refreshAdminData, 8000);
+  adminRefreshTimer = setInterval(refreshAdminData, 3000);
+  document.addEventListener('visibilitychange', handleAdminVisibilityChange);
 }
 function stopAdminAutoRefresh(){
   if(adminRefreshTimer){ clearInterval(adminRefreshTimer); adminRefreshTimer=null; }
+  document.removeEventListener('visibilitychange', handleAdminVisibilityChange);
+}
+function handleAdminVisibilityChange(){
+  if(document.visibilityState==='visible' && currentTrackId!==null && routeForRole(currentTrackRole)==='admin'){
+    refreshAdminData();
+  }
 }
 function renderAdmin(){
   document.getElementById('a-logged-as').textContent=currentUser.name+' · '+currentUser.email;
@@ -1508,7 +1534,7 @@ function renderTemplateEditor(){
   var wrap=document.getElementById('template-editor');
   wrap.innerHTML=
     '<div class="template-total-row"><label>Total stamps</label><input type="number" min="1" max="50" id="tpl-total" value="'+adminTemplate.totalStamps+'"></div>'+
-    '<div id="tpl-milestone-list"></div>'+
+    '<div id="tpl-milestone-list" class="milestone-list-grid"></div>'+
     '<button class="btn-add-milestone" onclick="addMilestoneRow()"><i class="ti ti-plus"></i> Add Milestone</button>'+
     '<button class="btn-save-template" id="btn-save-template" onclick="saveTemplate()"><i class="ti ti-check"></i> Save Reward Template</button>';
   renderMilestoneRows();
@@ -1527,7 +1553,7 @@ function renderMilestoneRows(){
       '</div>'+
       '<button class="btn-remove-milestone" onclick="removeMilestoneRow('+idx+')"><i class="ti ti-trash"></i></button>'+
     '</div>';
-  }).join('') || '<p style="font-size:13px;color:var(--ts);text-align:center;padding:10px 0;">No milestones yet — add one below.</p>';
+  }).join('') || '<p style="font-size:13px;color:var(--ts);text-align:center;padding:10px 0;grid-column:1/-1;">No milestones yet — add one below.</p>';
 }
 function updateMilestoneField(idx,field,value){
   if(!editingMilestones[idx]) return;
