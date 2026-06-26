@@ -346,9 +346,6 @@ body{background:#E0E1E5;min-height:100vh;display:flex;justify-content:center;fon
 .demo-watermark-bar button{background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:6px 12px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:5px;}
 .demo-readonly-shield{position:absolute;inset:0;z-index:40;cursor:not-allowed;background:transparent;}
 .demo-badge-fixed{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--tm);color:#fff;font-size:12px;font-weight:700;padding:8px 16px;border-radius:99px;display:flex;align-items:center;gap:6px;box-shadow:var(--shadow-lg);z-index:60;max-width:90%;text-align:center;}
-.scan-toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-30px);background:var(--green-d);color:#fff;font-size:13px;font-weight:700;padding:10px 18px;border-radius:99px;display:flex;align-items:center;gap:7px;box-shadow:var(--shadow-lg);z-index:3000;max-width:90%;text-align:center;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;}
-.scan-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-.scan-toast i{font-size:15px;}
 /* ADMIN PARTICIPANTS */
 .search-wrap{position:relative;margin-bottom:12px;}
 .search-input{width:100%;padding:12px 16px 12px 42px;border:1.5px solid var(--cream-d);border-radius:var(--r-md);font-size:15px;font-family:var(--font);color:var(--tm);background:#fff;outline:none;transition:border-color .2s;}
@@ -773,7 +770,6 @@ body{background:#E0E1E5;min-height:100vh;display:flex;justify-content:center;fon
   <div class="demo-badge-fixed"><i class="ti ti-lock"></i> Read-only preview — nothing here is clickable</div>
 </div>
 </div>
-<div class="scan-toast" id="scan-toast"><i class="ti ti-check"></i><span>Stamp collected!</span></div>
 <script>
 'use strict';
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwQoLdqUw1TVlAY9nfe68L8_Dk_pQ652pSdQODDrk47qkJeKYE4K-cez3WTjwUPnhDw/exec';
@@ -878,26 +874,10 @@ function routeForRole(role){ return (role==='admin'||role==='manager') ? 'admin'
 (function init(){
   var saved=localStorage.getItem('aiStampSessionV2');
   if(saved){
-    try{
-      currentUser=normalizeUser(JSON.parse(saved));
-      var ret=consumeReturnHash();
-      if(ret && ret.trackId){
-        openTrack(ret.trackId, 'participant');
-        if(ret.scanned) setTimeout(function(){ showScanToast(ret.sessionName); }, 300);
-      } else {
-        refreshDashboardAndShow();
-      }
-    }
+    try{ currentUser=normalizeUser(JSON.parse(saved)); refreshDashboardAndShow(); }
     catch(e){ localStorage.removeItem('aiStampSessionV2'); }
   }
 })();
-function showScanToast(sessionName){
-  var el=document.getElementById('scan-toast');
-  if(!el) return;
-  el.querySelector('span').textContent = sessionName ? 'Stamp collected: '+sessionName : 'Stamp collected!';
-  el.classList.add('show');
-  setTimeout(function(){ el.classList.remove('show'); }, 2600);
-}
 function persistUser(){ localStorage.setItem('aiStampSessionV2', JSON.stringify(currentUser)); }
 function showScreen(name){
   document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
@@ -1312,22 +1292,16 @@ async function submitQRToken(token){
   document.getElementById('scanner-status').textContent='Verifying…';
   try{
     var data=await apiRequest('scanQR',{userId:currentUser.id,email:currentUser.email,qrToken:token});
+    trackProgress=normalizeProgress(data.progress);
+    if(data.sessions) allSessions=data.sessions.map(normalizeSession);
     document.getElementById('scanner-live-area').style.display='none';
     var rc=document.getElementById('scan-result-card');
     rc.className='scan-result-card'; rc.style.display='block';
     document.getElementById('scan-result-icon').textContent='✅';
     document.getElementById('scan-result-title').textContent='Stamp collected!';
     document.getElementById('scan-result-body').textContent=data.sessionName+'\nStamped on: '+formatDateOnly(data.scannedAt||'');
-    // Full reload, not just an in-memory re-render: this guarantees the stamp
-    // card reflects the server's fresh state with zero ambiguity (no stale DOM,
-    // no leftover camera/video element state from the scanner). The track id
-    // and a "just scanned" flag are carried in the URL hash — the same pattern
-    // as an OAuth /callback redirect — so on reload the app reads the hash,
-    // skips the dashboard, and lands the user straight back on this same
-    // track's participant view with a confirmation toast, instead of starting
-    // over from scratch.
-    setReturnHash(currentTrackId, data.sessionName);
-    setTimeout(function(){ location.reload(); },450);
+    renderParticipant();
+    setTimeout(function(){ closeScanner(); },3000);
   }catch(e){
     document.getElementById('scanner-live-area').style.display='none';
     var rc=document.getElementById('scan-result-card');
@@ -1337,26 +1311,6 @@ async function submitQRToken(token){
     document.getElementById('scan-result-body').textContent=e.message;
     setTimeout(function(){ rc.style.display='none'; document.getElementById('scanner-live-area').style.display='block'; scanDone=false; startCamera(); },3000);
   }
-}
-// Encodes where to land after reload, e.g. #returnTrack=3&scanned=1&session=Session%204
-function setReturnHash(trackId, sessionName){
-  var parts=['returnTrack='+encodeURIComponent(trackId),'scanned=1'];
-  if(sessionName) parts.push('session='+encodeURIComponent(sessionName));
-  location.hash=parts.join('&');
-}
-// Reads the hash written by setReturnHash, if present, and clears it so a
-// later manual refresh doesn't replay the same "stamp collected" toast.
-function consumeReturnHash(){
-  var raw=location.hash.replace(/^#/, '');
-  if(!raw) return null;
-  var params={};
-  raw.split('&').forEach(function(pair){
-    var kv=pair.split('=');
-    if(kv[0]) params[kv[0]]=decodeURIComponent(kv[1]||'');
-  });
-  if(!params.returnTrack) return null;
-  history.replaceState(null, '', location.pathname+location.search);
-  return { trackId:Number(params.returnTrack), scanned:params.scanned==='1', sessionName:params.session||'' };
 }
 // ─────────────────────────────────────────────────────────────
 // ADMIN VIEW
