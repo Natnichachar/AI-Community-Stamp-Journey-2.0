@@ -546,14 +546,18 @@ body{background:#E0E1E5;min-height:100vh;display:flex;justify-content:center;fon
     </div>
 
     <div class="section mt-16">
-      <div class="slabel">Session Attendance</div>
-      <div class="card" id="sess-chart-card">
-        <div id="sess-chart-wrap" style="position:relative;"></div>
-        <div id="sess-chart-empty" style="display:none;text-align:center;padding:24px 10px;">
-          <i class="ti ti-chart-line" style="font-size:32px;color:var(--terra-l);display:block;margin-bottom:8px;"></i>
-          <p style="font-size:13px;color:var(--ts);">No sessions yet — once you add sessions, attendance will show here.</p>
+      <details class="stamp-history" id="sess-chart-details" style="background:#fff;border:.5px solid #E8DDD4;box-shadow:var(--shadow);">
+        <summary class="stamp-history-title" style="padding:14px 16px;">
+          <span><i class="ti ti-chart-line" style="color:var(--terra);margin-right:5px;"></i>Session Attendance</span>
+        </summary>
+        <div style="padding:0 16px 16px;">
+          <div id="sess-chart-wrap" style="position:relative;"></div>
+          <div id="sess-chart-empty" style="display:none;text-align:center;padding:24px 10px;">
+            <i class="ti ti-chart-line" style="font-size:32px;color:var(--terra-l);display:block;margin-bottom:8px;"></i>
+            <p style="font-size:13px;color:var(--ts);">No sessions yet — once you add sessions, attendance will show here.</p>
+          </div>
         </div>
-      </div>
+      </details>
     </div>
 
     <div class="section mt-16">
